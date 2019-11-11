@@ -8,23 +8,29 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import static java.awt.image.ImageObserver.HEIGHT;
-import static java.awt.image.ImageObserver.WIDTH;
+
 
 public class SplashScreen extends ScreenBeta {
+
+    ActorBeta background;
+
+    static float WIDTH = Gdx.graphics.getWidth();
+    static float HEIGHT = Gdx.graphics.getHeight();
 
     Sprite splash;
     Texture splashTexture;
 
     float elapsed;
 
-    //SpriteBatch batch;
+
     @Override
     public void initialize()
     {
-        splashTexture = new Texture(Gdx.files.internal("Cannonball.png"));
+
+        splashTexture = new Texture(Gdx.files.internal("Logo.png"));
         splash = new Sprite(splashTexture);
         splash.setSize(WIDTH, HEIGHT);
+        //Create "paper" to draw
         batch = new SpriteBatch();
     }
 
@@ -32,7 +38,7 @@ public class SplashScreen extends ScreenBeta {
     public void render(float delta)
     {
         //setting color
-        Gdx.gl.glClearColor(1,0,0,1);
+        Gdx.gl.glClearColor(0,0,0,1);
         //getting color
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -44,7 +50,7 @@ public class SplashScreen extends ScreenBeta {
 
         if (elapsed > 3)
         {
-            //((Game)Gdx.app.getApplicationListener()).setScreen(new TitleScreen());
+            ((Game)Gdx.app.getApplicationListener()).setScreen(new TitleScreen());
         }
         //Go to the next Screen
     }
