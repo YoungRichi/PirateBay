@@ -8,7 +8,7 @@ public class CannonBall extends ActorBeta {
 
     CannonBall() {
 
-        String[] planeAnim = {"planeGreen0.png", "planeGreen1.png", "planeGreen2.png"};
+        String[] planeAnim = {"Cannonball.png"};
 
         loadAnimationFromFiles(planeAnim, 0.1f, true);
 
