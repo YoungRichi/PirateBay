@@ -123,6 +123,12 @@ public class GameScreen extends ScreenBeta {
             cannonBall.SetVelocity(screenX, (screenY - Gdx.graphics.getHeight())*(-1));
         }
         isTouchDown = true;
+
+        //================RICHARD TESTING=====================
+        PirateBay.setActiveScreen(new OverScreen());
+
+        //============================================
+
         return super.touchDown(screenX, screenY, pointer, button);
     }
 
@@ -133,10 +139,7 @@ public class GameScreen extends ScreenBeta {
         System.out.println(fireTimer);
         isTouchDown = false;
 
-        //================RICHARD TESTING=====================
-        PirateBay.setActiveScreen(new OverScreen());
 
-        //============================================
         return super.touchUp(screenX, screenY, pointer, button);
     }
 }
