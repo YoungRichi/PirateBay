@@ -47,7 +47,7 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
 
     //int score;
 
-
+    SpriteBatch batch;
     //CONSTRUCTOR
     ScreenBeta()
     {

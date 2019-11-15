@@ -1,182 +1,92 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
-import java.util.Random;
 
-public class SplashScreen extends ScreenBeta
-{
+public class SplashScreen extends ScreenBeta {
+
+    ActorBeta background;
+
     static float WIDTH = Gdx.graphics.getWidth();
     static float HEIGHT = Gdx.graphics.getHeight();
 
-    CannonBall cannonBall;
-    OrthographicCamera camera;
-    Vector3 mouseCoord;
-    Vector2 dir;
-    float fireTimer;
-    float maxFireDuration;
-    boolean isFiring, fireTrigger;
-    boolean isTouchDown;
+    Sprite splash;
+    Texture splashTexture;
+    ActorBeta splashTex;
 
-    /*--------------------------------------------------------
-    -------------------------Enemy----------------------------
-    --------------------------------------------------------*/
-    TestEnemyAI enemyTest;
+    float elapsed;
 
-    /*--------------------------------------------------------
-    -------------------------Obstacles------------------------
-    --------------------------------------------------------*/
-    TestObstacle obstacleTest;
-    TestObstacle obstacleTest1;
-    TestObstacle obstacleTest2;
-    TestObstacle[] obstacles;
 
     @Override
-    public void initialize() {
-        camera = new OrthographicCamera();
-        mouseCoord = new Vector3();
-        dir = new Vector2();
+    public void initialize()
+    {
 
-        ActorBeta background = new ActorBeta(-100, 0, mainStage);
-        background.loadTexture( "background_4.jpg" );
-        background.setSize(Gdx.graphics.getWidth() * 2f,Gdx.graphics.getHeight() * 2f);
+        //splashTexture = new Texture(Gdx.files.internal("SplashLogo2.png"));
+        /*splash = new Sprite(splashTexture);
+        splash.setSize(WIDTH, HEIGHT);
+        //Create "paper" to draw
+        batch = new SpriteBatch();*/
 
-        ActorBeta.setWorldBounds(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        background = new ActorBeta(0, 0, mainStage);
+        background.loadTexture("splashBG.png");
+        background.setSize(WIDTH, HEIGHT);
 
-        cannonBall = new CannonBall();
-        cannonBall.setPosition(0, 0);
-        cannonBall.setScale(1.0f);
-        mainStage.addActor(cannonBall);
-
-        maxFireDuration = 10.0f;
-        fireTimer = maxFireDuration;
-        isFiring = false;
-        fireTrigger = false;
-        isTouchDown = false;
-
-        /*--------------------------------------------------------
-        -------------------------Enemy----------------------------
-        --------------------------------------------------------*/
-
-        enemyTest = new TestEnemyAI();
-        mainStage.addActor(enemyTest);
-
-        /*--------------------------------------------------------
-        -------------------------Obstacles------------------------
-        --------------------------------------------------------*/
-
-        obstacleTest = new TestObstacle();
-        obstacleTest.setScale(2f);
-        obstacleTest.setPosition(WIDTH/2, HEIGHT/2);
-        obstacleTest.setBoundaryRectangle();
-        mainStage.addActor(obstacleTest);
-
-        obstacleTest1 = new TestObstacle();
-        obstacleTest1.setScale(2f);
-        obstacleTest1.setPosition(obstacleTest.getX() - 500, obstacleTest.getY() + 200);
-        obstacleTest1.setBoundaryRectangle();
-        mainStage.addActor(obstacleTest1);
-
-        obstacleTest2 = new TestObstacle();
-        obstacleTest2.setScale(2f);
-        obstacleTest2.setPosition(obstacleTest1.getX(), obstacleTest1.getY() -500);
-        obstacleTest2.setBoundaryRectangle();
-        mainStage.addActor(obstacleTest2);
-
-        obstacles = new TestObstacle[]{obstacleTest, obstacleTest1, obstacleTest2};
+        splashTex = new ActorBeta(); //(0, 0, mainStage);
+        splashTex.loadTexture("SplashLogoEdited.png");
+        splashTex.setSize(WIDTH /3, HEIGHT /2);
+        splashTex.setPosition(WIDTH / 2 - splashTex.getWidth() / 2, HEIGHT / 2 - splashTex.getHeight() / 2);
+        splashTex.setColor(splashTex.getColor().r, splashTex.getColor().g, splashTex.getColor().b, 0.0f);
+        splashTex.addAction(Actions.sequence(Actions.delay(0.5f), Actions.parallel(Actions.sizeBy(WIDTH / 2, HEIGHT / 2, 3), Actions.moveTo(WIDTH / 12, HEIGHT / 100, 3),
+                Actions.fadeIn(3))));
+        mainStage.addActor(splashTex);
     }
 
-    @Override
-    public void update(float dt) {
-        if(fireTrigger)
-        {
-            fireTimer -= dt;
-        }
-        if(fireTimer > 0 && isFiring)
-            cannonBall.moveBy(cannonBall.GetVelocity().x, cannonBall.GetVelocity().y);
-        if(fireTimer <= 0 && !isTouchDown)
-        {
-            fireTrigger = false;
-            isFiring = false;
-            fireTimer = maxFireDuration;
-        }
-        if(cannonBall.getY() > Gdx.graphics.getHeight()- cannonBall.getHeight())
-        {
-            cannonBall.setY(Gdx.graphics.getHeight() - cannonBall.getHeight());
-            cannonBall.SetVelocityXY(cannonBall.GetVelocity().x, cannonBall.GetVelocity().y * (-1));
-        }
-        if(cannonBall.getY() < 0)
-        {
-            cannonBall.setY(0);
-            cannonBall.SetVelocityXY(cannonBall.GetVelocity().x, cannonBall.GetVelocity().y * (-1));
-        }
-        if(cannonBall.getX() < 0)
-        {
-            cannonBall.setX(0);
-            cannonBall.SetVelocityXY(cannonBall.GetVelocity().x * (-1), cannonBall.GetVelocity().y);
-        }
-        if(cannonBall.getX() > Gdx.graphics.getWidth() - cannonBall.getWidth())
-        {
-            cannonBall.setX(Gdx.graphics.getWidth() - cannonBall.getWidth());
-            cannonBall.SetVelocityXY(cannonBall.GetVelocity().x * (-1), cannonBall.GetVelocity().y);
-        }
+    /*@Override
+    public void render(float delta)
+    {
+        //setting color
+        //Gdx.gl.glClearColor(0,0,0,1);
+        //getting color
+       // Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+       // batch.begin();
+       // splash.draw(batch);
+       // batch.end();
 
-        /*--------------------------------------------------------
-        -------------------------Enemy Logic----------------------
-        --------------------------------------------------------*/
+        //elapsed +=delta;
 
-        //enemyTest.enemyState = TestEnemyAI.EnemyState.GoLeft;
-
-        for (int i = 0; i < obstacles.length; i++)
-        {
-            if(enemyTest.overlaps(obstacles[i]))
-            {
-                if(obstacles[i].getY() <= enemyTest.getY())
-                {
-                    Random random = new Random();
-                    int roll = random.nextInt(2);
-
-                    if(roll == 0)
-                    {
-                        enemyTest.enemyState = TestEnemyAI.EnemyState.GoDown;
-                    }
-
-                    if(roll == 1)
-                    {
-                        enemyTest.enemyState = TestEnemyAI.EnemyState.GoUp;
-                    }
-                }
-            }
-            //else if(!enemyTest.overlaps(obstacles[i]))
-                //enemyTest.enemyState = TestEnemyAI.EnemyState.GoLeft;
-        }
-        //enemyTest.enemyState = TestEnemyAI.EnemyState.GoLeft;
+       // if (elapsed > 3)
+      //  {
+      //      ((Game)Gdx.app.getApplicationListener()).setScreen(new TitleScreen());
+     //   }
+        //Go to the next Screen
     }
 
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+   /* @Override
+    public void dispose()
+    {
+       // batch.dispose();
+       // splash.getTexture().dispose();
+    }*/
 
-        if(!fireTrigger)
-        {
-            fireTrigger = true;
-            cannonBall.SetVelocity(screenX, (screenY - Gdx.graphics.getHeight())*(-1));
-        }
 
-        enemyTest.enemyState = TestEnemyAI.EnemyState.GoLeft;
-        isTouchDown = true;
-        return super.touchDown(screenX, screenY, pointer, button);
-    }
 
     @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        if(!isFiring)
-        isFiring = true;
-        System.out.println(fireTimer);
-        isTouchDown = false;
-        return super.touchUp(screenX, screenY, pointer, button);
+    public void update(float dt)
+    {
+        elapsed += dt;
+
+         if (elapsed > 3.5)
+          {
+              ((Game)Gdx.app.getApplicationListener()).setScreen(new TitleScreen());
+          }
+        //Go to the next Screen
     }
 }
