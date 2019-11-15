@@ -5,7 +5,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
-public class SplashScreen extends ScreenBeta {
+import java.util.Random;
+
+public class SplashScreen extends ScreenBeta
+{
+    static float WIDTH = Gdx.graphics.getWidth();
+    static float HEIGHT = Gdx.graphics.getHeight();
+
     CannonBall cannonBall;
     OrthographicCamera camera;
     Vector3 mouseCoord;
@@ -14,6 +20,19 @@ public class SplashScreen extends ScreenBeta {
     float maxFireDuration;
     boolean isFiring, fireTrigger;
     boolean isTouchDown;
+
+    /*--------------------------------------------------------
+    -------------------------Enemy----------------------------
+    --------------------------------------------------------*/
+    TestEnemyAI enemyTest;
+
+    /*--------------------------------------------------------
+    -------------------------Obstacles------------------------
+    --------------------------------------------------------*/
+    TestObstacle obstacleTest;
+    TestObstacle obstacleTest1;
+    TestObstacle obstacleTest2;
+    TestObstacle[] obstacles;
 
     @Override
     public void initialize() {
@@ -37,6 +56,37 @@ public class SplashScreen extends ScreenBeta {
         isFiring = false;
         fireTrigger = false;
         isTouchDown = false;
+
+        /*--------------------------------------------------------
+        -------------------------Enemy----------------------------
+        --------------------------------------------------------*/
+
+        enemyTest = new TestEnemyAI();
+        mainStage.addActor(enemyTest);
+
+        /*--------------------------------------------------------
+        -------------------------Obstacles------------------------
+        --------------------------------------------------------*/
+
+        obstacleTest = new TestObstacle();
+        obstacleTest.setScale(2f);
+        obstacleTest.setPosition(WIDTH/2, HEIGHT/2);
+        obstacleTest.setBoundaryRectangle();
+        mainStage.addActor(obstacleTest);
+
+        obstacleTest1 = new TestObstacle();
+        obstacleTest1.setScale(2f);
+        obstacleTest1.setPosition(obstacleTest.getX() - 500, obstacleTest.getY() + 200);
+        obstacleTest1.setBoundaryRectangle();
+        mainStage.addActor(obstacleTest1);
+
+        obstacleTest2 = new TestObstacle();
+        obstacleTest2.setScale(2f);
+        obstacleTest2.setPosition(obstacleTest1.getX(), obstacleTest1.getY() -500);
+        obstacleTest2.setBoundaryRectangle();
+        mainStage.addActor(obstacleTest2);
+
+        obstacles = new TestObstacle[]{obstacleTest, obstacleTest1, obstacleTest2};
     }
 
     @Override
@@ -73,6 +123,38 @@ public class SplashScreen extends ScreenBeta {
             cannonBall.setX(Gdx.graphics.getWidth() - cannonBall.getWidth());
             cannonBall.SetVelocityXY(cannonBall.GetVelocity().x * (-1), cannonBall.GetVelocity().y);
         }
+
+
+        /*--------------------------------------------------------
+        -------------------------Enemy Logic----------------------
+        --------------------------------------------------------*/
+
+        //enemyTest.enemyState = TestEnemyAI.EnemyState.GoLeft;
+
+        for (int i = 0; i < obstacles.length; i++)
+        {
+            if(enemyTest.overlaps(obstacles[i]))
+            {
+                if(obstacles[i].getY() <= enemyTest.getY())
+                {
+                    Random random = new Random();
+                    int roll = random.nextInt(2);
+
+                    if(roll == 0)
+                    {
+                        enemyTest.enemyState = TestEnemyAI.EnemyState.GoDown;
+                    }
+
+                    if(roll == 1)
+                    {
+                        enemyTest.enemyState = TestEnemyAI.EnemyState.GoUp;
+                    }
+                }
+            }
+            //else if(!enemyTest.overlaps(obstacles[i]))
+                //enemyTest.enemyState = TestEnemyAI.EnemyState.GoLeft;
+        }
+        //enemyTest.enemyState = TestEnemyAI.EnemyState.GoLeft;
     }
 
     @Override
@@ -83,6 +165,8 @@ public class SplashScreen extends ScreenBeta {
             fireTrigger = true;
             cannonBall.SetVelocity(screenX, (screenY - Gdx.graphics.getHeight())*(-1));
         }
+
+        enemyTest.enemyState = TestEnemyAI.EnemyState.GoLeft;
         isTouchDown = true;
         return super.touchDown(screenX, screenY, pointer, button);
     }
