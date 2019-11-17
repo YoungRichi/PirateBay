@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 public class TitleScreen extends ScreenBeta {
 
@@ -10,6 +11,7 @@ public class TitleScreen extends ScreenBeta {
     ActorBeta tapToPlay;
     Skin arcade;
     Label tap;
+    Table table;
 
     static float WIDTH = Gdx.graphics.getWidth();
     static float HEIGHT = Gdx.graphics.getHeight();
@@ -19,11 +21,13 @@ public class TitleScreen extends ScreenBeta {
         arcade = new Skin(Gdx.files.internal("arcade/skin/arcade-ui.json"));
 
 
-        background = new ActorBeta(0, 0, mainStage);
+        background = new ActorBeta();//, mainStage);
+        background.setPosition(0,0);
         background.loadTexture("TitleScreen.png");
         background.setSize(WIDTH,HEIGHT);
+        mainStage.addActor(background);
 
-        tapToPlay =  new ActorBeta(1500, 500, mainStage);
+        tapToPlay =  new ActorBeta(); //, mainStage);
         tapToPlay.loadTexture("TapMe.png");
 
         tap = new Label("TAP!!!", arcade);
@@ -32,7 +36,13 @@ public class TitleScreen extends ScreenBeta {
         tap.setFontScale(3.f);
         //tap.setWrap(true);
 
-        mainStage.addActor(tap);
+        table = new Table(arcade);
+        table.add(tap).padRight(50);
+        table.add(tapToPlay);
+        table.setPosition(WIDTH  - tap.getWidth() * 4, HEIGHT / 8);
+        mainStage.addActor(table);
+
+       // mainStage.addActor(tap);
 
 
 

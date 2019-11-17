@@ -4,9 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class GameScreen extends ScreenBeta {
 
+    Skin arcade;
     CannonBall cannonBall;
     OrthographicCamera camera;
     Vector3 mouseCoord;
@@ -15,6 +18,10 @@ public class GameScreen extends ScreenBeta {
     float maxFireDuration;
     boolean isFiring, fireTrigger;
     boolean isTouchDown;
+    Button pauseButton;
+    ActorBeta pauseButtonTex;
+    Button resumeButton;
+    ActorBeta resumeButtonTex;
 
     //===========Richard Testing======================
     Parrot parrot;
@@ -22,12 +29,75 @@ public class GameScreen extends ScreenBeta {
     BoatBig bigBoat;
     BoatMedium mediumBoat;
     BoatSmall smallBoat;
+    Cannon cannon;
+    CannonBase cannonBase;
+    Barricade barricade;
+    Lives liveIcon;
+    Rock rock;
+
+    static float WIDTH = Gdx.graphics.getWidth();
+    static float HEIGHT = Gdx.graphics.getHeight();
 
 
     //===========Richard Testing======================
 
     @Override
     public void initialize() {
+        CreateLevel();
+    }
+
+    @Override
+    public void update(float dt) {
+        ControlCannonBall(dt);
+        CheckPauseResumeButton();
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+
+        if(!fireTrigger)
+        {
+            fireTrigger = true;
+            cannonBall.SetVelocity(screenX, (screenY - Gdx.graphics.getHeight())*(-1));
+        }
+        isTouchDown = true;
+
+        //================RICHARD TESTING=====================
+       // PirateBay.setActiveScreen(new OverScreen());
+
+        //============================================
+
+        return super.touchDown(screenX, screenY, pointer, button);
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        if(!isFiring)
+            isFiring = true;
+        System.out.println(fireTimer);
+        isTouchDown = false;
+
+
+        return super.touchUp(screenX, screenY, pointer, button);
+    }
+
+    @Override
+    public void pause() {
+        super.pause();
+        isPaused = true;
+    }
+
+    @Override
+    public void resume() {
+        super.resume();
+        isPaused = false;
+    }
+
+    void CreateLevel()
+    {
+        arcade = new Skin(Gdx.files.internal("arcade/skin/arcade-ui.json"));
+
+
         camera = new OrthographicCamera();
         mouseCoord = new Vector3();
         dir = new Vector2();
@@ -50,7 +120,7 @@ public class GameScreen extends ScreenBeta {
         isTouchDown = false;
 
         //===========Richard Testing======================
-        parrot = new Parrot();
+/*        parrot = new Parrot();
         parrot.setPosition(Gdx.graphics.getWidth()/2 , Gdx.graphics.getHeight()/4 );
         parrot.setScale(0.5f);
         mainStage.addActor(parrot);
@@ -73,13 +143,56 @@ public class GameScreen extends ScreenBeta {
         smallBoat = new BoatSmall();
         smallBoat.setPosition(Gdx.graphics.getWidth()/4 , Gdx.graphics.getHeight()/20 );
         smallBoat.setScale(0.35f);
-        mainStage.addActor(smallBoat);
+        mainStage.addActor(smallBoat);*/
+
+        cannonBase = new CannonBase();
+        cannonBase.setPosition(0, Gdx.graphics.getHeight()/2);
+        cannonBase.setScale(0.5f);
+        mainStage.addActor(cannonBase);
+
+        cannon = new Cannon();
+        cannon.setPosition(-250, Gdx.graphics.getHeight()/2);
+        cannon.setScale(0.25f);
+        mainStage.addActor(cannon);
+
+        barricade = new Barricade();
+        barricade.setPosition(Gdx.graphics.getWidth()/4, 0);
+        barricade.setScale(1.f);
+        mainStage.addActor(barricade);
+
+        liveIcon = new Lives();
+        liveIcon.setPosition(Gdx.graphics.getWidth()/2 , Gdx.graphics.getHeight() * 13/16);
+        liveIcon.setScale(0.75f);
+        mainStage.addActor(liveIcon);
+
+        rock = new Rock();
+        rock.setPosition(Gdx.graphics.getWidth()/2 , Gdx.graphics.getHeight()/4);
+        rock.setScale(0.25f);
+        mainStage.addActor(rock);
+
+
         //===========Richard Testing======================
 
+        pauseButton= new Button(arcade);
+        pauseButtonTex = new ActorBeta();
+        pauseButtonTex.loadTexture("PauseButton.png");
+        pauseButtonTex.setScale(0.5f);
+        pauseButton.add(pauseButtonTex);
+        pauseButton.setPosition(WIDTH / 18, HEIGHT - HEIGHT / 9);
+        mainStage.addActor(pauseButton);
+
+        resumeButton= new Button(arcade);
+        resumeButtonTex = new ActorBeta();
+        resumeButtonTex.loadTexture("PlayButton.png");
+        resumeButtonTex.setScale(0.5f);
+        resumeButton.add(resumeButtonTex);
+        resumeButton.setPosition(WIDTH / 18, HEIGHT - HEIGHT / 9);
+        mainStage.addActor(resumeButton);
+        resumeButton.setVisible(false);
     }
 
-    @Override
-    public void update(float dt) {
+    void ControlCannonBall(float dt)
+    {
         if(fireTrigger)
         {
             fireTimer -= dt;
@@ -114,32 +227,21 @@ public class GameScreen extends ScreenBeta {
         }
     }
 
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
-        if(!fireTrigger)
+    void CheckPauseResumeButton()
+    {
+        if(pauseButton.isPressed())
         {
-            fireTrigger = true;
-            cannonBall.SetVelocity(screenX, (screenY - Gdx.graphics.getHeight())*(-1));
+            pause();
+            pauseButton.setVisible(false);
+            resumeButton.setVisible(true);
         }
-        isTouchDown = true;
 
-        //================RICHARD TESTING=====================
-        PirateBay.setActiveScreen(new OverScreen());
-
-        //============================================
-
-        return super.touchDown(screenX, screenY, pointer, button);
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        if(!isFiring)
-            isFiring = true;
-        System.out.println(fireTimer);
-        isTouchDown = false;
-
-
-        return super.touchUp(screenX, screenY, pointer, button);
+        if(resumeButton.isPressed())
+        {
+            resume();
+            pauseButton.setVisible(true);
+            resumeButton.setVisible(false);
+        }
     }
 }
