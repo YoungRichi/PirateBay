@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -22,6 +23,11 @@ public class SplashScreen extends ScreenBeta {
     ActorBeta splashTex;
 
     float elapsed;
+
+    //Sound
+    Sound spraySound;
+    Sound clickSound;
+
 
 
     @Override
@@ -46,6 +52,11 @@ public class SplashScreen extends ScreenBeta {
         splashTex.addAction(Actions.sequence(Actions.delay(0.5f), Actions.parallel(Actions.sizeBy(WIDTH / 2, HEIGHT / 2, 3), Actions.moveTo(WIDTH / 12, HEIGHT / 100, 3),
                 Actions.fadeIn(3))));
         mainStage.addActor(splashTex);
+
+        spraySound = Gdx.audio.newSound(Gdx.files.internal("Sound/spray.wav"));
+        clickSound = Gdx.audio.newSound(Gdx.files.internal("Sound/click.wav"));
+
+
     }
 
     /*@Override
@@ -82,11 +93,19 @@ public class SplashScreen extends ScreenBeta {
     public void update(float dt)
     {
         elapsed += dt;
-
          if (elapsed > 3.5)
           {
               ((Game)Gdx.app.getApplicationListener()).setScreen(new TitleScreen());
           }
+         else if(elapsed > 0.0f && elapsed < 1.0f)
+             spraySound.play();
         //Go to the next Screen
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        clickSound.play();
+        ((Game)Gdx.app.getApplicationListener()).setScreen(new TitleScreen());
+        return super.touchDown(screenX, screenY, pointer, button);
     }
 }

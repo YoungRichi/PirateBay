@@ -1,6 +1,8 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -22,6 +24,14 @@ public class GameScreen extends ScreenBeta {
     ActorBeta pauseButtonTex;
     Button resumeButton;
     ActorBeta resumeButtonTex;
+
+    Sound explosion;
+    Sound hit;
+    Sound gameOver;
+    Sound shoot;
+    Sound parrotSound;
+    Sound lvlCompleted;
+    Sound click;
 
     //===========Richard Testing======================
     Parrot parrot;
@@ -58,7 +68,8 @@ public class GameScreen extends ScreenBeta {
         isTouchDown = true;
 
         //================RICHARD TESTING=====================
-       // PirateBay.setActiveScreen(new OverScreen());
+        gameOver.play();
+        PirateBay.setActiveScreen(new OverScreen());
 
         //============================================
 
@@ -157,6 +168,20 @@ public class GameScreen extends ScreenBeta {
         resumeButton.setPosition(WIDTH / 18, HEIGHT - HEIGHT / 9);
         mainStage.addActor(resumeButton);
         resumeButton.setVisible(false);
+
+
+        //Sound
+        explosion = Gdx.audio.newSound(Gdx.files.internal("Sound/explosion.wav"));
+        gameOver = Gdx.audio.newSound(Gdx.files.internal("Sound/gameOver.wav"));
+        hit = Gdx.audio.newSound(Gdx.files.internal("Sound/hitsound.wav"));
+        lvlCompleted = Gdx.audio.newSound(Gdx.files.internal("Sound/levelCompleted.wav"));
+        parrotSound = Gdx.audio.newSound(Gdx.files.internal("Sound/parrot.wav"));
+        shoot = Gdx.audio.newSound(Gdx.files.internal("Sound/shoot.wav"));
+        click = Gdx.audio.newSound(Gdx.files.internal("Sound/click.wav"));
+
+
+
+
     }
 
     void ControlCannonBall(float dt)
@@ -175,21 +200,28 @@ public class GameScreen extends ScreenBeta {
         }
         if(cannonBall.getY() > Gdx.graphics.getHeight()- cannonBall.getHeight())
         {
+            hit.play();
             cannonBall.setY(Gdx.graphics.getHeight() - cannonBall.getHeight());
             cannonBall.SetVelocityXY(cannonBall.GetVelocity().x, cannonBall.GetVelocity().y * (-1));
         }
         if(cannonBall.getY() < 0)
         {
+            hit.play();
+
             cannonBall.setY(0);
             cannonBall.SetVelocityXY(cannonBall.GetVelocity().x, cannonBall.GetVelocity().y * (-1));
         }
         if(cannonBall.getX() < 0)
         {
+            hit.play();
+
             cannonBall.setX(0);
             cannonBall.SetVelocityXY(cannonBall.GetVelocity().x * (-1), cannonBall.GetVelocity().y);
         }
         if(cannonBall.getX() > Gdx.graphics.getWidth() - cannonBall.getWidth())
         {
+            hit.play();
+
             cannonBall.setX(Gdx.graphics.getWidth() - cannonBall.getWidth());
             cannonBall.SetVelocityXY(cannonBall.GetVelocity().x * (-1), cannonBall.GetVelocity().y);
         }
@@ -200,6 +232,7 @@ public class GameScreen extends ScreenBeta {
     {
         if(pauseButton.isPressed())
         {
+            click.play();
             pause();
             pauseButton.setVisible(false);
             resumeButton.setVisible(true);
@@ -207,6 +240,7 @@ public class GameScreen extends ScreenBeta {
 
         if(resumeButton.isPressed())
         {
+            click.play();
             resume();
             pauseButton.setVisible(true);
             resumeButton.setVisible(false);

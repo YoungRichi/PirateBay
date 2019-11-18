@@ -1,6 +1,8 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -108,6 +110,8 @@ public class LevelScreen extends ScreenBeta {
 
     static float WIDTH = Gdx.graphics.getWidth();
     static float HEIGHT = Gdx.graphics.getHeight();
+
+    Sound clickSound;
 
     @Override
     public void initialize() {
@@ -413,6 +417,8 @@ public class LevelScreen extends ScreenBeta {
         //mainStage.addActor(lvl1Label);
 
 
+        clickSound = Gdx.audio.newSound(Gdx.files.internal("Sound/click.wav"));
+
 
 
 
@@ -422,11 +428,13 @@ public class LevelScreen extends ScreenBeta {
     public void update(float dt) {
         if(quitButton.isPressed())
         {
+            clickSound.play();
             PirateBay.setActiveScreen(new TitleScreen());
         }
 
         if(Level1Button.isPressed())
         {
+            clickSound.play();
             PirateBay.setActiveScreen(new GameScreen());
         }
     }
