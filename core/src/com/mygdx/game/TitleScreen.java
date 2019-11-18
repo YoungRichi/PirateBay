@@ -13,13 +13,9 @@ public class TitleScreen extends ScreenBeta {
     Label tap;
     Table table;
 
-    static float WIDTH = Gdx.graphics.getWidth();
-    static float HEIGHT = Gdx.graphics.getHeight();
-
     @Override
     public void initialize() {
         arcade = new Skin(Gdx.files.internal("arcade/skin/arcade-ui.json"));
-
 
         background = new ActorBeta();//, mainStage);
         background.setPosition(0,0);

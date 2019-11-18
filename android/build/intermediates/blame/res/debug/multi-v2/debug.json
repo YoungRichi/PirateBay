@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\Rich\\Desktop\\PB\\master\\PirateBay\\android\\build\\intermediates\\res\\merged\\debug\\values_values.arsc.flat",
+            "outputFile": "/Users/ethanpham/Desktop/G2014/PirateBayGit/PirateBay/android/build/intermediates/res/merged/debug/values_values.arsc.flat",
             "map": [
                 {
-                    "source": "C:\\Users\\Rich\\Desktop\\PB\\master\\PirateBay\\android\\res\\values\\color.xml",
+                    "source": "/Users/ethanpham/Desktop/G2014/PirateBayGit/PirateBay/android/res/values/color.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -14,7 +14,24 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Rich\\Desktop\\PB\\master\\PirateBay\\android\\res\\values\\styles.xml",
+                    "source": "/Users/ethanpham/Desktop/G2014/PirateBayGit/PirateBay/android/res/values/strings.xml",
+                    "from": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "56",
+                        "endColumns": "46",
+                        "endOffsets": "98"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "111",
+                        "endColumns": "46",
+                        "endOffsets": "153"
+                    }
+                },
+                {
+                    "source": "/Users/ethanpham/Desktop/G2014/PirateBayGit/PirateBay/android/res/values/styles.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -30,23 +47,6 @@
                         "endLines": "11",
                         "endColumns": "12",
                         "endOffsets": "616"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\Rich\\Desktop\\PB\\master\\PirateBay\\android\\res\\values\\strings.xml",
-                    "from": {
-                        "startLines": "3",
-                        "startColumns": "4",
-                        "startOffsets": "56",
-                        "endColumns": "46",
-                        "endOffsets": "98"
-                    },
-                    "to": {
-                        "startLines": "3",
-                        "startColumns": "4",
-                        "startOffsets": "111",
-                        "endColumns": "46",
-                        "endOffsets": "153"
                     }
                 }
             ]

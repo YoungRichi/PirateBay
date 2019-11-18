@@ -14,78 +14,45 @@ public class SplashScreen extends ScreenBeta {
 
     ActorBeta background;
 
-    static float WIDTH = Gdx.graphics.getWidth();
-    static float HEIGHT = Gdx.graphics.getHeight();
-
     Sprite splash;
     Texture splashTexture;
     ActorBeta splashTex;
-    float elapsed;
+    float totalTime, delayTime, animatedTime;
 
 
     @Override
     public void initialize()
     {
-
-        //splashTexture = new Texture(Gdx.files.internal("SplashLogo2.png"));
-        /*splash = new Sprite(splashTexture);
-        splash.setSize(WIDTH, HEIGHT);
-        //Create "paper" to draw
-        batch = new SpriteBatch();*/
-
+        totalTime = 5f; // time before going to the next screen
+        delayTime = 1f;
+        animatedTime = 3;
         background = new ActorBeta(0, 0, mainStage);
         background.loadTexture("splashBG.png");
         background.setSize(WIDTH, HEIGHT);
 
         splashTex = new ActorBeta(); //(0, 0, mainStage);
         splashTex.loadTexture("SplashLogoEdited.png");
-        splashTex.setSize(WIDTH /3, HEIGHT /2);
+        float aspectRatio = splashTex.getWidth()/splashTex.getHeight(); // keep original aspect ratio when using setSize() method
+        splashTex.setSize(HEIGHT/3 * aspectRatio, HEIGHT/3 );
         splashTex.setPosition(WIDTH / 2 - splashTex.getWidth() / 2, HEIGHT / 2 - splashTex.getHeight() / 2);
-        splashTex.setColor(splashTex.getColor().r, splashTex.getColor().g, splashTex.getColor().b, 0.0f);
-        splashTex.addAction(Actions.sequence(Actions.delay(0.5f), Actions.parallel(Actions.sizeBy(WIDTH / 2, HEIGHT / 2, 3), Actions.moveTo(WIDTH / 12, HEIGHT / 100, 3),
-                Actions.fadeIn(3))));
+        splashTex.setColor(splashTex.getColor().r, splashTex.getColor().g, splashTex.getColor().b, 1.0f);
+        splashTex.addAction(Actions.sequence(Actions.delay(delayTime), Actions.parallel(Actions.sizeTo(HEIGHT * aspectRatio, HEIGHT, animatedTime),
+                Actions.moveTo(WIDTH/2 - HEIGHT * aspectRatio / 2, HEIGHT/2 - HEIGHT / 2, animatedTime),
+                Actions.fadeIn(animatedTime)), Actions.fadeOut(delayTime)));
         mainStage.addActor(splashTex);
     }
-
-    /*@Override
-    public void render(float delta)
-    {
-        //setting color
-        //Gdx.gl.glClearColor(0,0,0,1);
-        //getting color
-       // Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-       // batch.begin();
-       // splash.draw(batch);
-       // batch.end();
-
-        //elapsed +=delta;
-
-       // if (elapsed > 3)
-      //  {
-      //      ((Game)Gdx.app.getApplicationListener()).setScreen(new TitleScreen());
-     //   }
-        //Go to the next Screen
-    }
-
-   /* @Override
-    public void dispose()
-    {
-       // batch.dispose();
-       // splash.getTexture().dispose();
-    }*/
-
-
 
     @Override
     public void update(float dt)
     {
-        elapsed += dt;
+        totalTime -= dt;
 
-         if (elapsed > 3.5)
-          {
-              ((Game)Gdx.app.getApplicationListener()).setScreen(new TitleScreen());
-          }
         //Go to the next Screen
+        if (totalTime <= 0)
+          {
+              //((Game)Gdx.app.getApplicationListener()).setScreen(new TitleScreen());
+              PirateBay.setActiveScreen(new TitleScreen());
+          }
+
     }
 }

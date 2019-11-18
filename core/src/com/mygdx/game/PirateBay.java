@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
+
 public class PirateBay extends GameBeta {
     SplashScreen splashScreen;
     LevelScreen levelScreen;
@@ -9,13 +11,13 @@ public class PirateBay extends GameBeta {
 
     boolean paused = false;
 
-
     @Override
     public void create() {
         super.create();
 
-/*        splashScreen = new SplashScreen();
-        setActiveScreen(splashScreen);*/
+///*
+        splashScreen = new SplashScreen();
+        setActiveScreen(splashScreen);//*/
 
 /*        levelScreen = new LevelScreen();
         setActiveScreen(levelScreen);*/
@@ -26,8 +28,8 @@ public class PirateBay extends GameBeta {
 /*        overScreen = new OverScreen();
         setActiveScreen(overScreen);*/
 
-        endScreen = new EndScreen();
-        setScreen(endScreen);
+        //endScreen = new EndScreen();
+        //setScreen(endScreen);
 
     }
 }

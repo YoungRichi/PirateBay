@@ -48,6 +48,11 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
     //int score;
 
     SpriteBatch batch;
+
+
+    float WIDTH = Gdx.graphics.getWidth();
+    float HEIGHT = Gdx.graphics.getHeight();
+
     //CONSTRUCTOR
     ScreenBeta()
     {
