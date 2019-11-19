@@ -13,6 +13,9 @@ public class TitleScreen extends ScreenBeta {
     Label tap;
     Table table;
 
+    static float WIDTH = Gdx.graphics.getWidth();
+    static float HEIGHT = Gdx.graphics.getHeight();
+
     @Override
     public void initialize() {
         arcade = new Skin(Gdx.files.internal("arcade/skin/arcade-ui.json"));
@@ -33,9 +36,11 @@ public class TitleScreen extends ScreenBeta {
         //tap.setWrap(true);
 
         table = new Table(arcade);
+        table.setSize(WIDTH / 2, HEIGHT / 2);
+        //table.setPosition();
         table.add(tap).padRight(50);
         table.add(tapToPlay);
-        table.setPosition(WIDTH  - tap.getWidth() * 4, HEIGHT / 8);
+        //table.setPosition(WIDTH  - tap.getWidth() * 4, HEIGHT / 8);
         mainStage.addActor(table);
 
        // mainStage.addActor(tap);
