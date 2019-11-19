@@ -9,10 +9,13 @@
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/mygdx/game/ScreenBeta.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/mygdx/game/ScreenBeta.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/android.iml" beforeDir="false" afterPath="$PROJECT_DIR$/android/android.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/com/mygdx/game/SplashScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/mygdx/game/SplashScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/com/mygdx/game/TitleScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/mygdx/game/TitleScreen.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -45,7 +48,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/ScreenBeta.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="328">
+            <state relative-caret-position="420">
               <caret line="54" column="5" selection-start-line="54" selection-start-column="5" selection-end-line="54" selection-end-column="5" />
             </state>
           </provider>
@@ -54,8 +57,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/SplashScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="18" selection-start-line="18" selection-end-line="18" />
+            <state relative-caret-position="148">
+              <caret line="40" column="100" selection-start-line="40" selection-start-column="100" selection-end-line="40" selection-end-column="100" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -66,7 +69,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/TitleScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="123">
+            <state relative-caret-position="216">
               <caret line="37" column="34" selection-start-line="37" selection-start-column="34" selection-end-line="37" selection-end-column="34" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -78,7 +81,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/LevelScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="226">
+            <state relative-caret-position="1590">
               <caret line="113" column="51" selection-start-line="112" selection-start-column="4" selection-end-line="113" selection-end-column="51" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -90,7 +93,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/GameScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2100">
+            <state relative-caret-position="2070">
               <caret line="145" selection-start-line="172" selection-end-line="174" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -137,9 +140,9 @@
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Arrow.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/PirateBay.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/ActorBeta.java" />
-        <option value="$PROJECT_DIR$/core/src/com/mygdx/game/SplashScreen.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/ScreenBeta.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/TitleScreen.java" />
+        <option value="$PROJECT_DIR$/core/src/com/mygdx/game/SplashScreen.java" />
       </list>
     </option>
   </component>
@@ -155,21 +158,11 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane" />
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
           <expand>
-            <path>
-              <item name="PirateBay" type="1abcf292:AndroidViewProjectNode" />
-              <item name="android" type="feadf853:AndroidModuleNode" />
-            </path>
-            <path>
-              <item name="PirateBay" type="1abcf292:AndroidViewProjectNode" />
-              <item name="android" type="feadf853:AndroidModuleNode" />
-              <item name="manifests" type="f94875db:AndroidManifestsGroupNode" />
-            </path>
             <path>
               <item name="PirateBay" type="1abcf292:AndroidViewProjectNode" />
               <item name="core" type="e9137016:NonAndroidModuleNode" />
@@ -189,6 +182,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -295,7 +289,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1680" height="958" extended-state="6" />
+    <frame x="0" y="23" width="1680" height="959" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
@@ -308,13 +302,13 @@
       <window_info id="Resources Explorer" order="7" />
       <window_info id="Capture Tool" order="8" />
       <window_info anchor="bottom" id="Run" order="0" sideWeight="0.4989259" weight="0.32840237" />
-      <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.4981685" visible="true" weight="0.3290993" />
+      <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.497558" weight="0.32871974" />
       <window_info anchor="bottom" id="TODO" order="2" sideWeight="0.4989339" weight="0.32916266" />
       <window_info anchor="bottom" id="Debug" order="3" />
       <window_info anchor="bottom" id="Terminal" order="4" sideWeight="0.4989339" weight="0.32916266" />
-      <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.50183153" side_tool="true" visible="true" weight="0.3290993" />
+      <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.41025642" side_tool="true" visible="true" weight="0.3217993" />
       <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.49946696" weight="0.32916266" />
-      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.5903541" weight="0.3221709" />
+      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.5897436" visible="true" weight="0.3217993" />
       <window_info anchor="bottom" id="Android Profiler" order="8" />
       <window_info anchor="bottom" id="Find" order="9" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
@@ -425,16 +419,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Arrow.java" />
-    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/GameScreen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2100">
-          <caret line="145" selection-start-line="172" selection-end-line="174" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.10/37e7ec91522313dabc753c72196dd665ea4a9332/gdx-1.9.10-sources.jar!/com/badlogic/gdx/scenes/scene2d/actions/ScaleByAction.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -460,16 +444,6 @@
       <provider editor-type-id="android-manifest" />
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/LevelScreen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="113" column="51" selection-start-line="112" selection-start-column="4" selection-end-line="113" selection-end-column="51" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/PirateBay.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -477,9 +451,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/ScreenBeta.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="54" column="5" selection-start-line="54" selection-start-column="5" selection-end-line="54" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/LevelScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1590">
+          <caret line="113" column="51" selection-start-line="112" selection-start-column="4" selection-end-line="113" selection-end-column="51" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/GameScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2070">
+          <caret line="145" selection-start-line="172" selection-end-line="174" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/TitleScreen.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
+        <state relative-caret-position="216">
           <caret line="37" column="34" selection-start-line="37" selection-start-column="34" selection-end-line="37" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -487,17 +488,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/ScreenBeta.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="54" column="5" selection-start-line="54" selection-start-column="5" selection-end-line="54" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/SplashScreen.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        <state relative-caret-position="148">
+          <caret line="40" column="100" selection-start-line="40" selection-start-column="100" selection-end-line="40" selection-end-column="100" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

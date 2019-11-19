@@ -36,9 +36,9 @@ public class SplashScreen extends ScreenBeta {
         splashTex = new ActorBeta(); //(0, 0, mainStage);
         splashTex.loadTexture("SplashLogoEdited.png");
         float aspectRatio = splashTex.getWidth()/splashTex.getHeight(); // keep original aspect ratio when using setSize() method
-        splashTex.setSize(HEIGHT/3 * aspectRatio, HEIGHT/3 );
+        splashTex.setSize(HEIGHT/1.2f * aspectRatio, HEIGHT/1.2f );
         splashTex.setPosition(WIDTH / 2 - splashTex.getWidth() / 2, HEIGHT / 2 - splashTex.getHeight() / 2);
-        splashTex.setColor(splashTex.getColor().r, splashTex.getColor().g, splashTex.getColor().b, 1.0f);
+        splashTex.setColor(splashTex.getColor().r, splashTex.getColor().g, splashTex.getColor().b, 0.0f);
         splashTex.addAction(Actions.sequence(Actions.delay(delayTime), Actions.parallel(Actions.sizeTo(HEIGHT * aspectRatio, HEIGHT, animatedTime),
                 Actions.moveTo(WIDTH/2 - HEIGHT * aspectRatio / 2, HEIGHT/2 - HEIGHT / 2, animatedTime),
                 Actions.fadeIn(animatedTime)), Actions.fadeOut(delayTime)));
