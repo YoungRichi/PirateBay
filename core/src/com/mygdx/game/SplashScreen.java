@@ -14,6 +14,9 @@ public class SplashScreen extends ScreenBeta {
 
     ActorBeta background;
 
+    static float WIDTH = Gdx.graphics.getWidth();
+    static float HEIGHT = Gdx.graphics.getHeight();
+
     Sprite splash;
     Texture splashTexture;
     ActorBeta splashTex;
