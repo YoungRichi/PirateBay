@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
@@ -15,6 +16,10 @@ public class EndScreen extends ScreenBeta {
 
     static float WIDTH = Gdx.graphics.getWidth();
     static float HEIGHT = Gdx.graphics.getHeight();
+
+    Sound clickSound;
+
+
     @Override
     public void initialize() {
         comic = new Skin(Gdx.files.internal("comic/skin/comic-ui.json"));
@@ -24,16 +29,23 @@ public class EndScreen extends ScreenBeta {
         background.loadTexture("EndScreen.png");
         background.setSize(WIDTH,HEIGHT);
 
-        tapToPlay =  new ActorBeta(1500, 500, mainStage);
+        tapToPlay =  new ActorBeta(WIDTH/2, HEIGHT/2, mainStage);
         tapToPlay.loadTexture("TapMe.png");
+        float TapAspectRatio = tapToPlay.getWidth()/tapToPlay.getHeight();
+        tapToPlay.setSize(WIDTH/10 * TapAspectRatio, HEIGHT/10);
 
         dialogLb = new Label("The Pirate bay is at peace", comic);
+        float TextAspectRatio = dialogLb.getWidth()/dialogLb.getHeight();
+
         dialogLb.setPosition(WIDTH * 17/32, HEIGHT *6/8);
-        dialogLb.setScale(3);
-        dialogLb.setFontScale(4.f);
+        dialogLb.setScale(1);
+        dialogLb.setFontScale(WIDTH/7000 * TextAspectRatio);
         dialogLb.setWrap(false);
 
         mainStage.addActor(dialogLb);
+
+        ///
+        clickSound = Gdx.audio.newSound(Gdx.files.internal("Sound/click.wav"));
 
     }
 
@@ -41,7 +53,7 @@ public class EndScreen extends ScreenBeta {
     public void update(float dt) {
     if (talkCounter == 2)
     {
-        PirateBay.setActiveScreen(new TitleScreen());
+        PirateBay.setActiveScreen(new SplashScreen());
     }
 
     }
@@ -49,8 +61,10 @@ public class EndScreen extends ScreenBeta {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
+        clickSound.play();
         dialogLb.setText("For Now...");
         talkCounter++;
+
 
         //PirateBay.setActiveScreen(new TitleScreen());
 

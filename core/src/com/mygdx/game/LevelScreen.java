@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -113,6 +114,9 @@ public class LevelScreen extends ScreenBeta {
     static float WIDTH = Gdx.graphics.getWidth();
     static float HEIGHT = Gdx.graphics.getHeight();
 
+    //SOUND
+    Sound clickSound;
+
     @Override
     public void initialize() {
 
@@ -124,8 +128,11 @@ public class LevelScreen extends ScreenBeta {
 
 
         quitButtonTex = new ActorBeta();
+        float quitAspectRatio = quitButtonTex.getWidth()/quitButtonTex.getHeight();
+
         quitButtonTex.loadTexture("QuitButton.png");
-        quitButtonTex.setScale(0.5f);
+        //quitButtonTex.setScale(0.5f);
+        quitButtonTex.setSize(WIDTH /10, HEIGHT /8);
         quitButton = new Button(arcade);
         quitButton.add(quitButtonTex);
         quitButton.setPosition(WIDTH / 11, HEIGHT - HEIGHT / 6);
@@ -133,14 +140,15 @@ public class LevelScreen extends ScreenBeta {
         mainStage.addActor(quitButton);
 
         title = new Label("Select level", arcade);
-        title.setPosition(WIDTH / 4, HEIGHT - HEIGHT / 7);
-        title.setFontScale(5);
+        title.setPosition(WIDTH / 4, HEIGHT * 13/ 16);
+        float TextAspectRatio = title.getWidth()/title.getHeight();
+        title.setFontScale(WIDTH/2000 * TextAspectRatio);
         mainStage.addActor(title);
 
         //=====================Arrow===============================
         arrow = new Arrow();
         arrow.setPosition(WIDTH* 27/32, Gdx.graphics.getHeight()/2);
-        arrow.setScale(1.f);
+        arrow.setSize(WIDTH/10, HEIGHT/10);
         mainStage.addActor(arrow);
 
 
@@ -328,68 +336,6 @@ public class LevelScreen extends ScreenBeta {
         Level30Button = new Button(arcade);
         Level30Button.add(Level30ButtonTex);
 
-        //____________Labels______________
-        /*lvl1Label = new Label("1", arcade);
-        lvl1Label.setFontScale(5);
-
-        lvl2Label = new Label("2", arcade);
-        lvl2Label.setFontScale(5);
-
-        lvl3Label = new Label("3", arcade);
-        lvl3Label.setFontScale(5);
-
-        lvl4Label = new Label("4", arcade);
-        lvl4Label.setFontScale(5);
-
-        lvl5Label = new Label("5", arcade);
-        lvl5Label.setFontScale(5);
-
-        lvl6Label = new Label("6", arcade);
-        lvl6Label.setFontScale(5);
-
-        lvl7Label = new Label("7", arcade);
-        lvl7Label.setFontScale(5);
-
-        lvl8Label = new Label("8", arcade);
-        lvl8Label.setFontScale(5);
-
-        lvl9Label = new Label("9", arcade);
-        lvl9Label.setFontScale(5);
-
-        lvl10Label = new Label("10", arcade);
-        lvl10Label.setFontScale(5);
-
-        lvl11Label = new Label("11", arcade);
-        lvl11Label.setFontScale(5);
-
-        lvl12Label = new Label("12", arcade);
-        lvl12Label.setFontScale(5);
-
-        lvl13Label = new Label("13", arcade);
-        lvl13Label.setFontScale(5);
-
-        lvl14Label = new Label("14", arcade);
-        lvl14Label.setFontScale(5);
-
-        lvl15Label = new Label("15", arcade);
-        lvl15Label.setFontScale(5);
-
-        lvl16Label = new Label("16", arcade);
-        lvl16Label.setFontScale(5);
-
-        lvl17Label = new Label("17", arcade);
-        lvl17Label.setFontScale(5);
-
-        lvl18Label = new Label("18", arcade);
-        lvl18Label.setFontScale(5);
-
-        lvl19Label = new Label("19", arcade);
-        lvl19Label.setFontScale(5);
-
-        lvl20Label = new Label("20", arcade);
-        lvl20Label.setFontScale(5);
-*/
-
 
 
         //___________________________Level Buttons_____________________________//
@@ -424,6 +370,9 @@ public class LevelScreen extends ScreenBeta {
         //lvl1Label.setPosition(buttonTable.
         //mainStage.addActor(lvl1Label);
 
+        //SOUND
+        clickSound = Gdx.audio.newSound(Gdx.files.internal("Sound/click.wav"));
+
 
 
 
@@ -434,11 +383,13 @@ public class LevelScreen extends ScreenBeta {
     public void update(float dt) {
         if(quitButton.isPressed())
         {
+            clickSound.play();
             PirateBay.setActiveScreen(new TitleScreen());
         }
 
         if(Level1Button.isPressed())
         {
+            clickSound.play();
             PirateBay.setActiveScreen(new GameScreen());
         }
     }

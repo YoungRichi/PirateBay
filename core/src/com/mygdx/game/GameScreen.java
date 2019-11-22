@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -22,6 +23,16 @@ public class GameScreen extends ScreenBeta {
     ActorBeta pauseButtonTex;
     Button resumeButton;
     ActorBeta resumeButtonTex;
+    //-------------SOUND------------------------
+    Sound explosion;
+    Sound hit;
+    Sound gameOver;
+    Sound shoot;
+    Sound parrotSound;
+    Sound lvlCompleted;
+    Sound click;
+
+
 
     //===========Richard Testing======================
     Parrot parrot;
@@ -64,6 +75,7 @@ public class GameScreen extends ScreenBeta {
 
         //================RICHARD TESTING=====================
        // PirateBay.setActiveScreen(new OverScreen());
+        //gameOver.play();
 
         //============================================
 
@@ -110,7 +122,7 @@ public class GameScreen extends ScreenBeta {
 
         cannonBall = new CannonBall();
         cannonBall.setPosition(0, 0);
-        cannonBall.setScale(0.3f);
+        cannonBall.setSize(WIDTH/10, HEIGHT/8);
         mainStage.addActor(cannonBall);
 
         maxFireDuration = 10.0f;
@@ -120,17 +132,17 @@ public class GameScreen extends ScreenBeta {
         isTouchDown = false;
 
         //===========Richard Testing======================
-/*        parrot = new Parrot();
+        parrot = new Parrot();
         parrot.setPosition(Gdx.graphics.getWidth()/2 , Gdx.graphics.getHeight()/4 );
-        parrot.setScale(0.5f);
+        parrot.setSize(WIDTH/6, HEIGHT/4);
         mainStage.addActor(parrot);
 
         box = new SoldierBox();
         box.setPosition(Gdx.graphics.getWidth()/2 , Gdx.graphics.getHeight()/8 );
-        box.setScale(0.5f);
+        box.setSize(WIDTH/8, HEIGHT/6);
         mainStage.addActor(box);
 
-        bigBoat = new BoatBig();
+/*        bigBoat = new BoatBig();
         bigBoat.setPosition(Gdx.graphics.getWidth()/16 , Gdx.graphics.getHeight()/10 );
         bigBoat.setScale(0.35f);
         mainStage.addActor(bigBoat);
@@ -147,27 +159,27 @@ public class GameScreen extends ScreenBeta {
 
         cannonBase = new CannonBase();
         cannonBase.setPosition(0, Gdx.graphics.getHeight()/2);
-        cannonBase.setScale(0.5f);
+        cannonBase.setSize(WIDTH/10, HEIGHT/8);
         mainStage.addActor(cannonBase);
 
         cannon = new Cannon();
-        cannon.setPosition(-250, Gdx.graphics.getHeight()/2);
-        cannon.setScale(0.25f);
+        cannon.setPosition(0, Gdx.graphics.getHeight()/2 + HEIGHT/12);
+        cannon.setSize(WIDTH/10, HEIGHT/8);
         mainStage.addActor(cannon);
 
         barricade = new Barricade();
-        barricade.setPosition(Gdx.graphics.getWidth()/4, 0);
-        barricade.setScale(1.f);
+        barricade.setPosition(Gdx.graphics.getWidth() * 5/16, 0);
+        barricade.setSize(WIDTH/20, HEIGHT);
         mainStage.addActor(barricade);
 
         liveIcon = new Lives();
         liveIcon.setPosition(Gdx.graphics.getWidth()/2 , Gdx.graphics.getHeight() * 13/16);
-        liveIcon.setScale(0.75f);
+        liveIcon.setSize(WIDTH/10, HEIGHT/8);
         mainStage.addActor(liveIcon);
 
         rock = new Rock();
-        rock.setPosition(Gdx.graphics.getWidth()/2 , Gdx.graphics.getHeight()/4);
-        rock.setScale(0.25f);
+        rock.setPosition(Gdx.graphics.getWidth() * 3/4 , Gdx.graphics.getHeight()* 2/4);
+        rock.setSize(WIDTH/5, HEIGHT/4);
         mainStage.addActor(rock);
 
 
@@ -176,19 +188,31 @@ public class GameScreen extends ScreenBeta {
         pauseButton= new Button(arcade);
         pauseButtonTex = new ActorBeta();
         pauseButtonTex.loadTexture("PauseButton.png");
-        pauseButtonTex.setScale(0.5f);
+        //pauseButtonTex.setScale(0.5f);
+        pauseButtonTex.setSize(WIDTH /10, HEIGHT /8);
         pauseButton.add(pauseButtonTex);
-        pauseButton.setPosition(WIDTH / 18, HEIGHT - HEIGHT / 9);
+        pauseButton.setPosition(WIDTH / 18, HEIGHT * 27/ 32 );
         mainStage.addActor(pauseButton);
 
         resumeButton= new Button(arcade);
         resumeButtonTex = new ActorBeta();
         resumeButtonTex.loadTexture("PlayButton.png");
-        resumeButtonTex.setScale(0.5f);
+        //resumeButtonTex.setScale(0.5f);
+        resumeButtonTex.setSize(WIDTH /10, HEIGHT /8);
         resumeButton.add(resumeButtonTex);
-        resumeButton.setPosition(WIDTH / 18, HEIGHT - HEIGHT / 9);
+        resumeButton.setPosition(WIDTH / 18, HEIGHT * 27/ 32);
         mainStage.addActor(resumeButton);
         resumeButton.setVisible(false);
+
+
+        //-------------------------------------Sound--------------------------------
+        explosion = Gdx.audio.newSound(Gdx.files.internal("Sound/explosion.wav"));
+        gameOver = Gdx.audio.newSound(Gdx.files.internal("Sound/gameOver.wav"));
+        hit = Gdx.audio.newSound(Gdx.files.internal("Sound/hitsound.wav"));
+        lvlCompleted = Gdx.audio.newSound(Gdx.files.internal("Sound/levelCompleted.wav"));
+        parrotSound = Gdx.audio.newSound(Gdx.files.internal("Sound/parrot.wav"));
+        shoot = Gdx.audio.newSound(Gdx.files.internal("Sound/shoot.wav"));
+        click = Gdx.audio.newSound(Gdx.files.internal("Sound/click.wav"));
     }
 
     void ControlCannonBall(float dt)
@@ -232,6 +256,8 @@ public class GameScreen extends ScreenBeta {
     {
         if(pauseButton.isPressed())
         {
+            click.play();
+
             pause();
             pauseButton.setVisible(false);
             resumeButton.setVisible(true);
@@ -239,6 +265,8 @@ public class GameScreen extends ScreenBeta {
 
         if(resumeButton.isPressed())
         {
+            click.play();
+
             resume();
             pauseButton.setVisible(true);
             resumeButton.setVisible(false);

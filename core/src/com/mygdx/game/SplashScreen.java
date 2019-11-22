@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,21 +18,22 @@ public class SplashScreen extends ScreenBeta {
     static float WIDTH = Gdx.graphics.getWidth();
     static float HEIGHT = Gdx.graphics.getHeight();
 
-    Sprite splash;
-    Texture splashTexture;
     ActorBeta splashTex;
     float elapsed;
+    float totalTime;
+    float delayTime;
+    float animatedTime;
 
-
+    //Sound
+    Sound spraySound;
     @Override
     public void initialize()
     {
+        // time before going to the next screen
+        totalTime = 5f;
+        delayTime = 1f;
+        animatedTime = 3;
 
-        //splashTexture = new Texture(Gdx.files.internal("SplashLogo2.png"));
-        /*splash = new Sprite(splashTexture);
-        splash.setSize(WIDTH, HEIGHT);
-        //Create "paper" to draw
-        batch = new SpriteBatch();*/
 
         background = new ActorBeta(0, 0, mainStage);
         background.loadTexture("splashBG.png");
@@ -39,42 +41,21 @@ public class SplashScreen extends ScreenBeta {
 
         splashTex = new ActorBeta(); //(0, 0, mainStage);
         splashTex.loadTexture("SplashLogoEdited.png");
-        splashTex.setSize(WIDTH /3, HEIGHT /2);
+        //keep original aspect ratio when using setSize() method
+        float aspectRatio = splashTex.getWidth()/splashTex.getHeight();
+        //========
+        splashTex.setSize(WIDTH /3 * aspectRatio, HEIGHT /2);
         splashTex.setPosition(WIDTH / 2 - splashTex.getWidth() / 2, HEIGHT / 2 - splashTex.getHeight() / 2);
         splashTex.setColor(splashTex.getColor().r, splashTex.getColor().g, splashTex.getColor().b, 0.0f);
-        splashTex.addAction(Actions.sequence(Actions.delay(0.5f), Actions.parallel(Actions.sizeBy(WIDTH / 2, HEIGHT / 2, 3), Actions.moveTo(WIDTH / 12, HEIGHT / 100, 3),
-                Actions.fadeIn(3))));
+        splashTex.addAction(Actions.sequence(Actions.delay(delayTime), Actions.parallel(Actions.sizeBy(WIDTH / 2 * aspectRatio, HEIGHT / 2, 3),
+                Actions.moveTo(WIDTH / 12 * aspectRatio, HEIGHT / 100, 3),
+                Actions.fadeIn(animatedTime)), Actions.fadeOut(delayTime)));
         mainStage.addActor(splashTex);
+
+        //===============SOUND------------------
+        spraySound = Gdx.audio.newSound(Gdx.files.internal("Sound/spray.wav"));
+        //spraySound.setVolume(spraySound.play(), 1f);
     }
-
-    /*@Override
-    public void render(float delta)
-    {
-        //setting color
-        //Gdx.gl.glClearColor(0,0,0,1);
-        //getting color
-       // Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-       // batch.begin();
-       // splash.draw(batch);
-       // batch.end();
-
-        //elapsed +=delta;
-
-       // if (elapsed > 3)
-      //  {
-      //      ((Game)Gdx.app.getApplicationListener()).setScreen(new TitleScreen());
-     //   }
-        //Go to the next Screen
-    }
-
-   /* @Override
-    public void dispose()
-    {
-       // batch.dispose();
-       // splash.getTexture().dispose();
-    }*/
-
 
 
     @Override
@@ -86,6 +67,9 @@ public class SplashScreen extends ScreenBeta {
           {
               ((Game)Gdx.app.getApplicationListener()).setScreen(new TitleScreen());
           }
+         else if(elapsed > 0.0f && elapsed < 1.0f)
+              spraySound.play();
+
         //Go to the next Screen
     }
 }
