@@ -142,20 +142,20 @@ public class GameScreen extends ScreenBeta {
         box.setSize(WIDTH/8, HEIGHT/6);
         mainStage.addActor(box);
 
-/*        bigBoat = new BoatBig();
-        bigBoat.setPosition(Gdx.graphics.getWidth()/16 , Gdx.graphics.getHeight()/10 );
-        bigBoat.setScale(0.35f);
+        bigBoat = new BoatBig();
+        bigBoat.setPosition(Gdx.graphics.getWidth() *3/4 , Gdx.graphics.getHeight() * 3/8);
+        bigBoat.setSize(WIDTH/4, HEIGHT/3);
         mainStage.addActor(bigBoat);
 
         mediumBoat = new BoatMedium();
-        mediumBoat.setPosition(Gdx.graphics.getWidth()/16 , Gdx.graphics.getHeight()/15 );
-        mediumBoat.setScale(0.35f);
+        mediumBoat.setPosition(Gdx.graphics.getWidth()*3/4 , Gdx.graphics.getHeight()/14 );
+        mediumBoat.setSize(WIDTH/6, HEIGHT/4);
         mainStage.addActor(mediumBoat);
 
         smallBoat = new BoatSmall();
-        smallBoat.setPosition(Gdx.graphics.getWidth()/4 , Gdx.graphics.getHeight()/20 );
-        smallBoat.setScale(0.35f);
-        mainStage.addActor(smallBoat);*/
+        smallBoat.setPosition(Gdx.graphics.getWidth()/2 , Gdx.graphics.getHeight()/2 );
+        smallBoat.setSize(WIDTH/8, HEIGHT/8);
+        mainStage.addActor(smallBoat);
 
         cannonBase = new CannonBase();
         cannonBase.setPosition(0, Gdx.graphics.getHeight()/2);
@@ -178,7 +178,7 @@ public class GameScreen extends ScreenBeta {
         mainStage.addActor(liveIcon);
 
         rock = new Rock();
-        rock.setPosition(Gdx.graphics.getWidth() * 3/4 , Gdx.graphics.getHeight()* 2/4);
+        rock.setPosition(Gdx.graphics.getWidth() * 3/4 , Gdx.graphics.getHeight()* 3/4);
         rock.setSize(WIDTH/5, HEIGHT/4);
         mainStage.addActor(rock);
 

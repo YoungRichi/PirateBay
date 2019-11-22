@@ -22,8 +22,10 @@ public class OverScreen extends ScreenBeta {
         background.loadTexture("GameOverScreen.png");
         background.setSize(WIDTH,HEIGHT);
 
-        tapToPlay =  new ActorBeta(1500, 500, mainStage);
+        tapToPlay =  new ActorBeta(WIDTH /2, HEIGHT*1/8, mainStage);
         tapToPlay.loadTexture("TapMe.png");
+        float TapAspectRatio = tapToPlay.getWidth()/tapToPlay.getHeight();
+        tapToPlay.setSize(WIDTH/10 * TapAspectRatio, HEIGHT/10);
 
         gameOver = Gdx.audio.newSound(Gdx.files.internal("Sound/gameOver.wav"));
         clickSound = Gdx.audio.newSound(Gdx.files.internal("Sound/click.wav"));
