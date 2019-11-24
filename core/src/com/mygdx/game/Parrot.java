@@ -3,8 +3,8 @@ package com.mygdx.game;
 import com.badlogic.gdx.graphics.g2d.Animation;
 
 public class Parrot extends ActorBeta {
+
     String[] parrotAnim = {"Parrot1.png", "Parrot2.png", "Parrot3.png"};
-    Animation idleAnim = loadAnimationFromFiles(parrotAnim, 0.2f, true);
 
     Parrot()
     {
@@ -12,5 +12,20 @@ public class Parrot extends ActorBeta {
         this.setBoundaryRectangle();
         setMaxSpeed(800);
         setAnimation(idleAnim);
+    }
+
+    @Override
+    public void act(float dt) {
+        super.act(dt);
+        setAcceleration(400);
+        accelerateAtAngle(270);
+        applyPhysics(dt);
+        //boundToWorld();
+    }
+
+    public void moveLeft()
+    {
+        setSpeed(400);
+        setMotionAngle(180);
     }
 }

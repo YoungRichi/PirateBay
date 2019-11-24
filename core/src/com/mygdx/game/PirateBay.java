@@ -26,11 +26,11 @@ public class PirateBay extends GameBeta {
 /*        levelScreen = new LevelScreen();
         setActiveScreen(levelScreen);*/
 
-/*        gameScreen = new GameScreen();
-        setScreen(gameScreen);*/
+        gameScreen = new GameScreen();
+        setScreen(gameScreen);
 
-        overScreen = new OverScreen();
-        setActiveScreen(overScreen);
+/*        overScreen = new OverScreen();
+        setActiveScreen(overScreen);*/
 
 /*        endScreen = new EndScreen();
         setScreen(endScreen);*/

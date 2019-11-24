@@ -61,6 +61,10 @@ public class GameScreen extends ScreenBeta {
     public void update(float dt) {
         ControlCannonBall(dt);
         CheckPauseResumeButton();
+        CheckCollision();
+        parrot.moveLeft();
+
+
     }
 
     @Override
@@ -123,6 +127,7 @@ public class GameScreen extends ScreenBeta {
         cannonBall = new CannonBall();
         cannonBall.setPosition(0, 0);
         cannonBall.setSize(WIDTH/10, HEIGHT/8);
+        //cannonBall.setScale(1f);
         mainStage.addActor(cannonBall);
 
         maxFireDuration = 10.0f;
@@ -134,10 +139,16 @@ public class GameScreen extends ScreenBeta {
         //===========Richard Testing======================
         parrot = new Parrot();
         parrot.setPosition(Gdx.graphics.getWidth()/2 , Gdx.graphics.getHeight()/4 );
-        parrot.setSize(WIDTH/6, HEIGHT/4);
+        //parrot.setSize(WIDTH/6, HEIGHT/4);
+        parrot.setScale(1f);
         mainStage.addActor(parrot);
 
-        box = new SoldierBox();
+/*        cannonBall = new CannonBall();
+        cannonBall.setPosition(WIDTH/2,HEIGHT/2);
+        cannonBall.setSize(WIDTH/10, HEIGHT/8);
+        mainStage.addActor(cannonBall);*/
+
+/*        box = new SoldierBox();
         box.setPosition(Gdx.graphics.getWidth()/2 , Gdx.graphics.getHeight()/8 );
         box.setSize(WIDTH/8, HEIGHT/6);
         mainStage.addActor(box);
@@ -155,7 +166,7 @@ public class GameScreen extends ScreenBeta {
         smallBoat = new BoatSmall();
         smallBoat.setPosition(Gdx.graphics.getWidth()/2 , Gdx.graphics.getHeight()/2 );
         smallBoat.setSize(WIDTH/8, HEIGHT/8);
-        mainStage.addActor(smallBoat);
+        mainStage.addActor(smallBoat);*/
 
         cannonBase = new CannonBase();
         cannonBase.setPosition(0, Gdx.graphics.getHeight()/2);
@@ -271,5 +282,23 @@ public class GameScreen extends ScreenBeta {
             pauseButton.setVisible(true);
             resumeButton.setVisible(false);
         }
+    }
+
+    void CheckCollision()
+    {
+        if (cannonBall.overlaps(rock))
+        {
+            //pause();
+            rock.preventOverlap(cannonBall);
+           // parrot.moveLeft();
+        }
+
+        if (cannonBall.overlaps(parrot))
+        {
+            //pause();
+            parrot.preventOverlap(cannonBall);
+            // parrot.moveLeft();
+        }
+
     }
 }

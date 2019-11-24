@@ -8,7 +8,8 @@ public class CannonBall extends ActorBeta {
 
     CannonBall() {
 
-        String[] planeAnim = {"Cannonball.png", "Explosion1.png", "Explosion2.png", "Explosion3.png"};
+//        String[] planeAnim = {"Cannonball.png", "Explosion1.png", "Explosion2.png", "Explosion3.png"};
+        String[] planeAnim = {"cannonTesting.png"};
 
         loadAnimationFromFiles(planeAnim, 0.1f, true);
 
@@ -19,6 +20,7 @@ public class CannonBall extends ActorBeta {
     @Override
     public void act(float dt) {
         super.act(dt);
+        applyPhysics(dt);
         //boundToWorld();
     }
 }
