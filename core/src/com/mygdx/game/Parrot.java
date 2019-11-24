@@ -17,15 +17,15 @@ public class Parrot extends ActorBeta {
     @Override
     public void act(float dt) {
         super.act(dt);
-        setAcceleration(400);
-        accelerateAtAngle(270);
+        setAcceleration(100);
+        //accelerateAtAngle(270);
         applyPhysics(dt);
         //boundToWorld();
     }
 
     public void moveLeft()
     {
-        setSpeed(400);
+        setSpeed(100);
         setMotionAngle(180);
     }
 }

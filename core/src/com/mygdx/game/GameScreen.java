@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class GameScreen extends ScreenBeta {
@@ -23,6 +24,9 @@ public class GameScreen extends ScreenBeta {
     ActorBeta pauseButtonTex;
     Button resumeButton;
     ActorBeta resumeButtonTex;
+
+    int lives = 3;
+    Label livesCount;
     //-------------SOUND------------------------
     Sound explosion;
     Sound hit;
@@ -126,7 +130,7 @@ public class GameScreen extends ScreenBeta {
 
         cannonBall = new CannonBall();
         cannonBall.setPosition(0, 0);
-        cannonBall.setSize(WIDTH/10, HEIGHT/8);
+        //cannonBall.setSize(WIDTH/10, HEIGHT/8);
         //cannonBall.setScale(1f);
         mainStage.addActor(cannonBall);
 
@@ -138,9 +142,9 @@ public class GameScreen extends ScreenBeta {
 
         //===========Richard Testing======================
         parrot = new Parrot();
-        parrot.setPosition(Gdx.graphics.getWidth()/2 , Gdx.graphics.getHeight()/4 );
-        //parrot.setSize(WIDTH/6, HEIGHT/4);
-        parrot.setScale(1f);
+        parrot.setPosition(Gdx.graphics.getWidth() , Gdx.graphics.getHeight()/4 );
+        parrot.setSize(WIDTH/6, HEIGHT/4);
+        //parrot.setScale(1f);
         mainStage.addActor(parrot);
 
 /*        cannonBall = new CannonBall();
@@ -196,6 +200,15 @@ public class GameScreen extends ScreenBeta {
 
         //===========Richard Testing======================
 
+        //-----------------UI------------------------------
+
+        livesCount = new Label("3", arcade);
+        float TextAspectRatio = livesCount.getWidth()/livesCount.getHeight();
+
+        livesCount.setPosition(WIDTH * 5/8, HEIGHT * 7 / 8);
+        livesCount.setFontScale(WIDTH/250 * TextAspectRatio);
+        mainStage.addActor(livesCount);
+
         pauseButton= new Button(arcade);
         pauseButtonTex = new ActorBeta();
         pauseButtonTex.loadTexture("PauseButton.png");
@@ -224,6 +237,8 @@ public class GameScreen extends ScreenBeta {
         parrotSound = Gdx.audio.newSound(Gdx.files.internal("Sound/parrot.wav"));
         shoot = Gdx.audio.newSound(Gdx.files.internal("Sound/shoot.wav"));
         click = Gdx.audio.newSound(Gdx.files.internal("Sound/click.wav"));
+
+
     }
 
     void ControlCannonBall(float dt)
@@ -289,16 +304,39 @@ public class GameScreen extends ScreenBeta {
         if (cannonBall.overlaps(rock))
         {
             //pause();
-            rock.preventOverlap(cannonBall);
+            cannonBall.preventOverlap(rock);
            // parrot.moveLeft();
         }
 
         if (cannonBall.overlaps(parrot))
         {
             //pause();
-            parrot.preventOverlap(cannonBall);
+            cannonBall.preventOverlap(parrot);
             // parrot.moveLeft();
         }
 
+        // Enemy collides with barricade
+        if (parrot.overlaps(barricade))
+        {
+            //Life icon goes down
+            lives--;
+            livesCount.setText(lives);
+            parrot.preventOverlap(barricade);
+            parrot.remove();
+
+            //No life remaining
+            if (lives == 0)
+            {
+                PirateBay.setActiveScreen(new OverScreen());
+                gameOver.play();
+            }
+        }
+
     }
+
+    void CheckLives()
+    {
+
+    }
+
 }
