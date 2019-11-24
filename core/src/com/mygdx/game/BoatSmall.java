@@ -8,6 +8,7 @@ public class BoatSmall extends ActorBeta {
 
     BoatSmall()
     {
+        super();
         this.setBoundaryRectangle();
         setMaxSpeed(800);
         setAnimation(idleAnim);

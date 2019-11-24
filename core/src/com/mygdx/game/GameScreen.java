@@ -5,9 +5,12 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+
+import java.util.ArrayList;
 
 public class GameScreen extends ScreenBeta {
 
@@ -53,6 +56,8 @@ public class GameScreen extends ScreenBeta {
     Barricade barricade;
     Lives liveIcon;
     Rock rock;
+
+    ArrayList<Barricade> barricades;
 
     static float WIDTH = Gdx.graphics.getWidth();
     static float HEIGHT = Gdx.graphics.getHeight();
@@ -121,7 +126,7 @@ public class GameScreen extends ScreenBeta {
     void CreateLevel()
     {
         arcade = new Skin(Gdx.files.internal("arcade/skin/arcade-ui.json"));
-
+        barricades = new ArrayList<Barricade>();
 
         camera = new OrthographicCamera();
         mouseCoord = new Vector3();
@@ -147,7 +152,7 @@ public class GameScreen extends ScreenBeta {
 
         //===========Richard Testing======================
         parrot = new Parrot();
-        parrot.setPosition(Gdx.graphics.getWidth() , Gdx.graphics.getHeight()/4 );
+        parrot.setPosition(Gdx.graphics.getWidth() , Gdx.graphics.getHeight()/4);
         parrot.setSize(WIDTH/6, HEIGHT/4);
         //parrot.setScale(1f);
         mainStage.addActor(parrot);
@@ -190,8 +195,9 @@ public class GameScreen extends ScreenBeta {
 
         barricade = new Barricade();
         barricade.setPosition(Gdx.graphics.getWidth() * 5/16, 0);
-        barricade.setSize(WIDTH/20, HEIGHT);
+        //barricade.setSize(WIDTH/20, HEIGHT);
         mainStage.addActor(barricade);
+        barricades.add(barricade);
 
         liveIcon = new Lives();
         liveIcon.setPosition(Gdx.graphics.getWidth()/2 , Gdx.graphics.getHeight() * 13/16);
@@ -202,6 +208,7 @@ public class GameScreen extends ScreenBeta {
         rock.setPosition(Gdx.graphics.getWidth() * 3/4 , Gdx.graphics.getHeight()* 3/4);
         rock.setSize(WIDTH/5, HEIGHT/4);
         mainStage.addActor(rock);
+
 
 
         //===========Richard Testing======================
@@ -324,45 +331,53 @@ public class GameScreen extends ScreenBeta {
             parrot.remove();
             enemyCount--;
         }
+        for (int i=0; i<barricades.size(); i++)
+        {
+            // Enemy collides with barricade
+            if (parrot.overlaps(barricades.get(i)))
+            {
+                //Life icon goes down
+                lives--;
+                livesCount.setText(lives);
+                parrot.preventOverlap(barricades.get(i));
+                parrot.remove();
+            }
 
-        // Enemy collides with barricade
-        if (parrot.overlaps(barricade))
-        {
-            //Life icon goes down
-            lives--;
-            livesCount.setText(lives);
-            parrot.preventOverlap(barricade);
-            parrot.remove();
+            if (bigBoat.overlaps(barricades.get(i)))
+            {
+                lives--;
+                livesCount.setText(lives);
+                bigBoat.preventOverlap(barricades.get(i));
+                bigBoat.remove();
+            }
+            if (mediumBoat.overlaps(barricades.get(i)))
+            {
+                lives--;
+                livesCount.setText(lives);
+                mediumBoat.preventOverlap(barricades.get(i));
+                mediumBoat.remove();
+            }
+            if (smallBoat.overlaps(barricades.get(i)))
+            {
+                lives--;
+                livesCount.setText(lives);
+                smallBoat.preventOverlap(barricades.get(i));
+                smallBoat.remove();
+            }
         }
 
-        if (bigBoat.overlaps(barricade))
-        {
-            lives--;
-            livesCount.setText(lives);
-            bigBoat.preventOverlap(barricade);
-            bigBoat.remove();
-        }
-        if (mediumBoat.overlaps(barricade))
-        {
-            lives--;
-            livesCount.setText(lives);
-            mediumBoat.preventOverlap(barricade);
-            mediumBoat.remove();
-        }
-        if (smallBoat.overlaps(barricade))
-        {
-            lives--;
-            livesCount.setText(lives);
-            smallBoat.preventOverlap(barricade);
-            smallBoat.remove();
-        }
 
         //No life remaining
         if (lives <= 0)
         {
             /*PirateBay.setActiveScreen(new OverScreen());
             gameOver.play();*/
-            barricade.remove();
+            for (int i=0; i<barricades.size();i++)
+            {
+                barricades.get(i).remove();
+                barricades.remove(i);
+            }
+
            // barricade.clear();
         }
 
@@ -376,6 +391,7 @@ public class GameScreen extends ScreenBeta {
             winMsg.setText("Level Completed!");
             isPaused = true;
         }
+
     }
 
 }
