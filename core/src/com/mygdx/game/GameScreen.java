@@ -25,8 +25,12 @@ public class GameScreen extends ScreenBeta {
     Button resumeButton;
     ActorBeta resumeButtonTex;
 
+
     int lives = 3;
     Label livesCount;
+
+    int enemyCount;
+    Label winMsg;
     //-------------SOUND------------------------
     Sound explosion;
     Sound hit;
@@ -66,7 +70,8 @@ public class GameScreen extends ScreenBeta {
         ControlCannonBall(dt);
         CheckPauseResumeButton();
         CheckCollision();
-        parrot.moveLeft();
+        CheckGameState();
+        // parrot.moveLeft();
 
 
     }
@@ -146,31 +151,32 @@ public class GameScreen extends ScreenBeta {
         parrot.setSize(WIDTH/6, HEIGHT/4);
         //parrot.setScale(1f);
         mainStage.addActor(parrot);
-
-/*        cannonBall = new CannonBall();
-        cannonBall.setPosition(WIDTH/2,HEIGHT/2);
-        cannonBall.setSize(WIDTH/10, HEIGHT/8);
-        mainStage.addActor(cannonBall);*/
+        enemyCount++;
 
 /*        box = new SoldierBox();
         box.setPosition(Gdx.graphics.getWidth()/2 , Gdx.graphics.getHeight()/8 );
         box.setSize(WIDTH/8, HEIGHT/6);
-        mainStage.addActor(box);
+        mainStage.addActor(box);*/
 
         bigBoat = new BoatBig();
-        bigBoat.setPosition(Gdx.graphics.getWidth() *3/4 , Gdx.graphics.getHeight() * 3/8);
-        bigBoat.setSize(WIDTH/4, HEIGHT/3);
+        bigBoat.setPosition(Gdx.graphics.getWidth() , Gdx.graphics.getHeight() * 6/8);
+        bigBoat.setSize(WIDTH/8, HEIGHT/6);
         mainStage.addActor(bigBoat);
+        enemyCount++;
 
         mediumBoat = new BoatMedium();
-        mediumBoat.setPosition(Gdx.graphics.getWidth()*3/4 , Gdx.graphics.getHeight()/14 );
-        mediumBoat.setSize(WIDTH/6, HEIGHT/4);
+        mediumBoat.setPosition(Gdx.graphics.getWidth()*3/4 , Gdx.graphics.getHeight()/4 );
+        mediumBoat.setSize(WIDTH/12, HEIGHT/8);
         mainStage.addActor(mediumBoat);
+        enemyCount++;
 
         smallBoat = new BoatSmall();
-        smallBoat.setPosition(Gdx.graphics.getWidth()/2 , Gdx.graphics.getHeight()/2 );
-        smallBoat.setSize(WIDTH/8, HEIGHT/8);
-        mainStage.addActor(smallBoat);*/
+        smallBoat.setPosition(Gdx.graphics.getWidth() , Gdx.graphics.getHeight()/2 );
+        smallBoat.setSize(WIDTH/16, HEIGHT/16);
+        mainStage.addActor(smallBoat);
+        enemyCount++;
+
+        //-----------------------------------------------------------------------------
 
         cannonBase = new CannonBase();
         cannonBase.setPosition(0, Gdx.graphics.getHeight()/2);
@@ -200,7 +206,7 @@ public class GameScreen extends ScreenBeta {
 
         //===========Richard Testing======================
 
-        //-----------------UI------------------------------
+        //-----------------Labels------------------------------
 
         livesCount = new Label("3", arcade);
         float TextAspectRatio = livesCount.getWidth()/livesCount.getHeight();
@@ -209,6 +215,13 @@ public class GameScreen extends ScreenBeta {
         livesCount.setFontScale(WIDTH/250 * TextAspectRatio);
         mainStage.addActor(livesCount);
 
+
+        winMsg = new Label(" ", arcade);
+        winMsg.setPosition(WIDTH / 3, HEIGHT / 2);
+        winMsg.setFontScale(WIDTH/250 * TextAspectRatio);
+        mainStage.addActor(winMsg);
+
+        //---------------Buttons----------------------------
         pauseButton= new Button(arcade);
         pauseButtonTex = new ActorBeta();
         pauseButtonTex.loadTexture("PauseButton.png");
@@ -303,16 +316,13 @@ public class GameScreen extends ScreenBeta {
     {
         if (cannonBall.overlaps(rock))
         {
-            //pause();
             cannonBall.preventOverlap(rock);
-           // parrot.moveLeft();
         }
 
         if (cannonBall.overlaps(parrot))
         {
-            //pause();
-            cannonBall.preventOverlap(parrot);
-            // parrot.moveLeft();
+            parrot.remove();
+            enemyCount--;
         }
 
         // Enemy collides with barricade
@@ -323,20 +333,49 @@ public class GameScreen extends ScreenBeta {
             livesCount.setText(lives);
             parrot.preventOverlap(barricade);
             parrot.remove();
+        }
 
-            //No life remaining
-            if (lives == 0)
-            {
-                PirateBay.setActiveScreen(new OverScreen());
-                gameOver.play();
-            }
+        if (bigBoat.overlaps(barricade))
+        {
+            lives--;
+            livesCount.setText(lives);
+            bigBoat.preventOverlap(barricade);
+            bigBoat.remove();
+        }
+        if (mediumBoat.overlaps(barricade))
+        {
+            lives--;
+            livesCount.setText(lives);
+            mediumBoat.preventOverlap(barricade);
+            mediumBoat.remove();
+        }
+        if (smallBoat.overlaps(barricade))
+        {
+            lives--;
+            livesCount.setText(lives);
+            smallBoat.preventOverlap(barricade);
+            smallBoat.remove();
+        }
+
+        //No life remaining
+        if (lives <= 0)
+        {
+            /*PirateBay.setActiveScreen(new OverScreen());
+            gameOver.play();*/
+            barricade.remove();
+           // barricade.clear();
         }
 
     }
 
-    void CheckLives()
+    void CheckGameState()
     {
-
+        if (enemyCount == 0)
+        {
+            //Win
+            winMsg.setText("Level Completed!");
+            isPaused = true;
+        }
     }
 
 }

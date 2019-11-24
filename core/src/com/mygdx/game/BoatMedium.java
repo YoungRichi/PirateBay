@@ -13,6 +13,21 @@ public class BoatMedium extends ActorBeta {
         setMaxSpeed(800);
         setAnimation(idleAnim);
     }
+
+    @Override
+    public void act(float dt) {
+        super.act(dt);
+        setAcceleration(100);
+        moveLeft();
+        applyPhysics(dt);
+
+    }
+
+    public void moveLeft()
+    {
+        setSpeed(150);
+        setMotionAngle(180);
+    }
 }
 
 

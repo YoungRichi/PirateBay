@@ -18,6 +18,7 @@ public class Parrot extends ActorBeta {
     public void act(float dt) {
         super.act(dt);
         setAcceleration(100);
+        moveLeft();
         //accelerateAtAngle(270);
         applyPhysics(dt);
         //boundToWorld();
