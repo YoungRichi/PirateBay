@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+import java.util.Random;
+
 public class GameScreen extends ScreenBeta {
 
     CannonBall cannonBall;
@@ -25,6 +27,15 @@ public class GameScreen extends ScreenBeta {
 
 
     //===========Richard Testing======================
+
+
+    //===========Sam Testing==========================
+    TestObstacle obstacle1, obstacle2, obstacle3, obstacle4, obstacle5, obstacle6;
+    TestObstacle[] obstacles;
+    //===========Sam Testing==========================
+
+    static float WIDTH = Gdx.graphics.getWidth();
+    static float HEIGHT = Gdx.graphics.getHeight();
 
     @Override
     public void initialize() {
@@ -53,28 +64,64 @@ public class GameScreen extends ScreenBeta {
         parrot = new Parrot();
         parrot.setPosition(Gdx.graphics.getWidth()/2 , Gdx.graphics.getHeight()/4 );
         parrot.setScale(0.5f);
-        mainStage.addActor(parrot);
+        //mainStage.addActor(parrot);
 
         box = new SoldierBox();
         box.setPosition(Gdx.graphics.getWidth()/2 , Gdx.graphics.getHeight()/8 );
         box.setScale(0.5f);
-        mainStage.addActor(box);
+        //mainStage.addActor(box);
 
         bigBoat = new BoatBig();
-        bigBoat.setPosition(Gdx.graphics.getWidth()/16 , Gdx.graphics.getHeight()/10 );
-        bigBoat.setScale(0.35f);
+        bigBoat.setPosition(WIDTH , HEIGHT / 10 - 250);
+        bigBoat.setScale(0.15f);
         mainStage.addActor(bigBoat);
 
         mediumBoat = new BoatMedium();
-        mediumBoat.setPosition(Gdx.graphics.getWidth()/16 , Gdx.graphics.getHeight()/15 );
-        mediumBoat.setScale(0.35f);
+        mediumBoat.setPosition(WIDTH , HEIGHT / 6);
+        mediumBoat.setScale(0.13f);
         mainStage.addActor(mediumBoat);
 
         smallBoat = new BoatSmall();
-        smallBoat.setPosition(Gdx.graphics.getWidth()/4 , Gdx.graphics.getHeight()/20 );
-        smallBoat.setScale(0.35f);
+        smallBoat.setPosition(WIDTH , HEIGHT / 4);
+        smallBoat.setScale(0.1f);
         mainStage.addActor(smallBoat);
         //===========Richard Testing======================
+
+
+        //===========Sam Testing==========================//
+        obstacle1 = new TestObstacle();
+        obstacle1.setPosition(WIDTH/2 + 600, HEIGHT/2);
+        obstacle1.setBoundaryRectangle();
+        mainStage.addActor(obstacle1);
+
+        obstacle2 = new TestObstacle();
+        obstacle2.setPosition(obstacle1.getX() - 320, obstacle1.getY() + 200);
+        obstacle2.setBoundaryRectangle();
+        mainStage.addActor(obstacle2);
+
+        obstacle3 = new TestObstacle();
+        obstacle3.setPosition(obstacle1.getX() - 320, obstacle1.getY() - 200);
+        obstacle3.setBoundaryRectangle();
+        mainStage.addActor(obstacle3);
+
+        obstacle4 = new TestObstacle();
+        obstacle4.setPosition(obstacle1.getX() - 500, obstacle1.getY());
+        obstacle4.setBoundaryRectangle();
+        mainStage.addActor(obstacle4);
+
+        obstacle5 = new TestObstacle();
+        obstacle5.setPosition(obstacle4.getX() - 320, obstacle1.getY() + 200);
+        obstacle5.setBoundaryRectangle();
+        mainStage.addActor(obstacle5);
+
+        obstacle6 = new TestObstacle();
+        obstacle6.setPosition(obstacle4.getX() - 320, obstacle1.getY() - 200);
+        obstacle6.setBoundaryRectangle();
+        mainStage.addActor(obstacle6);
+
+
+        obstacles = new TestObstacle[]{obstacle1, obstacle2, obstacle3, obstacle4, obstacle5, obstacle6};
+        //===========Sam Testing==========================//
 
     }
 
@@ -111,6 +158,63 @@ public class GameScreen extends ScreenBeta {
         {
             cannonBall.setX(Gdx.graphics.getWidth() - cannonBall.getWidth());
             cannonBall.SetVelocityXY(cannonBall.GetVelocity().x * (-1), cannonBall.GetVelocity().y);
+        }
+
+        //=============Collision detection=================//
+        for (int i = 0; i < obstacles.length; i++)
+        {
+            if (obstacles[i].overlaps(smallBoat) && smallBoat.boatTimer < 0)
+            {
+                smallBoat.boatTimer = 0.5f;
+                Random randomInt = new Random();
+                int rollResult = randomInt.nextInt(2);
+                if(rollResult == 0)
+                {
+                    smallBoat.enemyState = BoatSmall.EnemyState.GoUp;
+                }
+                if(rollResult == 1)
+                {
+                    smallBoat.enemyState = BoatSmall.EnemyState.GoDown;
+                }
+
+                //if(obstacles[i].getY() < smallBoat.getY())
+                //    smallBoat.enemyState = BoatSmall.EnemyState.GoDown;
+                //if(obstacles[i].getY() >= smallBoat.getY())
+                //    smallBoat.enemyState = BoatSmall.EnemyState.GoUp;
+
+                //obstacles[i].preventOverlap(smallBoat);
+            }
+
+            if (obstacles[i].overlaps(mediumBoat) && mediumBoat.boatTimer < 0)
+            {
+                mediumBoat.boatTimer = 1f;
+                Random randomInt = new Random();
+                int rollResult = randomInt.nextInt(2);
+                if(rollResult == 0)
+                {
+                    mediumBoat.enemyState = BoatMedium.EnemyState.GoUp;
+                }
+                if(rollResult == 1)
+                {
+                    mediumBoat.enemyState = BoatMedium.EnemyState.GoDown;
+                }
+            }
+
+            if (obstacles[i].overlaps(bigBoat) && bigBoat.boatTimer < 0)
+            {
+                bigBoat.boatTimer = 2f;
+                Random randomInt = new Random();
+                int rollResult = randomInt.nextInt(2);
+                if(rollResult == 0)
+                {
+                    bigBoat.enemyState = BoatBig.EnemyState.GoUp;
+                }
+                if(rollResult == 1)
+                {
+                    bigBoat.enemyState = BoatBig.EnemyState.GoDown;
+                }
+            }
+            //=============Collision detection=================//
         }
     }
 

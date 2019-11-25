@@ -1,10 +1,27 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\Rich\\Desktop\\PirateBay\\android\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
+            "outputFile": "D:\\IT\\Github\\PirateBayGit\\AI\\PirateBay\\android\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Rich\\Desktop\\PirateBay\\android\\res\\values\\styles.xml",
+                    "source": "D:\\IT\\Github\\PirateBayGit\\AI\\PirateBay\\android\\res\\values\\strings.xml",
+                    "from": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "59",
+                        "endColumns": "46",
+                        "endOffsets": "101"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "111",
+                        "endColumns": "46",
+                        "endOffsets": "153"
+                    }
+                },
+                {
+                    "source": "D:\\IT\\Github\\PirateBayGit\\AI\\PirateBay\\android\\res\\values\\styles.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -23,24 +40,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Rich\\Desktop\\PirateBay\\android\\res\\values\\strings.xml",
-                    "from": {
-                        "startLines": "3",
-                        "startColumns": "4",
-                        "startOffsets": "59",
-                        "endColumns": "46",
-                        "endOffsets": "101"
-                    },
-                    "to": {
-                        "startLines": "3",
-                        "startColumns": "4",
-                        "startOffsets": "111",
-                        "endColumns": "46",
-                        "endOffsets": "153"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\Rich\\Desktop\\PirateBay\\android\\res\\values\\color.xml",
+                    "source": "D:\\IT\\Github\\PirateBayGit\\AI\\PirateBay\\android\\res\\values\\color.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

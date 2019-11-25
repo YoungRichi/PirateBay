@@ -2,6 +2,8 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 
+import java.util.Random;
+
 import javax.sound.sampled.LineEvent;
 
 public class LevelScreen extends ScreenBeta {
@@ -22,14 +24,11 @@ public class LevelScreen extends ScreenBeta {
         LevelButton =  new ActorBeta(WIDTH/4, HEIGHT/4, mainStage);
         LevelButton.loadTexture("StageButton.png");
         LevelButton.setScale(0.25f);
-
-
-
-
     }
 
     @Override
-    public void update(float dt) {
+    public void update(float dt)
+    {
 
     }
 
