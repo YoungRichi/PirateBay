@@ -6,6 +6,7 @@ public class BoatSmall extends ActorBeta {
     String[] boatSAnim = {"SmallBoat.png"};
     Animation idleAnim = loadAnimationFromFiles(boatSAnim, 0.2f, true);
 
+
     BoatSmall()
     {
         super();
@@ -27,6 +28,12 @@ public class BoatSmall extends ActorBeta {
     {
         setSpeed(150);
         setMotionAngle(180);
+    }
+
+    public void moveUp()
+    {
+        setSpeed(150);
+        setMotionAngle(90);
     }
 }
 

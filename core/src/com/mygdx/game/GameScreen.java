@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameScreen extends ScreenBeta {
 
@@ -55,7 +56,8 @@ public class GameScreen extends ScreenBeta {
     CannonBase cannonBase;
     Barricade barricade;
     Lives liveIcon;
-    Rock rock;
+    Rock rock1, rock2, rock3, rock4, rock5, rock6;
+    Rock[] rocks;
 
     ArrayList<Barricade> barricades;
 
@@ -176,12 +178,12 @@ public class GameScreen extends ScreenBeta {
         enemyCount++;
 
         smallBoat = new BoatSmall();
-        smallBoat.setPosition(Gdx.graphics.getWidth() , Gdx.graphics.getHeight()/2 );
+        smallBoat.setPosition(Gdx.graphics.getWidth() , Gdx.graphics.getHeight()/4 );
         smallBoat.setSize(WIDTH/16, HEIGHT/16);
         mainStage.addActor(smallBoat);
         enemyCount++;
 
-        //-----------------------------------------------------------------------------
+        //--------------------Player---------------------------------------------------------
 
         cannonBase = new CannonBase();
         cannonBase.setPosition(0, Gdx.graphics.getHeight()/2);
@@ -204,14 +206,42 @@ public class GameScreen extends ScreenBeta {
         liveIcon.setSize(WIDTH/10, HEIGHT/8);
         mainStage.addActor(liveIcon);
 
-        rock = new Rock();
-        rock.setPosition(Gdx.graphics.getWidth() * 3/4 , Gdx.graphics.getHeight()* 3/4);
-        rock.setSize(WIDTH/5, HEIGHT/4);
-        mainStage.addActor(rock);
+        //----------------Obstacle-----------------------------
+        rock1 = new Rock();
+        rock1.setPosition(WIDTH/2 + 600, HEIGHT/2);
+        mainStage.addActor(rock1);
+
+        rock2 = new Rock();
+        rock2.setPosition(rock1.getX() - 320, rock1.getY() + 200);
+        rock2.setBoundaryRectangle();
+        mainStage.addActor(rock2);
+
+        rock3 = new Rock();
+        rock3.setPosition(rock1.getX() - 320, rock1.getY() - 200);
+        rock3.setBoundaryRectangle();
+        mainStage.addActor(rock3);
+
+        rock4 = new Rock();
+        rock4.setPosition(rock1.getX() - 500, rock1.getY());
+        rock4.setBoundaryRectangle();
+        mainStage.addActor(rock4);
+
+        rock5 = new Rock();
+        rock5.setPosition(rock4.getX() - 320, rock1.getY() + 200);
+        rock5.setBoundaryRectangle();
+        mainStage.addActor(rock5);
+
+        rock6 = new Rock();
+        rock6.setPosition(rock4.getX() - 320, rock1.getY() - 200);
+        rock6.setBoundaryRectangle();
+        mainStage.addActor(rock6);
+
+
+        rocks = new Rock[]{rock1, rock2, rock3, rock4, rock5, rock6};
 
 
 
-        //===========Richard Testing======================
+
 
         //-----------------Labels------------------------------
 
@@ -321,10 +351,6 @@ public class GameScreen extends ScreenBeta {
 
     void CheckCollision()
     {
-        if (cannonBall.overlaps(rock))
-        {
-            cannonBall.preventOverlap(rock);
-        }
 
         if (cannonBall.overlaps(parrot))
         {
@@ -381,6 +407,15 @@ public class GameScreen extends ScreenBeta {
            // barricade.clear();
         }
 
+
+        //=============Obstacles detection=================//
+        for (int i = 0; i < rocks.length; i++)
+        {
+            if (rocks[i].overlaps(smallBoat) )
+            {
+                pause();
+            }
+        }
     }
 
     void CheckGameState()
