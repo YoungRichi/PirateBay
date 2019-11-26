@@ -32,6 +32,7 @@ public class GameScreen extends ScreenBeta {
     //===========Sam Testing==========================
     TestObstacle obstacle1, obstacle2, obstacle3, obstacle4, obstacle5, obstacle6;
     TestObstacle[] obstacles;
+    Barricade barricadeObject;
     //===========Sam Testing==========================
 
     static float WIDTH = Gdx.graphics.getWidth();
@@ -121,6 +122,12 @@ public class GameScreen extends ScreenBeta {
 
 
         obstacles = new TestObstacle[]{obstacle1, obstacle2, obstacle3, obstacle4, obstacle5, obstacle6};
+
+        barricadeObject = new Barricade();
+        barricadeObject.setPosition(300 + barricadeObject.getScaleX()/2, HEIGHT/2 + barricadeObject.getScaleY()/2);
+        barricadeObject.setBoundaryRectangle();
+        barricadeObject.setScale(2);
+        mainStage.addActor(barricadeObject);
         //===========Sam Testing==========================//
 
     }
@@ -168,14 +175,24 @@ public class GameScreen extends ScreenBeta {
                 smallBoat.boatTimer = 0.5f;
                 Random randomInt = new Random();
                 int rollResult = randomInt.nextInt(2);
-                if(rollResult == 0)
+                if(smallBoat.forceLeftCount <3)
                 {
-                    smallBoat.enemyState = BoatSmall.EnemyState.GoUp;
+                    if(rollResult == 0)
+                    {
+                        smallBoat.enemyState = BoatSmall.EnemyState.GoUp;
+                        smallBoat.forceLeftCount++;
+                    }
+                    if(rollResult == 1)
+                    {
+                        smallBoat.enemyState = BoatSmall.EnemyState.GoDown;
+                        smallBoat.forceLeftCount++;
+                    }
                 }
-                if(rollResult == 1)
-                {
-                    smallBoat.enemyState = BoatSmall.EnemyState.GoDown;
-                }
+                else
+                    {
+                        smallBoat.enemyState = BoatSmall.EnemyState.GoLeft;
+                        smallBoat.forceLeftCount = 0;
+                    }
 
                 //if(obstacles[i].getY() < smallBoat.getY())
                 //    smallBoat.enemyState = BoatSmall.EnemyState.GoDown;
@@ -190,14 +207,24 @@ public class GameScreen extends ScreenBeta {
                 mediumBoat.boatTimer = 1f;
                 Random randomInt = new Random();
                 int rollResult = randomInt.nextInt(2);
-                if(rollResult == 0)
+                if(mediumBoat.forceLeftCount <3)
                 {
-                    mediumBoat.enemyState = BoatMedium.EnemyState.GoUp;
+                    if(rollResult == 0)
+                    {
+                        mediumBoat.enemyState = BoatMedium.EnemyState.GoUp;
+                        mediumBoat.forceLeftCount++;
+                    }
+                    if(rollResult == 1)
+                    {
+                        mediumBoat.enemyState = BoatMedium.EnemyState.GoDown;
+                        mediumBoat.forceLeftCount++;
+                    }
                 }
-                if(rollResult == 1)
-                {
-                    mediumBoat.enemyState = BoatMedium.EnemyState.GoDown;
-                }
+                else
+                    {
+                        mediumBoat.enemyState = BoatMedium.EnemyState.GoLeft;
+                        mediumBoat.forceLeftCount = 0;
+                    }
             }
 
             if (obstacles[i].overlaps(bigBoat) && bigBoat.boatTimer < 0)
@@ -205,14 +232,39 @@ public class GameScreen extends ScreenBeta {
                 bigBoat.boatTimer = 2f;
                 Random randomInt = new Random();
                 int rollResult = randomInt.nextInt(2);
-                if(rollResult == 0)
+                if(bigBoat.forceLeftCount<3)
                 {
-                    bigBoat.enemyState = BoatBig.EnemyState.GoUp;
+                    if(rollResult == 0)
+                    {
+                        bigBoat.enemyState = BoatBig.EnemyState.GoUp;
+                        bigBoat.forceLeftCount++;
+                    }
+                    if(rollResult == 1)
+                    {
+                        bigBoat.enemyState = BoatBig.EnemyState.GoDown;
+                        bigBoat.forceLeftCount++;
+                    }
                 }
-                if(rollResult == 1)
-                {
-                    bigBoat.enemyState = BoatBig.EnemyState.GoDown;
-                }
+                else
+                    {
+                        bigBoat.enemyState = BoatBig.EnemyState.GoLeft;
+                        bigBoat.forceLeftCount = 0;
+                    }
+            }
+
+            if(smallBoat.getX() < barricadeObject.getX() + 100)
+            {
+                smallBoat.enemyState = BoatSmall.EnemyState.DeployTroops;
+            }
+
+            if(mediumBoat.getX() < barricadeObject.getX() + 100)
+            {
+                mediumBoat.enemyState = BoatMedium.EnemyState.DeployTroops;
+            }
+
+            if(bigBoat.getX() < barricadeObject.getX() + 50)
+            {
+                bigBoat.enemyState = BoatBig.EnemyState.DeployTroops;
             }
             //=============Collision detection=================//
         }

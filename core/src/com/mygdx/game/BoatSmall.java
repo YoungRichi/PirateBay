@@ -19,6 +19,7 @@ public class BoatSmall extends ActorBeta {
     }
     public BoatSmall.EnemyState enemyState;
     public float boatTimer = 0;
+    public int forceLeftCount = 0;
 
 
     static float WIDTH = Gdx.graphics.getWidth();
@@ -53,12 +54,16 @@ public class BoatSmall extends ActorBeta {
                 GoDown();
                 break;
 
+            case DeployTroops:
+                DeployTroops();
+                break;
+
             default:
                 break;
         }
 
         boatTimer -= dt;
-        if(boatTimer <= 0)
+        if(boatTimer <= 0 && enemyState != EnemyState.DeployTroops)
             enemyState = EnemyState.GoLeft;
     }
 
@@ -78,6 +83,11 @@ public class BoatSmall extends ActorBeta {
     {
         setAnimation(idleAnim);
         moveBy(0, -2.5f);
+    }
+
+    void DeployTroops()
+    {
+        setAnimation(idleAnim);
     }
 }
 
