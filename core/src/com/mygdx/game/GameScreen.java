@@ -156,7 +156,6 @@ public class GameScreen extends ScreenBeta {
         parrot = new Parrot();
         parrot.setPosition(Gdx.graphics.getWidth() , Gdx.graphics.getHeight()/4);
         parrot.setSize(WIDTH/6, HEIGHT/4);
-        //parrot.setScale(1f);
         mainStage.addActor(parrot);
         enemyCount++;
 
@@ -178,8 +177,8 @@ public class GameScreen extends ScreenBeta {
         enemyCount++;
 
         smallBoat = new BoatSmall();
-        smallBoat.setPosition(Gdx.graphics.getWidth() , Gdx.graphics.getHeight()/4 );
-        smallBoat.setSize(WIDTH/16, HEIGHT/16);
+        smallBoat.setPosition(Gdx.graphics.getWidth() , Gdx.graphics.getHeight()* 3/8 );
+        smallBoat.setSize(WIDTH/2, HEIGHT/2);
         mainStage.addActor(smallBoat);
         enemyCount++;
 
@@ -413,7 +412,17 @@ public class GameScreen extends ScreenBeta {
         {
             if (rocks[i].overlaps(smallBoat) )
             {
-                pause();
+                smallBoat.boatTimer = 0.5f;
+                Random randomInt = new Random();
+                int rollResult = randomInt.nextInt(2);
+                if(rollResult == 0)
+                {
+                    smallBoat.enemyState = BoatSmall.EnemyState.GoUp;
+                }
+                if(rollResult == 1)
+                {
+                    smallBoat.enemyState = BoatSmall.EnemyState.GoDown;
+                }
             }
         }
     }
