@@ -14,14 +14,13 @@ public class CannonBall extends ActorBeta {
     float maxFireDuration = 10.0f;
     float fireTimer = maxFireDuration;
     boolean isFiring = false;
-    ArrayList<Rock> rocks;
+
 
     public CannonBall(float x, float y, Stage s) {
         super(x, y, s);
         loadTexture("Cannonball.png");
         setSize(Gdx.graphics.getHeight() / 20 * getWidth()/getHeight(), Gdx.graphics.getHeight() / 20);
         setBoundaryRectangle();
-        rocks = new ArrayList<Rock>();
     }
 
     @Override
@@ -100,7 +99,7 @@ public class CannonBall extends ActorBeta {
                 ExplosionEffect explosionEffect = new ExplosionEffect(getX(), getY(), ScreenBeta.mainStage);
             }
         }
-        //System.out.println(fireTimer);
+
         //boundToWorld();
     }
 }

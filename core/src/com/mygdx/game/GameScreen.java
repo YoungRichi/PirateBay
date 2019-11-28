@@ -72,7 +72,6 @@ public class GameScreen extends ScreenBeta {
         {
             ControlCannonBall(dt);
         }
-        CheckCollision();
         CheckPauseResumeButton();
         CheckGameState();
         livesCount.setText("x " + cannon.lives);
@@ -156,7 +155,7 @@ public class GameScreen extends ScreenBeta {
         bigBoat = new BoatBig(WIDTH, HEIGHT * 3 / 4 - 50, mainStage);
         enemyCount++;
 
-        mediumBoat = new BoatMedium(WIDTH * 3 / 4, HEIGHT / 4, mainStage);
+        mediumBoat = new BoatMedium(WIDTH * 7 / 8, HEIGHT / 4, mainStage);
         enemyCount++;
 
         smallBoat = new BoatSmall(WIDTH, HEIGHT * 4 / 8, mainStage);
@@ -263,60 +262,7 @@ public class GameScreen extends ScreenBeta {
         }
     }
 
-    void CheckCollision()
-    {
 
-
-        for (int i=0; i<barricades.size(); i++)
-        {
-            // Enemy collides with barricade
-            if (parrot.overlaps(barricades.get(i)))
-            {
-                //Life icon goes down
-                //lives--;
-                //livesCount.setText("x " + lives);
-                parrot.preventOverlap(barricades.get(i));
-                //parrot.remove();
-            }
-
-            if (bigBoat.overlaps(barricades.get(i)))
-            {
-                //lives--;
-                //livesCount.setText("x " + lives);
-                bigBoat.preventOverlap(barricades.get(i));
-                //bigBoat.remove();
-            }
-            if (mediumBoat.overlaps(barricades.get(i)))
-            {
-                //lives--;
-                //livesCount.setText("x " + lives);
-                mediumBoat.preventOverlap(barricades.get(i));
-                //mediumBoat.remove();
-            }
-            if (smallBoat.overlaps(barricades.get(i)))
-            {
-                //lives--;
-                //livesCount.setText("x " + lives);
-                smallBoat.preventOverlap(barricades.get(i));
-                //smallBoat.remove();
-            }
-        }
-
-
-        //No life remaining
-        if (lives <= 0)
-        {
-            /*PirateBay.setActiveScreen(new OverScreen());
-            gameOver.play();*/
-            for (int i=0; i<barricades.size();i++)
-            {
-                //barricades.get(i).remove();
-                //barricades.remove(i);
-            }
-
-           // barricade.clear();
-        }
-    }
 
     void CheckGameState()
     {

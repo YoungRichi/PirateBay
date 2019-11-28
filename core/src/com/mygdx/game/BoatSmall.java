@@ -16,6 +16,7 @@ public class BoatSmall extends ActorBeta {
         setSize(Gdx.graphics.getHeight() / 12 * getWidth() / getHeight(), Gdx.graphics.getHeight() / 12);
         setBoundaryRectangleEdited();
         setSpeed(120);
+        //setSpeed(0);
         setMotionAngle(180);
     }
 
@@ -34,6 +35,27 @@ public class BoatSmall extends ActorBeta {
             setMotionAngle(90);
         }
 
+        if(!Attack())
+        {
+
+            for (Barricade barricade : ActorBeta.getListBarricade())
+            {
+                barricade.smallDamage = false;
+            }
+        }
     }
 
+    boolean Attack()
+    {
+        for (Barricade barricade : ActorBeta.getListBarricade())
+        {
+            if(overlaps(barricade))
+            {
+                preventOverlap(barricade);
+                barricade.smallDamage = true;
+                return true;
+            }
+        }
+        return false;
+    }
 }

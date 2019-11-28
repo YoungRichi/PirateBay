@@ -11,10 +11,19 @@ public class Barricade extends ActorBeta {
 
     Animation idleAnim = loadAnimationFromFiles(str, 0.1f, true);
 
-    float healthMax = 3600;
+    float healthMax = 100;
     float healthCurr;
-    float damRate = 1;
-    boolean isTakingDamage = false;
+
+    // variables indicating Big Boat attack
+    float hugeDamRate = 1.5f;
+    boolean hugeDamage = false;
+
+    // variables indicating Medium Boat attack
+    float mediumDamRate = 1.2f;
+
+    // variables indicating Small Boat attack
+    float smallDamRate = 1.0f;
+    boolean smallDamage = false;
 
     public Barricade(float x, float y, Stage s) {
         super(x, y, s);
@@ -27,10 +36,20 @@ public class Barricade extends ActorBeta {
     @Override
     public void act(float dt) {
         super.act(dt);
-        if(isTakingDamage)
+
+        // is under Big Boat attack
+        if(hugeDamage)
         {
-            healthCurr -= dt * damRate;
+            healthCurr -= dt * hugeDamRate;
+            System.out.println(healthCurr);
         }
+
+        if(smallDamage)
+        {
+            healthCurr -= dt * smallDamRate;
+            System.out.println(healthCurr);
+        }
+
         if(healthCurr <=0)
         {
             remove();

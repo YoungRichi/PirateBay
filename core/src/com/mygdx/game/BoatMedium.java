@@ -2,12 +2,18 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 public class BoatMedium extends ActorBeta {
 
     String[] boatMAnim = {"MediumBoat.png"};
     Animation idleAnim = loadAnimationFromFiles(boatMAnim, 0.2f, true);
+
+    float timeBetweenFire = 3;
+    float fireTimer = timeBetweenFire;
+    //MediumBoatBall mediumBoatBall;
 
     public BoatMedium(float x, float y, Stage s) {
         super(x, y, s);
@@ -30,6 +36,22 @@ public class BoatMedium extends ActorBeta {
         {
             setY(0);
             setMotionAngle(90);
+        }
+        if(getX() < Gdx.graphics.getWidth() * 3 / 4)
+        {
+            setSpeed(0);
+            Fire(dt);
+        }
+    }
+
+    void Fire(float deltatime)
+    {
+        fireTimer -= deltatime;
+        if(fireTimer <=0)
+        {
+            MediumBoatBall mediumBoatBall = new MediumBoatBall(getX(), getY() + getHeight() / 3, ScreenBeta.mainStage);
+
+            fireTimer = timeBetweenFire;
         }
     }
 }

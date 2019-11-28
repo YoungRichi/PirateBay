@@ -18,6 +18,7 @@ public class BoatBig extends ActorBeta {
         setSize(Gdx.graphics.getHeight() / 6 * getWidth() / getHeight(), Gdx.graphics.getHeight() / 6);
         setBoundaryRectangleEdited();
         setSpeed(120);
+        //setSpeed(0);
         setMotionAngle(180); // moves left
     }
 
@@ -34,15 +35,31 @@ public class BoatBig extends ActorBeta {
             setMotionAngle(90);
         }
 
+        if(!Attack())
+        {
+
+            for (Barricade barricade : ActorBeta.getListBarricade())
+            {
+                barricade.hugeDamage = false;
+            }
+        }
+
+
+    }
+
+    boolean Attack()
+    {
         for (Barricade barricade : ActorBeta.getListBarricade())
         {
             if(overlaps(barricade))
             {
-                //boatBig.remove();
-                //ExplosionEffect explosionEffect = new ExplosionEffect(getX(), getY(), ScreenBeta.mainStage);
+                preventOverlap(barricade);
+                barricade.hugeDamage = true;
+                return true;
             }
         }
-
+        return false;
     }
+
 }
 
