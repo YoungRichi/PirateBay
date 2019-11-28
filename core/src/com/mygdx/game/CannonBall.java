@@ -15,7 +15,6 @@ public class CannonBall extends ActorBeta {
     float fireTimer = maxFireDuration;
     boolean isFiring = false;
 
-
     public CannonBall(float x, float y, Stage s) {
         super(x, y, s);
         loadTexture("Cannonball.png");
@@ -133,6 +132,15 @@ public class CannonBall extends ActorBeta {
                 cannon.lives --;
                 fireTimer = 0; // the player is able to fire again only when the cannon ball's fireTimer reached zero
                 ExplosionEffect explosionEffect = new ExplosionEffect(getX(), getY(), ScreenBeta.mainStage);
+            }
+            else if(!isFiring)
+            {
+                if(fireTimer > 0 && fireTimer < 7)
+                    cannon.cannonState = CannonState.chargeDanger;
+                else if(fireTimer < 10)
+                    cannon.cannonState = CannonState.chargeNormal;
+                else
+                    cannon.cannonState = CannonState.Idle;
             }
         }
 

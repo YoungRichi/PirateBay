@@ -22,7 +22,7 @@ public class GameScreen extends ScreenBeta {
     CannonBall cannonBall;
     Vector3 mouseCoord;
     Vector2 dir;
-    boolean fireTrigger;
+    boolean fireTrigger; // indicate whether the cannon ball is loaded
     Button pauseButton, resumeButton;
     ActorBeta pauseButtonTex, resumeButtonTex;
 
@@ -42,8 +42,8 @@ public class GameScreen extends ScreenBeta {
 
     //===========Richard Testing======================
     Parrot parrot;
-    SoldierBox box;
-    Soldier soldier;
+    //SoldierBox box;
+    //Soldier soldier;
     BoatBig bigBoat;
     BoatMedium mediumBoat;
     BoatSmall smallBoat;
@@ -52,7 +52,7 @@ public class GameScreen extends ScreenBeta {
     Barricade barricade;
     Lives liveIcon;
 
-    ArrayList<Barricade> barricades;
+    //ArrayList<Barricade> barricades;
     //ArrayList<BoatBig> boatBigs;
     //ArrayList<BoatMedium> boatMediums;
 
@@ -95,7 +95,12 @@ public class GameScreen extends ScreenBeta {
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         if(!cannonBall.isFiring)
-            cannonBall.isFiring = true;
+        {
+            cannonBall.isFiring = true; // the cannon start firing
+            if(cannon.cannonState != CannonState.Idle) // Not allow to change to shoot anim if the cannon is in idle state
+            cannon.cannonState = CannonState.Shoot;
+        }
+
 
         return super.touchUp(screenX, screenY, pointer, button);
     }
@@ -135,9 +140,9 @@ public class GameScreen extends ScreenBeta {
 
         cannonBase = new CannonBase(0, HEIGHT / 2, mainStage);
         cannon = new Cannon(0, HEIGHT / 2 + HEIGHT / 12, mainStage);
-        barricades = new ArrayList<Barricade>();
+        //barricades = new ArrayList<Barricade>();
         barricade = new Barricade(WIDTH * 5 / 16, 0, mainStage);
-        barricades.add(barricade);
+        //barricades.add(barricade);
         liveIcon = new Lives(cannon.getX(), cannon.getY() + cannon.getHeight(), mainStage);
 
         //================================== Obstacles ===========================================//
