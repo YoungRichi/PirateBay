@@ -8,10 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 public class Barricade extends ActorBeta {
 
     String[] str = {"Barricade.png"};
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
->>>>>>> Stashed changes
+
     String[] threeQuadStr = {"Barricade_3QuadDam.png"};
     String[] halfStr = {"Barricade_HalfDam.png"};
     String[] oneQuadStr = {"Barricade_OneQuadDam.png"};
@@ -20,17 +17,6 @@ public class Barricade extends ActorBeta {
     Animation threeQuadDamAnim = loadAnimationFromFiles(threeQuadStr, 0.1f, true);
     Animation halfDamAnim = loadAnimationFromFiles(halfStr, 0.1f, true);
     Animation oneQuadDamAnim = loadAnimationFromFiles(oneQuadStr, 0.1f, true);
-<<<<<<< Updated upstream
-=======
-=======
-    String[] str75 = {"Barricade75.png"};
-    String[] str50 = {"Barricade50.png"};
-    String[] str25 = {"Barricade25.png"};
-
-
-    Animation idleAnim = loadAnimationFromFiles(str75, 0.1f, true);
->>>>>>> d6a658cecc25f0454e361009486267b801d5f23c
->>>>>>> Stashed changes
 
     float healthMax = 100;
     float healthCurr;

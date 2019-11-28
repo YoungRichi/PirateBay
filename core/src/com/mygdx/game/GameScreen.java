@@ -207,13 +207,6 @@ public class GameScreen extends ScreenBeta {
         parrotSound = Gdx.audio.newSound(Gdx.files.internal("Sound/parrot.wav"));
         shoot = Gdx.audio.newSound(Gdx.files.internal("Sound/shoot.wav"));
         click = Gdx.audio.newSound(Gdx.files.internal("Sound/click.wav"));
-
-        //------------------Richard Testing-----------------------------------
-        soldier = new Soldier(WIDTH, HEIGHT * 3/ 4, mainStage);
-        soldier.moveLeft();
-        //--------------------------------------------------------------------
-
-
     }
 
     void ControlCannonBall(float dt)
