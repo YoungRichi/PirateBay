@@ -8,13 +8,18 @@ public class Cannon extends ActorBeta {
 
     String[] str = {"Cannon.png"};
     String[] cannonAnim = {"Cannon_Idle3.png", "Cannon_Idle2.png", "Cannon_Idle3.png", "Cannon_Idle2.png" ,"Cannon_Idle1.png"};
-    String[] chargeAnim = {"Cannon_Charge1.png", "Cannon_Charge2.png", "Cannon_Charge3.png", "Cannon_Charge2.png"};
-    String[] shootAnim = {"Cannon_Shoot1.png", "Cannon_Shoot2.png", "Cannon_Shoot3.png"};
+    String[] chargeAnim = {"Cannon_Rest1.png", "Cannon_Rest1.png", "Cannon_Rest2.png", "Cannon_Rest3.png", "Cannon_Rest3.png"};
+    String[] shootAnim = {"Cannon_Charge1.png","Cannon_Shoot1.png", "Cannon_Shoot2.png", "Cannon_Shoot3.png"};
+    String[] dangerAnim = {"Cannon_Danger1.png", "Cannon_Danger1.png", "Cannon_Danger2.png", "Cannon_Danger3.png","Cannon_Danger3.png" };
 
 
-    //Animation idleAnim = loadAnimationFromFiles(cannonAnim, 0.5f, true);
+
+
+    Animation idleAnim = loadAnimationFromFiles(cannonAnim, 0.5f, true);
     //Animation idleAnim = loadAnimationFromFiles(chargeAnim, 0.1f, true);
-    Animation idleAnim = loadAnimationFromFiles(shootAnim, 0.1f, true);
+    //Animation idleAnim = loadAnimationFromFiles(shootAnim, 0.1f, true);
+    //Animation idleAnim = loadAnimationFromFiles(dangerAnim, 0.1f, true);
+
 
     int lives = 3;
 
