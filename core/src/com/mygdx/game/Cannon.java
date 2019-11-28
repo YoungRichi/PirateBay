@@ -12,7 +12,7 @@ public class Cannon extends ActorBeta {
     String[] str = {"Cannon.png"};
     String[] idleStr = {"Cannon_Idle3.png", "Cannon_Idle2.png", "Cannon_Idle3.png", "Cannon_Idle2.png" ,"Cannon_Idle1.png"};
     String[] chargeNormalStr = {"Cannon_Rest1.png", "Cannon_Rest1.png", "Cannon_Rest2.png", "Cannon_Rest3.png", "Cannon_Rest3.png"};
-    String[] chargeDangerStr = {"Cannon_Danger1.png", "Cannon_Danger1.png", "Cannon_Danger2.png", "Cannon_Danger3.png","Cannon_Danger3.png" };
+    String[] chargeDangerStr = {"Cannon_Danger1.png", "Cannon_Danger2.png", "Cannon_Danger3.png","Cannon_Danger2.png" };
     String[] shootStr = {"Cannon_Charge1.png","Cannon_Shoot1.png", "Cannon_Shoot2.png", "Cannon_Shoot3.png"};
 
     Animation idleAnim = loadAnimationFromFiles(idleStr, 0.5f, true);
