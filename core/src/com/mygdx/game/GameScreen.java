@@ -42,6 +42,7 @@ public class GameScreen extends ScreenBeta {
     //===========Richard Testing======================
     Parrot parrot;
     SoldierBox box;
+    Soldier soldier;
     BoatBig bigBoat;
     BoatMedium mediumBoat;
     BoatSmall smallBoat;
@@ -112,6 +113,9 @@ public class GameScreen extends ScreenBeta {
 
     void CreateLevel()
     {
+
+
+
         arcade = new Skin(Gdx.files.internal("arcade/skin/arcade-ui.json"));
 
         mouseCoord = new Vector3();
@@ -203,6 +207,11 @@ public class GameScreen extends ScreenBeta {
         parrotSound = Gdx.audio.newSound(Gdx.files.internal("Sound/parrot.wav"));
         shoot = Gdx.audio.newSound(Gdx.files.internal("Sound/shoot.wav"));
         click = Gdx.audio.newSound(Gdx.files.internal("Sound/click.wav"));
+
+        //------------------Richard Testing-----------------------------------
+        soldier = new Soldier(WIDTH, HEIGHT * 3/ 4, mainStage);
+        soldier.moveLeft();
+        //--------------------------------------------------------------------
 
 
     }
