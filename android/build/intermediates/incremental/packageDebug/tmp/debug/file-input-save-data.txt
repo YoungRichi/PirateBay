@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Thu Nov 28 10:56:27 EST 2019
+#Thu Nov 28 11:51:46 EST 2019
 2.path=comic/skin/font-button-export.fnt
 14.set=ASSET
 107.baseType=DIRECTORY

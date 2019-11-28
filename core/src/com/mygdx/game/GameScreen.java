@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Align;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -172,7 +173,12 @@ public class GameScreen extends ScreenBeta {
         mainStage.addActor(livesCount);
 
         winMsg = new Label(" ", arcade);
-        winMsg.setPosition(WIDTH / 3, HEIGHT / 2);
+        winMsg.setAlignment(Align.center);
+        winMsg.setFontScale(3);
+        winMsg.setSize(HEIGHT/1.5f, HEIGHT/4);
+        winMsg.setWrap(true);
+        winMsg.setPosition(WIDTH / 2 - winMsg.getWidth()/2, HEIGHT / 2 - winMsg.getHeight()/2);
+
         mainStage.addActor(winMsg);
 
         //============================== Buttons ================================================//
