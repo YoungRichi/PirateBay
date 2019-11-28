@@ -37,8 +37,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public abstract class ScreenBeta implements Screen, InputProcessor {
 
-    protected Stage mainStage;
-
+    //protected Stage mainStage;
+    static Stage mainStage;
     //STAGE
     protected Stage uiStage;
 
@@ -46,6 +46,10 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
     boolean isPaused;
 
     //int score;
+
+    static float WIDTH = Gdx.graphics.getWidth();
+    static float HEIGHT = Gdx.graphics.getHeight();
+
 
     SpriteBatch batch;
     //CONSTRUCTOR
@@ -241,4 +245,6 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
     public boolean scrolled(int amount) {
         return false;
     }
+
+
 }

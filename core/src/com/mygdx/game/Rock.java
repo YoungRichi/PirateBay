@@ -1,18 +1,20 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class Rock extends ActorBeta {
 
-    Rock() {
+    String[] str = {"smallRock.png"};
+    Animation idleAnim = loadAnimationFromFiles(str, 0.1f, true);
 
-        String[] planeAnim = {"smallRock.png"};
+    public Rock(float x, float y, Stage s) {
+        super(x, y, s);
 
-        loadAnimationFromFiles(planeAnim, 0.1f, true);
-
-        this.setBoundaryRectangle();
-        this.setSize(Gdx.graphics.getWidth()/15, Gdx.graphics.getHeight()/15);
-        //this.setBoundaryCircle();
+        setAnimation(idleAnim);
+        setSize(Gdx.graphics.getHeight() / 15 * getWidth() / getHeight(), Gdx.graphics.getHeight() / 15);
+        setBoundaryRectangle();
     }
 
     @Override

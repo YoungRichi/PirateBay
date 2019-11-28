@@ -1,15 +1,19 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+
 public class Lives extends ActorBeta {
 
-    Lives() {
+    String[] str = {"LivesIcon.png"};
 
-        String[] planeAnim = {"LivesIcon.png"};
+    Animation idleAnim = loadAnimationFromFiles(str, 0.1f, true);
 
-        loadAnimationFromFiles(planeAnim, 0.1f, true);
+    public Lives(float x, float y, Stage s) {
+        super(x, y, s);
 
-        this.setBoundaryRectangle();
-        //this.setBoundaryCircle();
+        setSize(Gdx.graphics.getHeight() / 12 * getWidth() / getHeight(), Gdx.graphics.getHeight() / 12);
     }
 
     @Override

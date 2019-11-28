@@ -18,7 +18,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Intersector.MinimumTranslationVector;
+import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import java.util.ArrayList;
+import java.lang.Class;
 
 /**
  *  Extend the Actor class to include graphics and collision detection.
@@ -32,7 +36,7 @@ public class ActorBeta extends Actor {
     private float elapsedTime;
     private boolean animationPaused;
 
-    private Vector2 velocityVec;
+    public Vector2 velocityVec;
     private Vector2 accelerationVec;
     private float acceleration;
     private float maxSpeed;
@@ -410,6 +414,15 @@ public class ActorBeta extends Actor {
         boundaryPolygon = new Polygon(vertices);
     }
 
+    public void setBoundaryRectangleEdited()
+    {
+        float w = getWidth();
+        float h = getHeight() / 3;
+
+        float [] vertices = {0, 0, w, 0, w, h, 0, h};
+        boundaryPolygon = new Polygon(vertices);
+    }
+
     public void setBoundaryPolygon(int numSides) {
         float w = getWidth();
         float h = getHeight();
@@ -534,5 +547,95 @@ public class ActorBeta extends Actor {
             setY(worldBounds.height - getHeight());
     }
 
+    public static ArrayList<Rock> getListRock()
+    {
+        ArrayList<Rock> list = new ArrayList<Rock>();
 
+
+        for (Actor a : ScreenBeta.mainStage.getActors())
+        {
+            if ( a instanceof Rock )
+                list.add( (Rock) a );
+        }
+        return list;
+    }
+
+    public static ArrayList<BoatSmall> getListSmallBoat()
+    {
+        ArrayList<BoatSmall> list = new ArrayList<BoatSmall>();
+
+        for (Actor a : ScreenBeta.mainStage.getActors())
+        {
+            if ( a instanceof BoatSmall)
+                list.add( (BoatSmall) a );
+        }
+        return list;
+    }
+
+    public static ArrayList<BoatMedium> getListMediumBoat()
+    {
+        ArrayList<BoatMedium> list = new ArrayList<BoatMedium>();
+
+        for (Actor a : ScreenBeta.mainStage.getActors())
+        {
+            if ( a instanceof BoatMedium)
+                list.add( (BoatMedium) a );
+        }
+        return list;
+    }
+
+    public static ArrayList<BoatBig> getListBigBoat()
+    {
+        ArrayList<BoatBig> list = new ArrayList<BoatBig>();
+
+        for (Actor a : ScreenBeta.mainStage.getActors())
+        {
+            if ( a instanceof BoatBig)
+                list.add( (BoatBig) a );
+        }
+        return list;
+    }
+
+    public static ArrayList<Cannon> getListCannon()
+    {
+        ArrayList<Cannon> list = new ArrayList<Cannon>();
+
+        for (Actor a : ScreenBeta.mainStage.getActors())
+        {
+            if ( a instanceof Cannon)
+                list.add( (Cannon) a );
+        }
+        return list;
+    }
+
+    public static ArrayList<Barricade> getListBarricade()
+    {
+        ArrayList<Barricade> list = new ArrayList<Barricade>();
+
+        for (Actor a : ScreenBeta.mainStage.getActors())
+        {
+            if ( a instanceof Barricade)
+                list.add( (Barricade) a );
+        }
+        return list;
+    }
+    // obstacle avoidance mechanic
+    public boolean CheckCollisionRock (float angle)
+    {
+        for (Rock rock : ActorBeta.getListRock())
+        {
+            if(overlaps(rock))
+            {
+                Vector2 offset = preventOverlap(rock);
+                if (offset != null) {
+                    if (Math.abs(offset.x) > Math.abs(offset.y))
+                        setMotionAngle(getMotionAngle() + angle);
+                    //else
+                    //setMotionAngle(getMotionAngle() - 90);
+                }
+                return true;
+            }
+        }
+        return false;
+    }
 }

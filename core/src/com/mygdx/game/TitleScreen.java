@@ -17,9 +17,6 @@ public class TitleScreen extends ScreenBeta {
     Label tap;
     Table table;
 
-    static float WIDTH = Gdx.graphics.getWidth();
-    static float HEIGHT = Gdx.graphics.getHeight();
-
     //---SOUND---
     Music titleMusic;
     Sound clickSound;
@@ -27,38 +24,33 @@ public class TitleScreen extends ScreenBeta {
     @Override
     public void initialize() {
         arcade = new Skin(Gdx.files.internal("arcade/skin/arcade-ui.json"));
-        //float screenRatio = WIDTH/HEIGHT;
 
-        background = new ActorBeta();//, mainStage);
-        background.setPosition(0,0);
+        background = new ActorBeta(0,0, mainStage);//, mainStage);
         background.loadTexture("TitleScreen.png");
         background.setSize(WIDTH,HEIGHT);
-        mainStage.addActor(background);
 
         tapToPlay =  new ActorBeta(); //, mainStage);
         tapToPlay.loadTexture("TapMe.png");
         //===
         float TapAspectRatio = tapToPlay.getWidth()/tapToPlay.getHeight();
-        tapToPlay.setSize(WIDTH/10 * TapAspectRatio, HEIGHT/10);
+        tapToPlay.setSize(HEIGHT/10 * TapAspectRatio, HEIGHT/10);
 
         tap = new Label("TAP!", arcade);
-        float TextAspectRatio = tap.getWidth()/tap.getHeight();
-
-        tap.setPosition(WIDTH /2 * TextAspectRatio, HEIGHT *7/8);
-        tap.setScale(1);
+        //float TextAspectRatio = tap.getWidth()/tap.getHeight();
+        //tap.setPosition(WIDTH /2 * TextAspectRatio, HEIGHT *7/8);
+        //tap.setScale(1);
         //========
-        tap.setFontScale( WIDTH/2000 * TextAspectRatio);
+        //tap.setFontScale( WIDTH/2000 * TextAspectRatio);
         //tap.setWrap(true);
 
         table = new Table(arcade);
-        table.add(tap).padRight(50);
-        table.add(tapToPlay);
+
         //table.setPosition(WIDTH  - tap.getWidth() * screenRatio, HEIGHT / 8);
         table.setPosition(WIDTH  * 7/8, HEIGHT / 8);
+        table.add(tap).padRight(10);
+        table.add(tapToPlay);
 
         mainStage.addActor(table);
-
-       // mainStage.addActor(tap);
 
         //Sound
         titleMusic = Gdx.audio.newMusic(Gdx.files.internal("Sound/menuBG.wav"));
@@ -75,8 +67,6 @@ public class TitleScreen extends ScreenBeta {
         titleMusic.setVolume(0.5f);
 
         clickSound = Gdx.audio.newSound(Gdx.files.internal("Sound/click.wav"));
-
-
     }
 
     @Override
@@ -92,6 +82,4 @@ public class TitleScreen extends ScreenBeta {
 
         return super.touchDown(screenX, screenY, pointer, button);
     }
-
-
 }

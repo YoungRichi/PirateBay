@@ -1,14 +1,23 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+
 public class Cannon extends ActorBeta {
-    Cannon() {
 
-        String[] planeAnim = {"Cannon.png"};
+    String[] str = {"Cannon.png"};
 
-        loadAnimationFromFiles(planeAnim, 0.1f, true);
+    Animation idleAnim = loadAnimationFromFiles(str, 0.1f, true);
 
-        this.setBoundaryRectangle();
-        //this.setBoundaryCircle();
+    int lives = 3;
+
+    public Cannon(float x, float y, Stage s) {
+        super(x, y, s);
+
+        setAnimation(idleAnim);
+        setSize(Gdx.graphics.getHeight() / 8 * getWidth()/getHeight(), Gdx.graphics.getHeight() / 8);
+        setBoundaryRectangle();
     }
 
     @Override

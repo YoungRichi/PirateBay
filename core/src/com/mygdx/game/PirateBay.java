@@ -15,16 +15,16 @@ public class PirateBay extends GameBeta {
     public void create() {
         super.create();
 
-/*        splashScreen = new SplashScreen();
-        setActiveScreen(splashScreen);*/
+        //splashScreen = new SplashScreen();
+        //setActiveScreen(splashScreen);
 
-/*
-        titleScreen = new TitleScreen();
-        setActiveScreen(titleScreen);
-*/
 
-/*        levelScreen = new LevelScreen();
-        setActiveScreen(levelScreen);*/
+        //titleScreen = new TitleScreen();
+        //setActiveScreen(titleScreen);
+
+
+        //levelScreen = new LevelScreen();
+        //setActiveScreen(levelScreen);
 
         gameScreen = new GameScreen();
         setScreen(gameScreen);

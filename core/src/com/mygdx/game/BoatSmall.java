@@ -3,128 +3,37 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class BoatSmall extends ActorBeta {
     String[] boatSAnim = {"SmallBoatEdited.png"};
     Animation idleAnim = loadAnimationFromFiles(boatSAnim, 0.2f, true);
 
-    Animation<TextureRegion>goAnim;
-    enum EnemyState
-    {
-        GoLeft,
-        GoUp,
-        GoDown,
-        DeployTroops,
-        Death
+    public BoatSmall(float x, float y, Stage s) {
+        super(x, y, s);
+
+        setAnimation(idleAnim);
+        setSize(Gdx.graphics.getHeight() / 12 * getWidth() / getHeight(), Gdx.graphics.getHeight() / 12);
+        setBoundaryRectangleEdited();
+        setSpeed(120);
+        setMotionAngle(180);
     }
-    public BoatSmall.EnemyState enemyState;
-    public float boatTimer = 0;
 
-
-    static float WIDTH = Gdx.graphics.getWidth();
-    static float HEIGHT = Gdx.graphics.getHeight();
-
-    BoatSmall()
-    {
-        //setMotionAngle(180);
-        //this.setScale(this.getScaleX() * 0.1f, this.getScaleY() * 0.1f);
-        //this.setPosition(WIDTH, HEIGHT/2);
-        this.setBoundaryRectangle();
-
-        enemyState = EnemyState.GoLeft;
-    }
 
     @Override
     public void act(float dt)
     {
         super.act(dt);
-
-        switch (enemyState)
-        {
-            case GoLeft:
-                GoLeft();
-                break;
-
-            case GoUp:
-                GoUp();
-                break;
-
-            case GoDown:
-                GoDown();
-                break;
-
-            default:
-                break;
-        }
-
-        boatTimer -= dt;
-        if(boatTimer <= 0)
-            enemyState = EnemyState.GoLeft;
-    }
-
-    void GoLeft()
-    {
-        setAnimation(idleAnim);
-        moveBy(-2.5f, 0);
-    }
-
-    void GoUp()
-    {
-        setAnimation(idleAnim);
-        moveBy(0, 2.5f);
-    }
-
-    void GoDown()
-    {
-        setAnimation(idleAnim);
-        moveBy(0, -2.5f);
-    }
-}
-
-
-
-
-
-
-/*
-package com.mygdx.game;
-
-import com.badlogic.gdx.graphics.g2d.Animation;
-
-public class BoatSmall extends ActorBeta {
-   String[] boatSAnim = {"SmallBoatEdited.png"};
-   // String[] boatSAnim = {"cannonTesting.png"};
-    Animation idleAnim = loadAnimationFromFiles(boatSAnim, 0.2f, true);
-
-
-    BoatSmall()
-    {
-        super();
-        this.setBoundaryRectangle();
-        setMaxSpeed(800);
-        setAnimation(idleAnim);
-    }
-
-    @Override
-    public void act(float dt) {
-        super.act(dt);
-        setAcceleration(100);
-        //moveLeft();
         applyPhysics(dt);
 
+        if(!CheckCollisionRock(90)) // the boat will move in its current direction + 90 degree if it collides with rocks
+            setMotionAngle(180);
+        if(getY() < 0)
+        {
+            setY(0);
+            setMotionAngle(90);
+        }
+
     }
 
-    public void moveLeft()
-    {
-        setSpeed(150);
-        setMotionAngle(180);
-    }
-
-    public void moveUp()
-    {
-        setSpeed(150);
-        setMotionAngle(90);
-    }
 }
-
-*/

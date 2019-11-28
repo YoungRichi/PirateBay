@@ -14,12 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 public class SplashScreen extends ScreenBeta {
 
     ActorBeta background;
-
-    static float WIDTH = Gdx.graphics.getWidth();
-    static float HEIGHT = Gdx.graphics.getHeight();
-
     ActorBeta splashTex;
-    float elapsed;
     float totalTime;
     float delayTime;
     float animatedTime;
@@ -44,11 +39,11 @@ public class SplashScreen extends ScreenBeta {
         //keep original aspect ratio when using setSize() method
         float aspectRatio = splashTex.getWidth()/splashTex.getHeight();
         //========
-        splashTex.setSize(WIDTH /3 * aspectRatio, HEIGHT /2);
+        splashTex.setSize(HEIGHT /2 * aspectRatio, HEIGHT /2);
         splashTex.setPosition(WIDTH / 2 - splashTex.getWidth() / 2, HEIGHT / 2 - splashTex.getHeight() / 2);
         splashTex.setColor(splashTex.getColor().r, splashTex.getColor().g, splashTex.getColor().b, 0.0f);
-        splashTex.addAction(Actions.sequence(Actions.delay(delayTime), Actions.parallel(Actions.sizeBy(WIDTH / 2 * aspectRatio, HEIGHT / 2, 3),
-                Actions.moveTo(WIDTH / 12 * aspectRatio, HEIGHT / 100, 3),
+        splashTex.addAction(Actions.sequence(Actions.delay(delayTime), Actions.parallel(Actions.sizeTo(HEIGHT * aspectRatio, HEIGHT, animatedTime),
+                Actions.moveTo(WIDTH / 2 - HEIGHT / 2 * aspectRatio, 0, animatedTime),
                 Actions.fadeIn(animatedTime)), Actions.fadeOut(delayTime)));
         mainStage.addActor(splashTex);
 
@@ -61,15 +56,16 @@ public class SplashScreen extends ScreenBeta {
     @Override
     public void update(float dt)
     {
-        elapsed += dt;
-
-         if (elapsed > 3.5)
-          {
-              ((Game)Gdx.app.getApplicationListener()).setScreen(new TitleScreen());
-          }
-         else if(elapsed > 0.0f && elapsed < 1.0f)
-              spraySound.play();
+        totalTime -= dt;
 
         //Go to the next Screen
+         if (totalTime <= 0)
+          {
+              PirateBay.setActiveScreen(new TitleScreen());
+          }
+         //else if(elapsed > 0.0f && elapsed < 1.0f)
+              //spraySound.play();
+
+
     }
 }

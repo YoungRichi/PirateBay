@@ -110,10 +110,6 @@ public class LevelScreen extends ScreenBeta {
     Arrow arrow;
 
 
-
-    static float WIDTH = Gdx.graphics.getWidth();
-    static float HEIGHT = Gdx.graphics.getHeight();
-
     //SOUND
     Sound clickSound;
 
@@ -126,13 +122,10 @@ public class LevelScreen extends ScreenBeta {
         background.loadTexture("Level_Background.png");
         background.setSize(WIDTH,HEIGHT);
 
-
         quitButtonTex = new ActorBeta();
-        float quitAspectRatio = quitButtonTex.getWidth()/quitButtonTex.getHeight();
-
         quitButtonTex.loadTexture("QuitButton.png");
-        //quitButtonTex.setScale(0.5f);
-        quitButtonTex.setSize(WIDTH /10, HEIGHT /8);
+        float quitAspectRatio = quitButtonTex.getWidth()/quitButtonTex.getHeight();
+        quitButtonTex.setSize(HEIGHT /8 * quitAspectRatio, HEIGHT /8);
         quitButton = new Button(arcade);
         quitButton.add(quitButtonTex);
         quitButton.setPosition(WIDTH / 11, HEIGHT - HEIGHT / 6);
@@ -150,9 +143,6 @@ public class LevelScreen extends ScreenBeta {
         arrow.setPosition(WIDTH* 27/32, Gdx.graphics.getHeight()/2);
         arrow.setSize(WIDTH/10, HEIGHT/10);
         mainStage.addActor(arrow);
-
-
-
 
         //____________________Level Buttons___________________
         Level1ButtonTex =  new ActorBeta();// mainStage);
@@ -373,10 +363,6 @@ public class LevelScreen extends ScreenBeta {
         //SOUND
         clickSound = Gdx.audio.newSound(Gdx.files.internal("Sound/click.wav"));
 
-
-
-
-
     }
 
     @Override
@@ -393,13 +379,4 @@ public class LevelScreen extends ScreenBeta {
             PirateBay.setActiveScreen(new GameScreen());
         }
     }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-       // PirateBay.setActiveScreen(new GameScreen());
-
-        return super.touchDown(screenX, screenY, pointer, button);
-    }
-
-
 }
