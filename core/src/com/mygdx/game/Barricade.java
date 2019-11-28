@@ -8,8 +8,14 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 public class Barricade extends ActorBeta {
 
     String[] str = {"Barricade.png"};
+    String[] threeQuadStr = {"Barricade_3QuadDam.png"};
+    String[] halfStr = {"Barricade_HalfDam.png"};
+    String[] oneQuadStr = {"Barricade_OneQuadDam.png"};
 
     Animation idleAnim = loadAnimationFromFiles(str, 0.1f, true);
+    Animation threeQuadDamAnim = loadAnimationFromFiles(threeQuadStr, 0.1f, true);
+    Animation halfDamAnim = loadAnimationFromFiles(halfStr, 0.1f, true);
+    Animation oneQuadDamAnim = loadAnimationFromFiles(oneQuadStr, 0.1f, true);
 
     float healthMax = 100;
     float healthCurr;
@@ -41,19 +47,39 @@ public class Barricade extends ActorBeta {
         if(hugeDamage)
         {
             healthCurr -= dt * hugeDamRate;
-            System.out.println(healthCurr);
+            //System.out.println(healthCurr);
         }
 
         if(smallDamage)
         {
             healthCurr -= dt * smallDamRate;
-            System.out.println(healthCurr);
+            //System.out.println(healthCurr);
         }
 
         if(healthCurr <=0)
         {
             remove();
         }
+        else if(healthCurr <= healthMax * 0.25f)
+        {
+            setAnimation(oneQuadDamAnim);
+            setSize(Gdx.graphics.getHeight() * getWidth() / getHeight(), Gdx.graphics.getHeight());
+            setBoundaryRectangle();
+        }
+        else if(healthCurr <= healthMax * 0.5f)
+        {
+            setAnimation(halfDamAnim);
+            setSize(Gdx.graphics.getHeight() * getWidth() / getHeight(), Gdx.graphics.getHeight());
+            setBoundaryRectangle();
+        }
+        else if(healthCurr <= healthMax * 0.75f)
+        {
+            setAnimation(threeQuadDamAnim);
+            setSize(Gdx.graphics.getHeight() * getWidth() / getHeight(), Gdx.graphics.getHeight());
+            setBoundaryRectangle();
+        }
+
+
         //boundToWorld();
     }
 }

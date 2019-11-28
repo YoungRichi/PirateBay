@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 public class BoatSmall extends ActorBeta {
     String[] boatSAnim = {"SmallBoatEdited.png"};
     Animation idleAnim = loadAnimationFromFiles(boatSAnim, 0.2f, true);
+    float dropOffRate = 2;
+    float dropOffTimer = dropOffRate;
 
     public BoatSmall(float x, float y, Stage s) {
         super(x, y, s);
@@ -43,6 +45,13 @@ public class BoatSmall extends ActorBeta {
                 barricade.smallDamage = false;
             }
         }
+        // stop moving when the barricade is down
+        if(ActorBeta.getListBarricade().size() == 0)
+        {
+            setSpeed(0);
+            DropOffSoldier(dt);
+        }
+
     }
 
     boolean Attack()
@@ -57,5 +66,14 @@ public class BoatSmall extends ActorBeta {
             }
         }
         return false;
+    }
+    void DropOffSoldier(float deltaTime)
+    {
+        dropOffTimer -= deltaTime;
+        if(dropOffTimer <=0)
+        {
+            new Soldier(getX(), getY(), ScreenBeta.mainStage);
+            dropOffTimer = dropOffRate;
+        }
     }
 }

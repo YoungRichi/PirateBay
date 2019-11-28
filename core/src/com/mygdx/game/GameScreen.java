@@ -218,27 +218,6 @@ public class GameScreen extends ScreenBeta {
         {
             fireTrigger = false;
         }
-
-        if(cannonBall.getY() > Gdx.graphics.getHeight()- cannonBall.getHeight())
-        {
-            cannonBall.setY(Gdx.graphics.getHeight() - cannonBall.getHeight());
-            cannonBall.SetVelocityXY(cannonBall.GetVelocity().x, cannonBall.GetVelocity().y * (-1));
-        }
-        if(cannonBall.getY() < 0)
-        {
-            cannonBall.setY(0);
-            cannonBall.SetVelocityXY(cannonBall.GetVelocity().x, cannonBall.GetVelocity().y * (-1));
-        }
-        if(cannonBall.getX() < 0)
-        {
-            cannonBall.setX(0);
-            cannonBall.SetVelocityXY(cannonBall.GetVelocity().x * (-1), cannonBall.GetVelocity().y);
-        }
-        if(cannonBall.getX() > Gdx.graphics.getWidth() - cannonBall.getWidth())
-        {
-            cannonBall.setX(Gdx.graphics.getWidth() - cannonBall.getWidth());
-            cannonBall.SetVelocityXY(cannonBall.GetVelocity().x * (-1), cannonBall.GetVelocity().y);
-        }
     }
 
     void CheckPauseResumeButton()
@@ -273,11 +252,11 @@ public class GameScreen extends ScreenBeta {
             isPaused = true;
             cannonBall.fireTimer = 0;
         }
-        if(cannon.lives == 0)
+        if(cannon.lives == 0 || loseGame)
         {
             winMsg.setText("You lose!");
             isPaused = true;
-            cannonBall.fireTimer = 0;
+            //cannonBall.fireTimer = 0;
         }
     }
 

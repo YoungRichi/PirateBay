@@ -43,7 +43,8 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
     protected Stage uiStage;
 
     //BOOLEANS
-    boolean isPaused;
+    static boolean isPaused;
+    static boolean loseGame;
 
     //int score;
 
@@ -57,6 +58,7 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
     {
 
         isPaused = false;
+        loseGame = false;
 
         mainStage = new Stage();
         uiStage = new Stage();

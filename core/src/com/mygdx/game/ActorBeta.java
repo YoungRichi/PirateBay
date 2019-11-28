@@ -619,6 +619,18 @@ public class ActorBeta extends Actor {
         }
         return list;
     }
+
+    public static ArrayList<Soldier> getListSoldier()
+    {
+        ArrayList<Soldier> list = new ArrayList<Soldier>();
+
+        for (Actor a : ScreenBeta.mainStage.getActors())
+        {
+            if ( a instanceof Soldier)
+                list.add( (Soldier) a );
+        }
+        return list;
+    }
     // obstacle avoidance mechanic
     public boolean CheckCollisionRock (float angle)
     {

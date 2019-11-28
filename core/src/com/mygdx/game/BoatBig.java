@@ -9,7 +9,9 @@ public class BoatBig extends ActorBeta {
 
     String[] boatAnim = {"BigBoat.png"};
     Animation idleAnim = loadAnimationFromFiles(boatAnim, 0.2f, true);
-    boolean colliding = false;
+    int health = 2;
+    float dropOffRate = 2;
+    float dropOffTimer = dropOffRate;
 
     public BoatBig(float x, float y, Stage s) {
         super(x, y, s);
@@ -18,7 +20,6 @@ public class BoatBig extends ActorBeta {
         setSize(Gdx.graphics.getHeight() / 6 * getWidth() / getHeight(), Gdx.graphics.getHeight() / 6);
         setBoundaryRectangleEdited();
         setSpeed(120);
-        //setSpeed(0);
         setMotionAngle(180); // moves left
     }
 
@@ -29,6 +30,7 @@ public class BoatBig extends ActorBeta {
 
         if(!CheckCollisionRock(90)) // the boat will move in its current direction + 90 degree if it collides with rocks
             setMotionAngle(180);
+        // check collision with the edges of the screen
         if(getY() < 0)
         {
             setY(0);
@@ -42,6 +44,12 @@ public class BoatBig extends ActorBeta {
             {
                 barricade.hugeDamage = false;
             }
+        }
+        // stop moving when the barricade is down
+        if(ActorBeta.getListBarricade().size() == 0)
+        {
+            setSpeed(0);
+            DropOffSoldier(dt);
         }
 
 
@@ -61,5 +69,14 @@ public class BoatBig extends ActorBeta {
         return false;
     }
 
+    void DropOffSoldier(float deltaTime)
+    {
+        dropOffTimer -= deltaTime;
+        if(dropOffTimer <=0)
+        {
+            new Soldier(getX(), getY(), ScreenBeta.mainStage);
+            dropOffTimer = dropOffRate;
+        }
+    }
 }
 
