@@ -42,8 +42,6 @@ public class GameScreen extends ScreenBeta {
 
     //===========Richard Testing======================
     Parrot parrot;
-    //SoldierBox box;
-    //Soldier soldier;
     BoatBig bigBoat;
     BoatMedium mediumBoat;
     BoatSmall smallBoat;
@@ -51,10 +49,6 @@ public class GameScreen extends ScreenBeta {
     CannonBase cannonBase;
     Barricade barricade;
     Lives liveIcon;
-
-    //ArrayList<Barricade> barricades;
-    //ArrayList<BoatBig> boatBigs;
-    //ArrayList<BoatMedium> boatMediums;
 
     int boatBigNumMax, boatMediumNumMax;
     int rockNumMax;
@@ -87,6 +81,7 @@ public class GameScreen extends ScreenBeta {
             fireTrigger = true;
             cannonBall = new CannonBall(cannon.getX() + cannon.getWidth() + 10,cannon.getY() + cannon.getHeight() - 15, mainStage);
             cannonBall.SetVelocity(screenX, (screenY - HEIGHT)*(-1));
+            
         }
 
         return super.touchDown(screenX, screenY, pointer, button);
