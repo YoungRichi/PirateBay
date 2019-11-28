@@ -8,8 +8,12 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 public class Barricade extends ActorBeta {
 
     String[] str = {"Barricade.png"};
+    String[] str75 = {"Barricade75.png"};
+    String[] str50 = {"Barricade50.png"};
+    String[] str25 = {"Barricade25.png"};
 
-    Animation idleAnim = loadAnimationFromFiles(str, 0.1f, true);
+
+    Animation idleAnim = loadAnimationFromFiles(str75, 0.1f, true);
 
     float healthMax = 100;
     float healthCurr;
