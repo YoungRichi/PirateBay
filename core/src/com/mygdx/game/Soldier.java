@@ -28,7 +28,7 @@ public class Soldier extends ActorBeta {
         if(getX() <= -getWidth())
         {
             remove();
-            ScreenBeta.loseGame = true;
+            //ScreenBeta.loseGame = true;
         }
     }
 }

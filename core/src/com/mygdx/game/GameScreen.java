@@ -76,15 +76,21 @@ public class GameScreen extends ScreenBeta {
 
         if(!fireTrigger && !isPaused)
         {
-            fireTrigger = true;
-            cannon.fireDir = new Vector2(screenX - cannon.getX(), (screenY - HEIGHT)*(-1) - cannon.getY());
+            Vector2 cannonPos = new Vector2(cannon.getX() + cannon.getWidth()/2,cannon.getY() + cannon.getHeight()/2 );
+            Vector2 touchPos = new Vector2(screenX, (screenY - HEIGHT)*(-1));
+            cannon.fireDir = new Vector2(screenX - cannon.getX() - cannon.getWidth()/2, (screenY - HEIGHT)*(-1) - cannon.getY() - cannon.getHeight()/2);
             cannon.setRotation(cannon.fireDir.angle());
             cannon.setOrigin(cannon.getWidth()/2, cannon.getHeight()/2);
 
-            cannonBall = new CannonBall(cannon.getX()+ cannon.getWidth()/4+(float)(Math.cos(cannon.fireDir.angleRad()))*cannon.getWidth()/2 *1.5f,
-                    cannon.getY() + (float)(Math.sin(cannon.fireDir.angleRad()))*cannon.getWidth()/2 *1.5f, mainStage);
-            cannonBall.SetVelocity(screenX, (screenY - HEIGHT)*(-1));
-            cannonBall.setVisible(false);
+
+            if(cannonPos.dst(touchPos) > cannon.getWidth()) // able to load cannon ball only when the touch down position is outside of the range
+            {
+                fireTrigger = true;
+                cannonBall = new CannonBall(cannon.getX()+ cannon.getWidth()/2+(float)(Math.cos(cannon.fireDir.angleRad()))*cannon.getWidth()/2 *1.5f,
+                        cannon.getY() + cannon.getHeight()/2+ (float)(Math.sin(cannon.fireDir.angleRad()))*cannon.getWidth()/2 *1.5f, mainStage);
+                cannonBall.SetVelocity(screenX, (screenY - HEIGHT)*(-1));
+                cannonBall.setVisible(true);
+            }
         }
 
         return super.touchDown(screenX, screenY, pointer, button);
@@ -92,13 +98,17 @@ public class GameScreen extends ScreenBeta {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        if(!cannonBall.isFiring)
+        if(fireTrigger)
         {
-            cannonBall.isFiring = true; // the cannon start firing
-            if(cannon.cannonState != CannonState.Idle) // Not allow to change to shoot anim if the cannon is in idle state
-            cannon.cannonState = CannonState.Shoot;
-            cannonBall.setVisible(true);
+            if(!cannonBall.isFiring)
+            {
+                cannonBall.isFiring = true; // the cannon start firing
+                if(cannon.cannonState != CannonState.Idle) // Not allow to change to shoot anim if the cannon is in idle state
+                    cannon.cannonState = CannonState.Shoot;
+                cannonBall.setVisible(true);
+            }
         }
+
 
 
         return super.touchUp(screenX, screenY, pointer, button);
