@@ -38,7 +38,7 @@ public class MediumBoatBall extends ActorBeta {
                 remove();
                 ExplosionEffect explosionEffect = new ExplosionEffect(getX(), getY(), ScreenBeta.mainStage);
                 barricade.healthCurr -= barricade.mediumDamRate;
-                System.out.println(barricade.healthCurr);
+                //System.out.println(barricade.healthCurr);
             }
         }
     }

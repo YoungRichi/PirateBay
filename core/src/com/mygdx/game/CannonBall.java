@@ -135,7 +135,7 @@ public class CannonBall extends ActorBeta {
             }
             else if(!isFiring)
             {
-                if(fireTimer > 0 && fireTimer < 7)
+                if(0 < fireTimer && fireTimer < 7)
                     cannon.cannonState = CannonState.chargeDanger;
                 else if(fireTimer < 10)
                     cannon.cannonState = CannonState.chargeNormal;

@@ -53,8 +53,6 @@ public class GameScreen extends ScreenBeta {
     int boatBigNumMax, boatMediumNumMax;
     int rockNumMax;
 
-
-
     //===========Richard Testing======================
 
     @Override
@@ -79,9 +77,14 @@ public class GameScreen extends ScreenBeta {
         if(!fireTrigger && !isPaused)
         {
             fireTrigger = true;
-            cannonBall = new CannonBall(cannon.getX() + cannon.getWidth() + 10,cannon.getY() + cannon.getHeight() - 15, mainStage);
+            cannon.fireDir = new Vector2(screenX - cannon.getX(), (screenY - HEIGHT)*(-1) - cannon.getY());
+            cannon.setRotation(cannon.fireDir.angle());
+            cannon.setOrigin(cannon.getWidth()/2, cannon.getHeight()/2);
+
+            cannonBall = new CannonBall(cannon.getX()+ cannon.getWidth()/4+(float)(Math.cos(cannon.fireDir.angleRad()))*cannon.getWidth()/2 *1.5f,
+                    cannon.getY() + (float)(Math.sin(cannon.fireDir.angleRad()))*cannon.getWidth()/2 *1.5f, mainStage);
             cannonBall.SetVelocity(screenX, (screenY - HEIGHT)*(-1));
-            
+            cannonBall.setVisible(false);
         }
 
         return super.touchDown(screenX, screenY, pointer, button);
@@ -94,6 +97,7 @@ public class GameScreen extends ScreenBeta {
             cannonBall.isFiring = true; // the cannon start firing
             if(cannon.cannonState != CannonState.Idle) // Not allow to change to shoot anim if the cannon is in idle state
             cannon.cannonState = CannonState.Shoot;
+            cannonBall.setVisible(true);
         }
 
 
@@ -114,9 +118,6 @@ public class GameScreen extends ScreenBeta {
 
     void CreateLevel()
     {
-
-
-
         arcade = new Skin(Gdx.files.internal("arcade/skin/arcade-ui.json"));
 
         mouseCoord = new Vector3();
@@ -129,8 +130,7 @@ public class GameScreen extends ScreenBeta {
         ActorBeta.setWorldBounds(WIDTH, HEIGHT);
 
         fireTrigger = false; // if the player touches the screen, then the value is true
-
-
+        
         //================================= Player ==============================================//
 
         cannonBase = new CannonBase(0, HEIGHT / 2, mainStage);
