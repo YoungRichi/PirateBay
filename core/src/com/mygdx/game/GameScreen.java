@@ -88,8 +88,8 @@ public class GameScreen extends ScreenBeta {
 
                 cannonBall = new CannonBall(cannon.getX()+ cannon.getWidth()/2 +(float)(Math.cos(cannon.fireDir.angleRad()))*cannon.getWidth()/2 *1.5f,
                         cannon.getY() + cannon.getHeight()/2 - HEIGHT / 50 + (float)(Math.sin(cannon.fireDir.angleRad()))*cannon.getWidth()/2 *1.5f, mainStage);
-                cannonBall.SetVelocity(screenX, (screenY - HEIGHT)*(-1));
-                cannonBall.setVisible(true);
+                cannonBall.SetVelocity(screenX, (screenY - HEIGHT)*(-1) - cannonBall.getHeight()/2);
+                cannonBall.setVisible(false);
             }
         }
 
@@ -182,7 +182,6 @@ public class GameScreen extends ScreenBeta {
         livesCount.setSize(HEIGHT/12, HEIGHT/12);
         livesCount.setPosition(liveIcon.getX() + liveIcon.getWidth() + 10, liveIcon.getY());
         mainStage.addActor(livesCount);
-
 
         winMsg = new Label(" ", arcade);
         winMsg.setAlignment(Align.center);

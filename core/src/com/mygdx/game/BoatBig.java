@@ -37,12 +37,13 @@ public class BoatBig extends ActorBeta {
             setMotionAngle(90);
         }
 
-        if(!Attack())
+        if(Attack())
         {
 
             for (Barricade barricade : ActorBeta.getListBarricade())
             {
-                barricade.hugeDamage = false;
+                //barricade.hugeDamage = false;
+                barricade.healthCurr -= barricade.hugeDamRate;
             }
         }
         // stop moving when the barricade is down
@@ -62,7 +63,7 @@ public class BoatBig extends ActorBeta {
             if(overlaps(barricade))
             {
                 preventOverlap(barricade);
-                barricade.hugeDamage = true;
+                //barricade.hugeDamage = true;
                 return true;
             }
         }
