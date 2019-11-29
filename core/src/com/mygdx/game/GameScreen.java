@@ -146,7 +146,7 @@ public class GameScreen extends ScreenBeta {
         cannon = new Cannon(0, HEIGHT / 2 , mainStage);
         barricade = new Barricade(WIDTH * 5 / 16, 0, mainStage);
         liveIcon = new Lives(cannon.getX(), cannon.getY() + cannon.getHeight(), mainStage);
-        noTapZone = new NoTapZone(0 - WIDTH* 1/32, HEIGHT * 6/16  , mainStage);
+        noTapZone = new NoTapZone(cannon.getX()+ cannon.getWidth()/2 - cannon.getWidth(), cannon.getY() + cannon.getHeight()/2 - cannon.getWidth() , mainStage);
         noTapZone.setVisible(true);
 
 
