@@ -76,18 +76,18 @@ public class GameScreen extends ScreenBeta {
 
         if(!fireTrigger && !isPaused)
         {
-            Vector2 cannonPos = new Vector2(cannon.getX() + cannon.getWidth()/2,cannon.getY() + cannon.getHeight()/2 );
+            Vector2 cannonOriPos = new Vector2(cannon.getX() + cannon.getWidth() / 2,cannon.getY()+ cannon.getHeight() / 2);
             Vector2 touchPos = new Vector2(screenX, (screenY - HEIGHT)*(-1));
-            cannon.fireDir = new Vector2(screenX - cannon.getX() - cannon.getWidth()/2, (screenY - HEIGHT)*(-1) - cannon.getY() - cannon.getHeight()/2);
-            cannon.setRotation(cannon.fireDir.angle());
-            cannon.setOrigin(cannon.getWidth()/2, cannon.getHeight()/2);
-
-
-            if(cannonPos.dst(touchPos) > cannon.getWidth()) // able to load cannon ball only when the touch down position is outside of the range
+            cannon.fireDir = touchPos.sub(cannonOriPos);
+            
+            if(cannon.fireDir.len() > cannon.getWidth()) // able to load cannon ball only when the touch down position is outside of the range
             {
                 fireTrigger = true;
-                cannonBall = new CannonBall(cannon.getX()+ cannon.getWidth()/2+(float)(Math.cos(cannon.fireDir.angleRad()))*cannon.getWidth()/2 *1.5f,
-                        cannon.getY() + cannon.getHeight()/2+ (float)(Math.sin(cannon.fireDir.angleRad()))*cannon.getWidth()/2 *1.5f, mainStage);
+                cannon.setRotation(cannon.fireDir.angle());
+                cannon.setOrigin(cannon.getWidth()/2, cannon.getHeight()/2);
+
+                cannonBall = new CannonBall(cannon.getX()+ cannon.getWidth()/2 +(float)(Math.cos(cannon.fireDir.angleRad()))*cannon.getWidth()/2 *1.5f,
+                        cannon.getY() + cannon.getHeight()/2 - HEIGHT / 50 + (float)(Math.sin(cannon.fireDir.angleRad()))*cannon.getWidth()/2 *1.5f, mainStage);
                 cannonBall.SetVelocity(screenX, (screenY - HEIGHT)*(-1));
                 cannonBall.setVisible(true);
             }
@@ -143,11 +143,9 @@ public class GameScreen extends ScreenBeta {
         
         //================================= Player ==============================================//
 
-        cannonBase = new CannonBase(0, HEIGHT / 2, mainStage);
-        cannon = new Cannon(0, HEIGHT / 2 + HEIGHT / 12, mainStage);
-        //barricades = new ArrayList<Barricade>();
+        cannonBase = new CannonBase(0, HEIGHT / 2 - HEIGHT / 12, mainStage);
+        cannon = new Cannon(0, HEIGHT / 2 , mainStage);
         barricade = new Barricade(WIDTH * 5 / 16, 0, mainStage);
-        //barricades.add(barricade);
         liveIcon = new Lives(cannon.getX(), cannon.getY() + cannon.getHeight(), mainStage);
 
         //================================== Obstacles ===========================================//
@@ -258,8 +256,6 @@ public class GameScreen extends ScreenBeta {
             resumeButton.setVisible(false);
         }
     }
-
-
 
     void CheckGameState()
     {
