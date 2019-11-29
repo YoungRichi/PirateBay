@@ -132,11 +132,14 @@ public class CannonBall extends ActorBeta {
                 cannon.lives --;
                 fireTimer = 0; // the player is able to fire again only when the cannon ball's fireTimer reached zero
                 ExplosionEffect explosionEffect = new ExplosionEffect(getX(), getY(), ScreenBeta.mainStage);
+                cannon.addAction(Actions.repeat(10, Actions.sequence(Actions.fadeOut(0.05f), Actions.fadeIn(0.05f))));
             }
             else if(!isFiring)
             {
-                if(0 < fireTimer && fireTimer < 7)
+                if(0 < fireTimer && fireTimer < 3)
                     cannon.cannonState = CannonState.chargeDanger;
+                else if(fireTimer < 6)
+                    cannon.cannonState = CannonState.chargeWarning;
                 else if(fireTimer < 10)
                     cannon.cannonState = CannonState.chargeNormal;
                 else

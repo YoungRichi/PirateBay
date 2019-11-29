@@ -36,6 +36,11 @@ public class BoatSmall extends ActorBeta {
             setY(0);
             setMotionAngle(90);
         }
+        if(getY() > Gdx.graphics.getHeight())
+        {
+            setY(Gdx.graphics.getHeight() - getHeight());
+            setMotionAngle(90);
+        }
 
         if(Attack())
         {
