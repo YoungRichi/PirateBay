@@ -79,7 +79,7 @@ public class GameScreen extends ScreenBeta {
             Vector2 cannonOriPos = new Vector2(cannon.getX() + cannon.getWidth() / 2,cannon.getY()+ cannon.getHeight() / 2);
             Vector2 touchPos = new Vector2(screenX, (screenY - HEIGHT)*(-1));
             cannon.fireDir = touchPos.sub(cannonOriPos);
-            
+
             if(cannon.fireDir.len() > cannon.getWidth()) // able to load cannon ball only when the touch down position is outside of the range
             {
                 fireTrigger = true;
@@ -108,8 +108,6 @@ public class GameScreen extends ScreenBeta {
                 cannonBall.setVisible(true);
             }
         }
-
-
 
         return super.touchUp(screenX, screenY, pointer, button);
     }
@@ -176,15 +174,20 @@ public class GameScreen extends ScreenBeta {
 
         //============================== Labels =================================================//
 
+        float refResolutionFactor = HEIGHT/480;
+
         livesCount = new Label("x 3", arcade);
+        livesCount.setAlignment(Align.center);
+        livesCount.setFontScale(1 * refResolutionFactor);
+        livesCount.setSize(HEIGHT/12, HEIGHT/12);
         livesCount.setPosition(liveIcon.getX() + liveIcon.getWidth() + 10, liveIcon.getY());
         mainStage.addActor(livesCount);
 
+
         winMsg = new Label(" ", arcade);
         winMsg.setAlignment(Align.center);
-        winMsg.setFontScale(3);
-        winMsg.setSize(HEIGHT/1.5f, HEIGHT/4);
-        winMsg.setWrap(true);
+        winMsg.setFontScale(2 * refResolutionFactor);
+        winMsg.setSize(WIDTH, HEIGHT/4);
         winMsg.setPosition(WIDTH / 2 - winMsg.getWidth()/2, HEIGHT / 2 - winMsg.getHeight()/2);
 
         mainStage.addActor(winMsg);
