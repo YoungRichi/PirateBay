@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class NoTapZone extends ActorBeta {
 
-    String[] str = {"NoTapZone1.png", "NoTapZone2.png" };
+    String[] str = {"CircleZone1.png", "CircleZone2.png" };
     Animation idleAnim = loadAnimationFromFiles(str, 0.1f, true);
     float cannonAspectRatio;
 
