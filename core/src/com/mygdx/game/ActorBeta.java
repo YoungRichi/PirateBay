@@ -632,10 +632,20 @@ public class ActorBeta extends Actor {
         return list;
     }
 
-    boolean canGoUp = true;
-    boolean canGoDown = true;
+    public static ArrayList<NoTapZone> getListNoTapZone()
+    {
+        ArrayList<NoTapZone> list = new ArrayList<NoTapZone>();
+
+        for (Actor a : ScreenBeta.mainStage.getActors())
+        {
+            if ( a instanceof NoTapZone)
+                list.add( (NoTapZone) a );
+        }
+        return list;
+    }
+    boolean upGroup;
     // obstacle avoidance mechanic
-    public boolean CheckCollisionRock (float angle)
+    public boolean CheckCollisionRock ()
     {
         for (Rock rock : ActorBeta.getListRock())
         {
@@ -644,20 +654,24 @@ public class ActorBeta extends Actor {
                 Vector2 offset = preventOverlap(rock);
                 if (offset != null) {
                     if (Math.abs(offset.x) > Math.abs(offset.y))
-                        setMotionAngle(angle);
-                    else
                     {
-                        if(offset.y <= 0)
-                            canGoUp = false;
+                        if(upGroup)
+                            setMotionAngle(90);
                         else
-                            canGoDown = false;
-                        setMotionAngle(180);
+                            setMotionAngle(- 90);
                     }
-
                 }
                 return true;
             }
         }
         return false;
+    }
+
+    public void SetUpGroup()
+    {
+        if (getY() >= Gdx.graphics.getHeight()/2)
+            upGroup = true;
+        else
+            upGroup = false;
     }
 }

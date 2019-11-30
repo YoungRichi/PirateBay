@@ -9,11 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 enum CannonState  {Idle, Shoot, chargeNormal, chargeWarning, chargeDanger }
 public class Cannon extends ActorBeta {
 
-
-    String[] str = {"Cannon.png"};
     String[] idleStr = {"Cannon_Idle3.png", "Cannon_Idle2.png", "Cannon_Idle3.png", "Cannon_Idle2.png" ,"Cannon_Idle1.png"};
     String[] chargeNormalStr = {"Cannon_Rest1.png", "Cannon_Rest1.png", "Cannon_Rest2.png", "Cannon_Rest3.png", "Cannon_Rest3.png"};
-    // Change the sprites here
     String[] chargeWarningStr = {"Cannon_Warn1.png", "Cannon_Warn2.png", "Cannon_Warn3.png", "Cannon_Warn2.png"};
     String[] chargeDangerStr = {"Cannon_Danger1.png", "Cannon_Danger3.png","Cannon_Danger2.png" };
     String[] shootStr = {"Cannon_Charge1.png","Cannon_Shoot1.png", "Cannon_Shoot2.png", "Cannon_Shoot3.png","Cannon_Shoot3.png","Cannon_Shoot3.png","Cannon_Shoot3.png"};
@@ -40,7 +37,7 @@ public class Cannon extends ActorBeta {
     @Override
     public void act(float dt) {
         super.act(dt);
-        //rotateBy(25);
+
         if(cannonState == CannonState.Idle)
         {
             setAnimation(idleAnim);
@@ -60,23 +57,14 @@ public class Cannon extends ActorBeta {
                 toIdleTimer = 1.0f;
             }
         }
-        else if (cannonState == CannonState.chargeNormal)
+        else
         {
-            setAnimation(chargeNormalAnim);
-            setRotation(fireDir.angle());
-            setSize(Gdx.graphics.getHeight() / 10 * getWidth()/getHeight(), Gdx.graphics.getHeight() / 10);
-            setOrigin(getWidth()/2, getHeight()/2);
-        }
-        else if (cannonState == CannonState.chargeWarning)
-        {
-            setAnimation(chargeWarningAnim);
-            setRotation(fireDir.angle());
-            setSize(Gdx.graphics.getHeight() / 10 * getWidth()/getHeight(), Gdx.graphics.getHeight() / 10);
-            setOrigin(getWidth()/2, getHeight()/2);
-        }
-        else if (cannonState == CannonState.chargeDanger)
-        {
-            setAnimation(chargeDangerAnim);
+            if (cannonState == CannonState.chargeNormal)
+                setAnimation(chargeNormalAnim);
+            else if (cannonState == CannonState.chargeWarning)
+                setAnimation(chargeWarningAnim);
+            else if (cannonState == CannonState.chargeDanger)
+                setAnimation(chargeDangerAnim);
             setRotation(fireDir.angle());
             setSize(Gdx.graphics.getHeight() / 10 * getWidth()/getHeight(), Gdx.graphics.getHeight() / 10);
             setOrigin(getWidth()/2, getHeight()/2);

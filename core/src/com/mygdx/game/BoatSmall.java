@@ -10,6 +10,8 @@ public class BoatSmall extends ActorBeta {
     Animation idleAnim = loadAnimationFromFiles(boatSAnim, 0.2f, true);
     float dropOffRate = 2;
     float dropOffTimer = dropOffRate;
+    ActorBeta pathFinderBelow;
+    ActorBeta pathFinderAbove;
 
     public BoatSmall(float x, float y, Stage s) {
         super(x, y, s);
@@ -17,8 +19,21 @@ public class BoatSmall extends ActorBeta {
         setAnimation(idleAnim);
         setSize(Gdx.graphics.getHeight() / 12 * getWidth() / getHeight(), Gdx.graphics.getHeight() / 12);
         setBoundaryRectangleEdited();
+        SetUpGroup();
         setSpeed(120);
         setMotionAngle(180);
+
+        pathFinderBelow = new ActorBeta(0,0, s);
+        pathFinderBelow.loadTexture("cannonTesting.png");
+        pathFinderBelow.setSize( getWidth() - 30, 8 );
+        pathFinderBelow.setBoundaryRectangle();
+        pathFinderBelow.setVisible(false);
+
+        pathFinderAbove = new ActorBeta(0,0, s);
+        pathFinderAbove.loadTexture("cannonTesting.png");
+        pathFinderAbove.setSize( getWidth() - 30, 8 );
+        pathFinderAbove.setBoundaryRectangle();
+        pathFinderAbove.setVisible(false);
     }
 
 
@@ -28,9 +43,14 @@ public class BoatSmall extends ActorBeta {
         super.act(dt);
         applyPhysics(dt);
 
-        // the boat will move in the direction specified by the value of this parameter if it collides with rocks horizontally
+        pathFinderBelow.setPosition( getX() + 15, getY() - 8 );
+        pathFinderAbove.setPosition( getX() + 15, getY()+ getHeight()/3);
 
-        if(!CheckCollisionRock(90))
+        if(pathFinderBelow.CheckCollisionRock())
+            upGroup = true;
+        if(pathFinderAbove.CheckCollisionRock())
+            upGroup = false;
+        if(!CheckCollisionRock())
             setMotionAngle(180);
 
         if(getY() < 0)
@@ -44,17 +64,16 @@ public class BoatSmall extends ActorBeta {
             setMotionAngle(-90);
         }
 
-        if(Attack())
+        for (Barricade barricade : ActorBeta.getListBarricade())
         {
-
-            for (Barricade barricade : ActorBeta.getListBarricade())
+            if(overlaps(barricade))
             {
-                //barricade.smallDamage = false;
+                preventOverlap(barricade);
                 barricade.healthCurr -= barricade.smallDamRate;
             }
         }
-        // stop moving when the barricade is down
-        if(ActorBeta.getListBarricade().size() == 0)
+
+        if(ActorBeta.getListBarricade().size() == 0 && getX() <= Gdx.graphics.getWidth() * 5 /16)
         {
             setSpeed(0);
             DropOffSoldier(dt);
@@ -62,19 +81,6 @@ public class BoatSmall extends ActorBeta {
 
     }
 
-    boolean Attack()
-    {
-        for (Barricade barricade : ActorBeta.getListBarricade())
-        {
-            if(overlaps(barricade))
-            {
-                preventOverlap(barricade);
-                //barricade.smallDamage = true;
-                return true;
-            }
-        }
-        return false;
-    }
     void DropOffSoldier(float deltaTime)
     {
         dropOffTimer -= deltaTime;

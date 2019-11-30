@@ -25,10 +25,17 @@ public class Soldier extends ActorBeta {
     public void act(float dt) {
         super.act(dt);
         applyPhysics(dt);
+        for (NoTapZone noTapZone : ActorBeta.getListNoTapZone())
+        {
+            if(overlaps(noTapZone))
+            {
+                preventOverlap(noTapZone);
+            }
+        }
         if(getX() <= -getWidth())
         {
             remove();
-            //ScreenBeta.loseGame = true;
+            ScreenBeta.loseGame = true;
         }
     }
 }

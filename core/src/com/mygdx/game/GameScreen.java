@@ -60,13 +60,16 @@ public class GameScreen extends ScreenBeta {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
-        if(!fireTrigger && !isPaused)
+        if(!fireTrigger)
         {
             Vector2 cannonOriPos = new Vector2(cannon.getX() + cannon.getWidth() / 2,cannon.getY()+ cannon.getHeight() / 2);
             Vector2 touchPos = new Vector2(screenX, (screenY - HEIGHT)*(-1));
+            Vector2 uIButtonPos = new Vector2(pauseButtonTex.getX() + pauseButtonTex.getWidth()/2, pauseButtonTex.getY() + pauseButtonTex.getHeight()/2);
             cannon.fireDir = touchPos.sub(cannonOriPos);
+            Vector2 buttonZone = touchPos.sub(uIButtonPos);
 
-            if(cannon.fireDir.len() > cannon.getWidth()) // able to load cannon ball only when the touch down position is outside of the range
+            if(cannon.fireDir.len() > cannon.getWidth() &&
+                    buttonZone.len() > Math.max(pauseButtonTex.getWidth(), pauseButtonTex.getHeight())) // able to load cannon ball only when the touch down position is outside of the range
             {
                 fireTrigger = true;
                 cannon.setRotation(cannon.fireDir.angle());
@@ -84,6 +87,7 @@ public class GameScreen extends ScreenBeta {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+
         if(fireTrigger)
         {
             if(!cannonBall.isFiring)
@@ -134,25 +138,28 @@ public class GameScreen extends ScreenBeta {
 
         //================================== Obstacles ===========================================//
 
-        rockNumMax = 10;
+        rockNumMax = 6;
 
         for (int i = 0; i < rockNumMax; i++)
         {
-            new Rock(WIDTH / 2, HEIGHT - HEIGHT * i / 10 , mainStage); //- WIDTH * i / 30
+            new Rock(WIDTH / 2, HEIGHT - HEIGHT * i / 15 , mainStage); //- WIDTH * i / 30
         }
 
         new Rock(WIDTH / 2 + HEIGHT/15 + 20, HEIGHT /4 * 3 , mainStage);
         new Rock(WIDTH / 2 + HEIGHT/15 + 20, HEIGHT /4 , mainStage);
+
         //================================== Enemies ============================================//
 
-        boatBigNumMax = 3;
+        boatBigNumMax = 5;
         boatMediumNumMax = 3;
         boatSmallNumMax = 5;
 
         for (int i = 0; i < boatBigNumMax; i++)
         {
-            new BoatBig(WIDTH, HEIGHT/4 * i, mainStage);
+            new BoatBig(WIDTH, HEIGHT/10 * i, mainStage);
         }
+        new BoatSmall(WIDTH, HEIGHT/2, mainStage);
+        new BoatMedium(WIDTH, HEIGHT/3, mainStage);
 
         //============================== Labels =================================================//
 
@@ -178,21 +185,21 @@ public class GameScreen extends ScreenBeta {
         pauseButtonTex = new ActorBeta();
         pauseButtonTex.loadTexture("PauseButton.png");
         float pauseBtnAR = pauseButtonTex.getWidth() / pauseButtonTex.getHeight();
-        pauseButtonTex.setSize(HEIGHT / 8 * pauseBtnAR, HEIGHT /8);
+        pauseButtonTex.setSize(HEIGHT / 10 * pauseBtnAR, HEIGHT /10);
         pauseButton= new Button(arcade);
         pauseButton.setSize(pauseButtonTex.getWidth() * 0.9f, pauseButtonTex.getHeight() * 0.9f);
         pauseButton.add(pauseButtonTex);
-        pauseButton.setPosition(10, HEIGHT - pauseButton.getHeight() * 1.1f);
+        pauseButton.setPosition(20, HEIGHT - pauseButton.getHeight() * 1.2f);
         mainStage.addActor(pauseButton);
 
         resumeButtonTex = new ActorBeta();
         resumeButtonTex.loadTexture("PlayButton.png");
         float resumeBtnAR = resumeButtonTex.getWidth() / resumeButtonTex.getHeight();
-        resumeButtonTex.setSize(HEIGHT / 8 * resumeBtnAR, HEIGHT /8);
+        resumeButtonTex.setSize(HEIGHT / 10 * resumeBtnAR, HEIGHT /10);
         resumeButton= new Button(arcade);
         resumeButton.setSize(resumeButtonTex.getWidth() * 0.9f, resumeButtonTex.getHeight() * 0.9f);
         resumeButton.add(resumeButtonTex);
-        resumeButton.setPosition(10, HEIGHT - resumeButton.getHeight() * 1.1f);
+        resumeButton.setPosition(20, HEIGHT - resumeButton.getHeight() * 1.2f);
         mainStage.addActor(resumeButton);
         resumeButton.setVisible(false);
 

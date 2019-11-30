@@ -12,34 +12,47 @@ public class BoatBig extends ActorBeta {
     int health = 2;
     float dropOffRate = 2;
     float dropOffTimer = dropOffRate;
+    ActorBeta pathFinderBelow;
+    ActorBeta pathFinderAbove;
 
     public BoatBig(float x, float y, Stage s) {
         super(x, y, s);
 
         setAnimation(idleAnim);
         setSize(Gdx.graphics.getHeight() / 6 * getWidth() / getHeight(), Gdx.graphics.getHeight() / 6);
+        SetUpGroup();
         setBoundaryRectangleEdited();
         setSpeed(120);
         setMotionAngle(180); // moves left
+
+        pathFinderBelow = new ActorBeta(0,0, s);
+        pathFinderBelow.loadTexture("cannonTesting.png");
+        pathFinderBelow.setSize( getWidth() - 30, 8 );
+        pathFinderBelow.setBoundaryRectangle();
+        pathFinderBelow.setVisible(false);
+
+        pathFinderAbove = new ActorBeta(0,0, s);
+        pathFinderAbove.loadTexture("cannonTesting.png");
+        pathFinderAbove.setSize( getWidth() - 30, 8 );
+        pathFinderAbove.setBoundaryRectangle();
+        pathFinderAbove.setVisible(false);
     }
 
     @Override
     public void act(float dt) {
         super.act(dt);
+
+        pathFinderBelow.setPosition( getX() + 15, getY() - 8 );
+        pathFinderAbove.setPosition( getX() + 15, getY()+ getHeight()/3);
+
         applyPhysics(dt);
+        if(pathFinderBelow.CheckCollisionRock())
+            upGroup = true;
+        if(pathFinderAbove.CheckCollisionRock())
+            upGroup = false;
 
-        if(getY() >= Gdx.graphics.getHeight()/2)
-        {
-            if(!CheckCollisionRock(90)) // the boat will move in its current direction + 90 degree if it collides with rocks
-                setMotionAngle(180);
-        }
-        else
-        {
-            if(!CheckCollisionRock(- 90)) // the boat will move in its current direction - 90 degree if it collides with rocks
-                setMotionAngle(180);
-        }
-
-
+        if(!CheckCollisionRock())
+            setMotionAngle(180);
 
         // check collision with the edges of the screen
         if(getY() < 0)
@@ -53,35 +66,20 @@ public class BoatBig extends ActorBeta {
             setMotionAngle(-90);
         }
 
-        if(Attack())
-        {
-
-            for (Barricade barricade : ActorBeta.getListBarricade())
-            {
-                //barricade.hugeDamage = false;
-                barricade.healthCurr -= barricade.hugeDamRate;
-            }
-        }
-        // stop moving and drop off soldiers only when reached the barricade location and no barricade in the level
-        if(ActorBeta.getListBarricade().size() == 0 && getX() <= Gdx.graphics.getWidth() * 5 /16)
-        {
-            setSpeed(0);
-            DropOffSoldier(dt);
-        }
-    }
-
-    boolean Attack()
-    {
         for (Barricade barricade : ActorBeta.getListBarricade())
         {
             if(overlaps(barricade))
             {
                 preventOverlap(barricade);
-                //barricade.hugeDamage = true;
-                return true;
+                barricade.healthCurr -= barricade.hugeDamRate;
             }
         }
-        return false;
+
+        if(ActorBeta.getListBarricade().size() == 0 && getX() <= Gdx.graphics.getWidth() * 5 /16)
+        {
+            setSpeed(0);
+            DropOffSoldier(dt);
+        }
     }
 
     void DropOffSoldier(float deltaTime)

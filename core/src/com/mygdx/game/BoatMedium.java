@@ -13,7 +13,8 @@ public class BoatMedium extends ActorBeta {
 
     float timeBetweenFire = 3;
     float fireTimer = timeBetweenFire;
-    //MediumBoatBall mediumBoatBall;
+    ActorBeta pathFinderBelow;
+    ActorBeta pathFinderAbove;
 
     public BoatMedium(float x, float y, Stage s) {
         super(x, y, s);
@@ -21,8 +22,21 @@ public class BoatMedium extends ActorBeta {
         setAnimation(idleAnim);
         setSize(Gdx.graphics.getHeight() / 8 * getWidth()/getHeight(), Gdx.graphics.getHeight() / 8);
         setBoundaryRectangleEdited();
+        SetUpGroup();
         setSpeed(120);
         setMotionAngle(180);
+
+        pathFinderBelow = new ActorBeta(0,0, s);
+        pathFinderBelow.loadTexture("cannonTesting.png");
+        pathFinderBelow.setSize( getWidth() - 30, 8 );
+        pathFinderBelow.setBoundaryRectangle();
+        pathFinderBelow.setVisible(false);
+
+        pathFinderAbove = new ActorBeta(0,0, s);
+        pathFinderAbove.loadTexture("cannonTesting.png");
+        pathFinderAbove.setSize( getWidth() - 30, 8 );
+        pathFinderAbove.setBoundaryRectangle();
+        pathFinderAbove.setVisible(false);
     }
 
     @Override
@@ -30,7 +44,11 @@ public class BoatMedium extends ActorBeta {
         super.act(dt);
         applyPhysics(dt);
 
-        if(!CheckCollisionRock(90)) // the boat will move in its current direction + 90 degree if it collides with rocks
+        if(pathFinderBelow.CheckCollisionRock())
+            upGroup = true;
+        if(pathFinderAbove.CheckCollisionRock())
+            upGroup = false;
+        if(!CheckCollisionRock()) // the boat will move in its current direction + 90 degree if it collides with rocks
             setMotionAngle(180);
         if(getY() < 0)
         {
