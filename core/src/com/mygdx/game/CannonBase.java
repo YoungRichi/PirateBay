@@ -12,7 +12,7 @@ public class CannonBase extends ActorBeta {
 
     public CannonBase() {
         setAnimation(idleAnim);
-        setSize(Gdx.graphics.getHeight() / 8 * getWidth()/getHeight(), Gdx.graphics.getHeight() / 8);
+        setSize(Gdx.graphics.getHeight() / 6 * getWidth()/getHeight(), Gdx.graphics.getHeight() / 6);
         setBoundaryRectangle();
     }
 
