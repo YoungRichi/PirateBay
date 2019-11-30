@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 
 public class CannonBase extends ActorBeta {
 
-    String[] str = {"CannonBaseNew.png"};
+    String[] str = {"CannonBaseNew3.png"};
 
     Animation idleAnim = loadAnimationFromFiles(str, 0.1f, true);
 
