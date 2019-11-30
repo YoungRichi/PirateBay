@@ -18,7 +18,6 @@ public class BoatSmall extends ActorBeta {
         setSize(Gdx.graphics.getHeight() / 12 * getWidth() / getHeight(), Gdx.graphics.getHeight() / 12);
         setBoundaryRectangleEdited();
         setSpeed(120);
-        //setSpeed(0);
         setMotionAngle(180);
     }
 
@@ -29,17 +28,20 @@ public class BoatSmall extends ActorBeta {
         super.act(dt);
         applyPhysics(dt);
 
-        if(!CheckCollisionRock(90)) // the boat will move in its current direction + 90 degree if it collides with rocks
+        // the boat will move in the direction specified by the value of this parameter if it collides with rocks horizontally
+
+        if(!CheckCollisionRock(90))
             setMotionAngle(180);
+
         if(getY() < 0)
         {
             setY(0);
             setMotionAngle(90);
         }
-        if(getY() > Gdx.graphics.getHeight())
+        if(getY() > Gdx.graphics.getHeight() - getHeight())
         {
             setY(Gdx.graphics.getHeight() - getHeight());
-            setMotionAngle(90);
+            setMotionAngle(-90);
         }
 
         if(Attack())

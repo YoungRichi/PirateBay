@@ -18,43 +18,28 @@ import java.util.Random;
 
 public class GameScreen extends ScreenBeta {
 
-    Skin arcade;
+    //=============== Player ========================//
     CannonBall cannonBall;
     Vector3 mouseCoord;
     Vector2 dir;
     boolean fireTrigger; // indicate whether the cannon ball is loaded
+    Cannon cannon;
+    Lives liveIcon;
+
+    //================ UI ============================//
+    Skin arcade;
     Button pauseButton, resumeButton;
     ActorBeta pauseButtonTex, resumeButtonTex;
-
-    int lives = 3;
     Label livesCount;
-
-    int enemyCount;
     Label winMsg;
-    //-------------SOUND------------------------
-    Sound explosion;
-    Sound hit;
-    Sound gameOver;
-    Sound shoot;
-    Sound parrotSound;
-    Sound lvlCompleted;
-    Sound click;
 
-    //===========Richard Testing======================
-    Parrot parrot;
-    BoatBig bigBoat;
-    BoatMedium mediumBoat;
-    BoatSmall smallBoat;
-    Cannon cannon;
-    CannonBase cannonBase;
-    Barricade barricade;
-    Lives liveIcon;
-    NoTapZone noTapZone;
+    //================= Sounds =========================//
+    Sound explosion, hit, gameOver, shoot, parrotSound, lvlCompleted, click;
 
-    int boatBigNumMax, boatMediumNumMax;
+    //================= Enemies =======================//
+
+    int boatBigNumMax, boatMediumNumMax, boatSmallNumMax;
     int rockNumMax;
-
-    //===========Richard Testing======================
 
     @Override
     public void initialize() {
@@ -141,15 +126,11 @@ public class GameScreen extends ScreenBeta {
         fireTrigger = false; // if the player touches the screen, then the value is true
         
         //================================= Player ==============================================//
-
-        cannonBase = new CannonBase(0, HEIGHT / 2 - HEIGHT / 12, mainStage);
+        new CannonBase(0, HEIGHT / 2 - HEIGHT / 12, mainStage);
         cannon = new Cannon(0, HEIGHT / 2 , mainStage);
-        barricade = new Barricade(WIDTH * 5 / 16, 0, mainStage);
+        new Barricade(WIDTH * 5 / 16, 0, mainStage);
+        new NoTapZone(cannon.getX()+ cannon.getWidth()/2 - cannon.getWidth(), cannon.getY() + cannon.getHeight()/2 - cannon.getWidth() , mainStage);
         liveIcon = new Lives(cannon.getX(), cannon.getY() + cannon.getHeight(), mainStage);
-        noTapZone = new NoTapZone(cannon.getX()+ cannon.getWidth()/2 - cannon.getWidth(), cannon.getY() + cannon.getHeight()/2 - cannon.getWidth() , mainStage);
-        noTapZone.setVisible(true);
-
-
 
         //================================== Obstacles ===========================================//
 
@@ -160,22 +141,18 @@ public class GameScreen extends ScreenBeta {
             new Rock(WIDTH / 2, HEIGHT - HEIGHT * i / 10 , mainStage); //- WIDTH * i / 30
         }
 
+        new Rock(WIDTH / 2 + HEIGHT/15 + 20, HEIGHT /4 * 3 , mainStage);
+        new Rock(WIDTH / 2 + HEIGHT/15 + 20, HEIGHT /4 , mainStage);
         //================================== Enemies ============================================//
 
         boatBigNumMax = 3;
         boatMediumNumMax = 3;
+        boatSmallNumMax = 5;
 
-        parrot = new Parrot(WIDTH, HEIGHT / 4, mainStage);
-        enemyCount++;
-
-        bigBoat = new BoatBig(WIDTH, HEIGHT * 3 / 4 - 50, mainStage);
-        enemyCount++;
-
-        mediumBoat = new BoatMedium(WIDTH * 7 / 8, HEIGHT / 4, mainStage);
-        enemyCount++;
-
-        smallBoat = new BoatSmall(WIDTH, HEIGHT * 4 / 8, mainStage);
-        enemyCount++;
+        for (int i = 0; i < boatBigNumMax; i++)
+        {
+            new BoatBig(WIDTH, HEIGHT/4 * i, mainStage);
+        }
 
         //============================== Labels =================================================//
 

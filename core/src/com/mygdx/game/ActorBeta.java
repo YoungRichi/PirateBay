@@ -631,6 +631,9 @@ public class ActorBeta extends Actor {
         }
         return list;
     }
+
+    boolean canGoUp = true;
+    boolean canGoDown = true;
     // obstacle avoidance mechanic
     public boolean CheckCollisionRock (float angle)
     {
@@ -641,9 +644,16 @@ public class ActorBeta extends Actor {
                 Vector2 offset = preventOverlap(rock);
                 if (offset != null) {
                     if (Math.abs(offset.x) > Math.abs(offset.y))
-                        setMotionAngle(getMotionAngle() + angle);
-                    //else
-                    //setMotionAngle(getMotionAngle() - 90);
+                        setMotionAngle(angle);
+                    else
+                    {
+                        if(offset.y <= 0)
+                            canGoUp = false;
+                        else
+                            canGoDown = false;
+                        setMotionAngle(180);
+                    }
+
                 }
                 return true;
             }
