@@ -21,16 +21,9 @@ public class Barricade extends ActorBeta {
     float healthMax = 100;
     float healthCurr;
 
-    // variables indicating Big Boat attack
     float hugeDamRate = 0.03f;
-    //boolean hugeDamage = false;
-
-    // variables indicating Medium Boat attack
     float mediumDamRate = 1.2f;
-
-    // variables indicating Small Boat attack
     float smallDamRate = 0.01f;
-    //boolean smallDamage = false;
 
     public Barricade(float x, float y, Stage s) {
         super(x, y, s);
@@ -43,22 +36,6 @@ public class Barricade extends ActorBeta {
     @Override
     public void act(float dt) {
         super.act(dt);
-
-        /*
-        // is under Big Boat attack
-        if(hugeDamage)
-        {
-            healthCurr -= dt * hugeDamRate;
-            //System.out.println(healthCurr);
-        }
-
-        if(smallDamage)
-        {
-            healthCurr -= dt * smallDamRate;
-            //System.out.println(healthCurr);
-        }
-
-        */
 
         if(healthCurr <=0)
         {

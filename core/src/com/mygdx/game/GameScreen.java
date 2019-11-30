@@ -23,6 +23,7 @@ public class GameScreen extends ScreenBeta {
     Vector3 mouseCoord;
     Vector2 dir;
     boolean fireTrigger; // indicate whether the cannon ball is loaded
+    CannonBase cannonBase;
     Cannon cannon;
     Lives liveIcon;
 
@@ -64,19 +65,20 @@ public class GameScreen extends ScreenBeta {
         {
             Vector2 cannonOriPos = new Vector2(cannon.getX() + cannon.getWidth() / 2,cannon.getY()+ cannon.getHeight() / 2);
             Vector2 touchPos = new Vector2(screenX, (screenY - HEIGHT)*(-1));
-            Vector2 uIButtonPos = new Vector2(pauseButtonTex.getX() + pauseButtonTex.getWidth()/2, pauseButtonTex.getY() + pauseButtonTex.getHeight()/2);
+            Vector2 uIButtonPos = new Vector2(- pauseButtonTex.getX() + pauseButtonTex.getWidth()/2, - pauseButtonTex.getY() + pauseButtonTex.getHeight()/2);
             cannon.fireDir = touchPos.sub(cannonOriPos);
-            Vector2 buttonZone = touchPos.sub(uIButtonPos);
+            Vector2 touchPos1 = new Vector2(screenX, screenY);
+            Vector2 buttonZone = touchPos1.sub(uIButtonPos);
 
-            if(cannon.fireDir.len() > cannon.getWidth() &&
-                    buttonZone.len() > Math.max(pauseButtonTex.getWidth(), pauseButtonTex.getHeight())) // able to load cannon ball only when the touch down position is outside of the range
+            if(cannon.fireDir.len() > cannon.getWidth()&&
+                    buttonZone.len2() > 2f * (pauseButtonTex.getWidth()/2 * pauseButtonTex.getWidth()/2 ) + pauseButtonTex.getHeight()/2 * pauseButtonTex.getHeight()/2) // able to load cannon ball only when the touch down position is outside of the range
             {
                 fireTrigger = true;
                 cannon.setRotation(cannon.fireDir.angle());
                 cannon.setOrigin(cannon.getWidth()/2, cannon.getHeight()/2);
 
-                cannonBall = new CannonBall(cannon.getX()+ cannon.getWidth()/2 +(float)(Math.cos(cannon.fireDir.angleRad()))*cannon.getWidth()/2 *1.5f,
-                        cannon.getY() + cannon.getHeight()/2 - HEIGHT / 50 + (float)(Math.sin(cannon.fireDir.angleRad()))*cannon.getWidth()/2 *1.5f, mainStage);
+                cannonBall = new CannonBall(cannon.getX()+ cannon.getWidth()/2 +(float)(Math.cos(cannon.fireDir.angleRad()))*cannon.getWidth(),
+                        cannon.getY() + cannon.getHeight()/2 - HEIGHT / 50 + (float)(Math.sin(cannon.fireDir.angleRad()))*cannon.getWidth(), mainStage);
                 cannonBall.SetVelocity(screenX, (screenY - HEIGHT)*(-1) - cannonBall.getHeight()/2);
                 cannonBall.setVisible(false);
             }
@@ -130,22 +132,24 @@ public class GameScreen extends ScreenBeta {
         fireTrigger = false; // if the player touches the screen, then the value is true
         
         //================================= Player ==============================================//
-        new CannonBase(0, HEIGHT / 2 - HEIGHT / 12, mainStage);
-        cannon = new Cannon(0, HEIGHT / 2 , mainStage);
+        cannonBase = new CannonBase();
+        cannonBase.setPosition(cannonBase.getWidth()/2, HEIGHT/3);
+        mainStage.addActor(cannonBase);
+        cannon = new Cannon(cannonBase.getX() , cannonBase.getY() + cannonBase.getHeight()*3/4 , mainStage);
         new Barricade(WIDTH * 5 / 16, 0, mainStage);
         new NoTapZone(cannon.getX()+ cannon.getWidth()/2 - cannon.getWidth(), cannon.getY() + cannon.getHeight()/2 - cannon.getWidth() , mainStage);
         liveIcon = new Lives(cannon.getX(), cannon.getY() + cannon.getHeight(), mainStage);
 
         //================================== Obstacles ===========================================//
 
-        rockNumMax = 6;
+        rockNumMax = 10;
 
         for (int i = 0; i < rockNumMax; i++)
         {
-            new Rock(WIDTH / 2, HEIGHT - HEIGHT * i / 15 , mainStage); //- WIDTH * i / 30
+            new Rock(WIDTH / 2, HEIGHT * 3/4 - HEIGHT * i / 15 , mainStage); //- WIDTH * i / 30
         }
 
-        new Rock(WIDTH / 2 + HEIGHT/15 + 20, HEIGHT /4 * 3 , mainStage);
+        new Rock(WIDTH / 2 + HEIGHT/15 + 20, HEIGHT /10 * 9 , mainStage);
         new Rock(WIDTH / 2 + HEIGHT/15 + 20, HEIGHT /4 , mainStage);
 
         //================================== Enemies ============================================//
@@ -159,7 +163,9 @@ public class GameScreen extends ScreenBeta {
             new BoatBig(WIDTH, HEIGHT/10 * i, mainStage);
         }
         new BoatSmall(WIDTH, HEIGHT/2, mainStage);
+        new BoatSmall(WIDTH, HEIGHT/3, mainStage);
         new BoatMedium(WIDTH, HEIGHT/3, mainStage);
+        new BoatMedium(WIDTH, HEIGHT/2, mainStage);
 
         //============================== Labels =================================================//
 
@@ -186,20 +192,24 @@ public class GameScreen extends ScreenBeta {
         pauseButtonTex.loadTexture("PauseButton.png");
         float pauseBtnAR = pauseButtonTex.getWidth() / pauseButtonTex.getHeight();
         pauseButtonTex.setSize(HEIGHT / 10 * pauseBtnAR, HEIGHT /10);
+        pauseButtonTex.setColor(1,1,1, 0.5f);
         pauseButton= new Button(arcade);
         pauseButton.setSize(pauseButtonTex.getWidth() * 0.9f, pauseButtonTex.getHeight() * 0.9f);
         pauseButton.add(pauseButtonTex);
         pauseButton.setPosition(20, HEIGHT - pauseButton.getHeight() * 1.2f);
+        pauseButton.setColor(1,1,1,0);
         mainStage.addActor(pauseButton);
 
         resumeButtonTex = new ActorBeta();
         resumeButtonTex.loadTexture("PlayButton.png");
         float resumeBtnAR = resumeButtonTex.getWidth() / resumeButtonTex.getHeight();
         resumeButtonTex.setSize(HEIGHT / 10 * resumeBtnAR, HEIGHT /10);
+        resumeButtonTex.setColor(1,1,1,0.5f);
         resumeButton= new Button(arcade);
         resumeButton.setSize(resumeButtonTex.getWidth() * 0.9f, resumeButtonTex.getHeight() * 0.9f);
         resumeButton.add(resumeButtonTex);
         resumeButton.setPosition(20, HEIGHT - resumeButton.getHeight() * 1.2f);
+        resumeButton.setColor(1,1,1,0);
         mainStage.addActor(resumeButton);
         resumeButton.setVisible(false);
 

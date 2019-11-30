@@ -10,9 +10,7 @@ public class CannonBase extends ActorBeta {
 
     Animation idleAnim = loadAnimationFromFiles(str, 0.1f, true);
 
-    public CannonBase(float x, float y, Stage s) {
-        super(x, y, s);
-
+    public CannonBase() {
         setAnimation(idleAnim);
         setSize(Gdx.graphics.getHeight() / 8 * getWidth()/getHeight(), Gdx.graphics.getHeight() / 8);
         setBoundaryRectangle();
