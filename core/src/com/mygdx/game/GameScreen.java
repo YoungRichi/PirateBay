@@ -20,6 +20,7 @@ public class GameScreen extends ScreenBeta {
 
     //=============== Player ========================//
     CannonBall cannonBall;
+    Ball ball;
     Vector3 mouseCoord;
     Vector2 dir;
     boolean fireTrigger; // indicate whether the cannon ball is loaded
@@ -81,6 +82,10 @@ public class GameScreen extends ScreenBeta {
                         cannon.getY() + cannon.getHeight()/2 - HEIGHT / 50 + (float)(Math.sin(cannon.fireDir.angleRad()))*cannon.getWidth(), mainStage);
                 cannonBall.SetVelocity(screenX, (screenY - HEIGHT)*(-1) - cannonBall.getHeight()/2);
                 cannonBall.setVisible(false);
+                // HEIGHT / 50 is half of the cannon ball height
+
+                ball = new Ball(cannon.getX()+ cannon.getWidth()/2 - HEIGHT/50 +(float)(Math.cos(cannon.fireDir.angleRad()))*cannon.getWidth()/3,
+                        cannon.getY() + cannon.getHeight()/2 - HEIGHT/50 + (float)(Math.sin(cannon.fireDir.angleRad()))*cannon.getWidth()/3, mainStage);
             }
         }
 

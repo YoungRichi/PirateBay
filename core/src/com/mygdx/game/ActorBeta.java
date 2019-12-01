@@ -643,6 +643,19 @@ public class ActorBeta extends Actor {
         }
         return list;
     }
+
+    public static ArrayList<CannonBall> getListCannonBall()
+    {
+        ArrayList<CannonBall> list = new ArrayList<CannonBall>();
+
+        for (Actor a : ScreenBeta.mainStage.getActors())
+        {
+            if ( a instanceof CannonBall)
+                list.add( (CannonBall) a );
+        }
+        return list;
+    }
+
     boolean upGroup;
     // obstacle avoidance mechanic
     public boolean CheckCollisionRock ()

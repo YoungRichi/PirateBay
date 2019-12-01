@@ -11,8 +11,8 @@ import java.util.ArrayList;
 
 public class CannonBall extends ActorBeta {
 
-    float maxFireDuration = 5.0f;
-    float fireTimer = maxFireDuration;
+    public float fireDurationMax = 5.0f;
+    float fireTimer = fireDurationMax;
     boolean isFiring = false;
 
     public CannonBall(float x, float y, Stage s) {
@@ -43,7 +43,7 @@ public class CannonBall extends ActorBeta {
         if(fireTimer <=0)
         {
             isFiring = false;
-            fireTimer = maxFireDuration;
+            fireTimer = fireDurationMax;
             remove();
             ExplosionEffect explosionEffect = new ExplosionEffect(getX(), getY(), ScreenBeta.mainStage);
         }
@@ -140,7 +140,7 @@ public class CannonBall extends ActorBeta {
                     cannon.cannonState = CannonState.chargeDanger;
                 else if(fireTimer < 3)
                     cannon.cannonState = CannonState.chargeWarning;
-                else if(fireTimer < maxFireDuration)
+                else if(fireTimer < fireDurationMax)
                     cannon.cannonState = CannonState.chargeNormal;
                 else
                     cannon.cannonState = CannonState.Idle;
