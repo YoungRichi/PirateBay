@@ -84,7 +84,7 @@ public class GameScreen extends ScreenBeta {
                 cannonBall.setVisible(false);
                 // HEIGHT / 50 is half of the cannon ball height
 
-                ball = new Ball(cannon.getX()+ cannon.getWidth()/2 - HEIGHT/50 +(float)(Math.cos(cannon.fireDir.angleRad()))*cannon.getWidth()/3,
+                ball = new Ball(cannon.getX()+ cannon.getWidth()/2 - HEIGHT/25 +(float)(Math.cos(cannon.fireDir.angleRad()))*cannon.getWidth()/3,
                         cannon.getY() + cannon.getHeight()/2 - HEIGHT/50 + (float)(Math.sin(cannon.fireDir.angleRad()))*cannon.getWidth()/3, mainStage);
             }
         }
