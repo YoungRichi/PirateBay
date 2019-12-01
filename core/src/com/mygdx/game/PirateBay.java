@@ -7,6 +7,7 @@ public class PirateBay extends GameBeta {
     GameScreen gameScreen;
     OverScreen overScreen;
     EndScreen endScreen;
+    Level01 level01;
 
     boolean paused = false;
 
@@ -15,6 +16,8 @@ public class PirateBay extends GameBeta {
     public void create() {
         super.create();
 
+        level01 = new Level01();
+        setActiveScreen(level01);
         //splashScreen = new SplashScreen();
         //setActiveScreen(splashScreen);
 
@@ -26,8 +29,8 @@ public class PirateBay extends GameBeta {
         //levelScreen = new LevelScreen();
         //setActiveScreen(levelScreen);
 
-        gameScreen = new GameScreen();
-        setScreen(gameScreen);
+        //gameScreen = new GameScreen();
+        //setScreen(gameScreen);
 
 /*        overScreen = new OverScreen();
         setActiveScreen(overScreen);*/

@@ -150,8 +150,7 @@ public class GameScreen extends ScreenBeta {
         }
 
         new Rock(WIDTH / 2 + HEIGHT/15 + 20, HEIGHT /10 * 9 , mainStage);
-        new Rock(WIDTH / 2 + HEIGHT/15 + 20, HEIGHT /4 , mainStage);
-
+        new Rock(WIDTH / 2 + HEIGHT/15 + 20, HEIGHT /4 - 50, mainStage);
         //================================== Enemies ============================================//
 
         boatBigNumMax = 5;

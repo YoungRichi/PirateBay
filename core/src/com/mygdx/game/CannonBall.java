@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class CannonBall extends ActorBeta {
 
-    float maxFireDuration = 10.0f;
+    float maxFireDuration = 5.0f;
     float fireTimer = maxFireDuration;
     boolean isFiring = false;
 
@@ -136,11 +136,11 @@ public class CannonBall extends ActorBeta {
             }
             else if(!isFiring)
             {
-                if(0 < fireTimer && fireTimer < 3)
+                if(0 < fireTimer && fireTimer < 1.5)
                     cannon.cannonState = CannonState.chargeDanger;
-                else if(fireTimer < 6)
+                else if(fireTimer < 3)
                     cannon.cannonState = CannonState.chargeWarning;
-                else if(fireTimer < 10)
+                else if(fireTimer < maxFireDuration)
                     cannon.cannonState = CannonState.chargeNormal;
                 else
                     cannon.cannonState = CannonState.Idle;
