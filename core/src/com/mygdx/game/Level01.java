@@ -105,8 +105,8 @@ public class Level01 extends ScreenBeta {
         disTextTimeMax = 5f;
         disTextTimer = disTextTimeMax;
         secondWaveTimer = 1;
-        secondWaveTransTimer01 = 3;
-        secondWaveTransTimer02 = 3;
+        secondWaveTransTimer01 = 5;
+        secondWaveTransTimer02 = 5;
 
         livesCount = new Label("x 3", arcade);
         livesCount.setAlignment(Align.center);
@@ -139,7 +139,7 @@ public class Level01 extends ScreenBeta {
         tapText.addAction(tapTextSequenceAction);
 
         instructionGroup = new Group();
-        instructionGroup.setPosition(WIDTH/2 - boatSmall01.getWidth(), HEIGHT/2 - boatSmall01.getHeight() / 2);
+        instructionGroup.setPosition(WIDTH/2 - boatSmall01.getWidth(), HEIGHT/2 - boatSmall01.getHeight()/1.5f);
         mainStage.addActor(instructionGroup);
         instructionGroup.addActor(tapToPlay);
         instructionGroup.addActor(tapText);
@@ -218,7 +218,7 @@ public class Level01 extends ScreenBeta {
                 fader.addAction(faderSequenceAction);
                 tapToPlay.setColor(1,1,1,0);
                 tapText.setColor(1,1,1,0);
-                winMsg.setText("Try tap and hold longer. Watch the size of the ball carefully!");
+                winMsg.setText("Try to tap and hold longer. Watch the size of the ball carefully!");
                 secondWaveTransTimer02 -= dt;
                 if(secondWaveTransTimer02 <= 0)
                 {
@@ -277,7 +277,7 @@ public class Level01 extends ScreenBeta {
             cannon.fireDir = touchPos.sub(cannonOriPos);
 
             if(cannon.fireDir.len() > cannon.getWidth() &&
-                    -screenY+HEIGHT >= boatSmall01.getY()&& -screenY+HEIGHT <= boatSmall01.getY() + boatSmall01.getHeight())
+                    -screenY+HEIGHT >= boatSmall01.getY() && -screenY+HEIGHT <= boatSmall01.getY() + boatSmall01.getHeight()/3)
             {
                 fireTrigger = true;
                 cannon.setRotation(cannon.fireDir.angle());
