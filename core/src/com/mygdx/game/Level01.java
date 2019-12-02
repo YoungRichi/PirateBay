@@ -244,7 +244,7 @@ public class Level01 extends ScreenBeta {
                 secondWave = true;
             }
         }
-        if(secondWave && cannon.lives == 0)
+        if(secondWave && cannonBall.fireTimer <= 0 && ActorBeta.getListSmallBoat().size() ==0)
         {
             cannon.lives = 1;
             boatSmall01 = new BoatSmall(WIDTH / 2, HEIGHT / 2, mainStage);
