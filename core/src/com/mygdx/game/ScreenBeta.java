@@ -45,6 +45,7 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
     //BOOLEANS
     static boolean isPaused;
     static boolean loseGame;
+    static boolean delayToDisplay;
 
     //int score;
 

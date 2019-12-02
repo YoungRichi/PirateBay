@@ -27,7 +27,7 @@ public class CannonBall extends ActorBeta {
         super.act(dt);
         applyPhysics(dt);
 
-        if(ScreenBeta.isPaused) // if the game is paused, then stop moving
+        if(ScreenBeta.isPaused || ScreenBeta.delayToDisplay) // if the game is paused, then stop moving
         {
             moveBy(0, 0);
             rotateBy(0);
@@ -136,9 +136,9 @@ public class CannonBall extends ActorBeta {
             }
             else if(!isFiring)
             {
-                if(0 < fireTimer && fireTimer < 1.5)
+                if(0 < fireTimer && fireTimer < fireDurationMax / 5)
                     cannon.cannonState = CannonState.chargeDanger;
-                else if(fireTimer < 3)
+                else if(fireTimer < fireDurationMax * 2.5f / 5)
                     cannon.cannonState = CannonState.chargeWarning;
                 else if(fireTimer < fireDurationMax)
                     cannon.cannonState = CannonState.chargeNormal;

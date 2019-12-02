@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -16,6 +17,7 @@ public class Level01 extends ScreenBeta {
 
     //=============== Player ========================//
     CannonBall cannonBall;
+    Ball ball;
     Vector3 mouseCoord;
     Vector2 dir;
     boolean fireTrigger; // indicate whether the cannon ball is loaded
@@ -29,13 +31,28 @@ public class Level01 extends ScreenBeta {
     ActorBeta pauseButtonTex, resumeButtonTex;
     Label livesCount;
     Label winMsg;
-
+    ActorBeta tapToPlay;
+    Label tapText;
+    float refResolutionFactor;
+    SequenceAction tapTextSequenceAction;
+    SequenceAction tapToPlaySequenceAction;
+    SequenceAction winMsgSequenceAction;
+    SequenceAction faderSequenceAction;
+    float startLvlTimeMax;
+    float startLvlTimer;
+    Group instructionGroup;
+    ActorBeta fader;
     //================= Sounds =========================//
     Sound explosion, hit, gameOver, shoot, parrotSound, lvlCompleted, click;
 
     //================= Enemies =======================//
     BoatSmall boatSmall01;
-    boolean secondWave;
+    boolean firstWave, secondWave, thirdWave;
+    boolean secondWaveTransition;
+    float disTextTimeMax;
+    float disTextTimer;
+    float secondWaveTransTimer01, secondWaveTransTimer02;
+    float secondWaveTimer;
 
     @Override
     public void initialize() {
@@ -50,7 +67,10 @@ public class Level01 extends ScreenBeta {
 
         ActorBeta.setWorldBounds(WIDTH, HEIGHT);
 
+
         fireTrigger = false; // if the player touches the screen, then the value is true
+        startLvlTimeMax = 3;
+        startLvlTimer = startLvlTimeMax;
 
         //================================= Player ==============================================//
         cannonBase = new CannonBase();
@@ -63,17 +83,30 @@ public class Level01 extends ScreenBeta {
 
         //================================== Obstacles ===========================================//
 
-        new Rock(WIDTH / 2 + WIDTH / 10, HEIGHT / 2, mainStage);
+        for(int i = 0; i < 15; i++)
+        {
+            new Rock(WIDTH / 2 + WIDTH / 10, 0 + i * HEIGHT / 15, mainStage);
+        }
+
 
         //================================== Enemies ============================================//
 
         boatSmall01 = new BoatSmall(WIDTH / 2, HEIGHT / 2, mainStage);
         boatSmall01.setSpeed(0);
+        firstWave = true;
+        secondWaveTransition = false;
         secondWave = false;
+        thirdWave = false;
+
 
         //============================== Labels =================================================//
 
-        float refResolutionFactor = HEIGHT/480;
+        refResolutionFactor = HEIGHT/480;
+        disTextTimeMax = 5f;
+        disTextTimer = disTextTimeMax;
+        secondWaveTimer = 1;
+        secondWaveTransTimer01 = 3;
+        secondWaveTransTimer02 = 3;
 
         livesCount = new Label("x 3", arcade);
         livesCount.setAlignment(Align.center);
@@ -82,81 +115,143 @@ public class Level01 extends ScreenBeta {
         livesCount.setPosition(liveIcon.getX() + liveIcon.getWidth() + 10, liveIcon.getY());
         mainStage.addActor(livesCount);
 
+
+
+        tapToPlay = new ActorBeta();
+        tapToPlay.loadTexture("TapMe.png");
+        float TapAspectRatio = tapToPlay.getWidth()/tapToPlay.getHeight();
+        tapToPlay.setSize(HEIGHT/10 * TapAspectRatio, HEIGHT/10);
+        tapToPlay.setPosition(0,0);
+        tapToPlay.setColor(1,1,1,0);
+        tapToPlaySequenceAction = Actions.sequence(Actions.delay(3), Actions.repeat(10,
+                Actions.sequence(Actions.fadeIn(0.2f), Actions.fadeOut(0.5f))));
+        tapToPlay.addAction(tapToPlaySequenceAction);
+
+        tapText = new Label("TAP HERE TO FIRE!", arcade);
+        //tapText.setAlignment(Align.center);
+        tapText.setFontScale(1 * refResolutionFactor);
+        tapText.setSize(WIDTH * 1.5f / 2, HEIGHT/6);
+        tapText.setWrap(true);
+        tapText.setPosition(tapToPlay.getX(), tapToPlay.getY() - tapToPlay.getHeight()* 2);
+        tapText.setColor(1,1,1,0);
+        tapTextSequenceAction = Actions.sequence(Actions.delay(3), Actions.repeat(10,
+                Actions.sequence(Actions.fadeIn(0.2f), Actions.fadeOut(0.5f))));
+        tapText.addAction(tapTextSequenceAction);
+
+        instructionGroup = new Group();
+        instructionGroup.setPosition(WIDTH/2 - boatSmall01.getWidth(), HEIGHT/2 - boatSmall01.getHeight() / 2);
+        mainStage.addActor(instructionGroup);
+        instructionGroup.addActor(tapToPlay);
+        instructionGroup.addActor(tapText);
+
+        fader = new ActorBeta(0,0, mainStage);
+        fader.loadTexture("cannonTesting.png");
+        fader.setSize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+        fader.setColor(1,1,1,0);
+        faderSequenceAction = Actions.sequence(Actions.delay(0.5f),
+                Actions.fadeIn(2));
+
         winMsg = new Label(" ", arcade);
         winMsg.setAlignment(Align.center);
         winMsg.setFontScale(2 * refResolutionFactor);
         winMsg.setSize(WIDTH, HEIGHT/4);
         winMsg.setPosition(WIDTH / 2 - winMsg.getWidth()/2, HEIGHT / 2 - winMsg.getHeight()/2);
         winMsg.setText("Level 1");
-        winMsg.addAction(Actions.sequence(Actions.delay(0.5f),Actions.fadeOut(2)));
+        winMsgSequenceAction = Actions.sequence(Actions.delay(0.5f),Actions.fadeOut(disTextTimeMax - 0.5f));
+        winMsg.addAction(winMsgSequenceAction);
         mainStage.addActor(winMsg);
-
-        ActorBeta tapToPlay = new ActorBeta();
-        tapToPlay.loadTexture("TapMe.png");
-        float TapAspectRatio = tapToPlay.getWidth()/tapToPlay.getHeight();
-        tapToPlay.setSize(HEIGHT/10 * TapAspectRatio, HEIGHT/10);
-        tapToPlay.setPosition(0,0);
-        tapToPlay.setColor(1,1,1,0);
-        tapToPlay.addAction(Actions.sequence(Actions.delay(3), Actions.repeat(10,
-                Actions.sequence(Actions.fadeIn(0.2f), Actions.fadeOut(0.5f)))));
-
-        Label tapText = new Label("TAP HERE TO FIRE!", arcade);
-        tapText.setAlignment(Align.center);
-        tapText.setFontScale(1 * refResolutionFactor);
-        tapText.setPosition(tapToPlay.getX(), tapToPlay.getY() - tapToPlay.getHeight());
-        tapText.setColor(1,1,1,0);
-        tapText.addAction(Actions.sequence(Actions.delay(3), Actions.repeat(10,
-                Actions.sequence(Actions.fadeIn(0.2f), Actions.fadeOut(0.5f)))));
-
-        Group instructionGroup = new Group();
-        instructionGroup.setPosition(WIDTH/2 - boatSmall01.getWidth(), HEIGHT/2 - boatSmall01.getHeight() / 2);
-        mainStage.addActor(instructionGroup);
-        instructionGroup.addActor(tapToPlay);
-        instructionGroup.addActor(tapText);
-
-        //============================== Buttons ================================================//
-
-        pauseButtonTex = new ActorBeta();
-        pauseButtonTex.loadTexture("PauseButton.png");
-        float pauseBtnAR = pauseButtonTex.getWidth() / pauseButtonTex.getHeight();
-        pauseButtonTex.setSize(HEIGHT / 10 * pauseBtnAR, HEIGHT /10);
-        pauseButtonTex.setColor(1,1,1, 0.5f);
-        pauseButton= new Button(arcade);
-        pauseButton.setSize(pauseButtonTex.getWidth() * 0.9f, pauseButtonTex.getHeight() * 0.9f);
-        pauseButton.add(pauseButtonTex);
-        pauseButton.setPosition(20, HEIGHT - pauseButton.getHeight() * 1.2f);
-        pauseButton.setColor(1,1,1,0);
-        mainStage.addActor(pauseButton);
-
-        resumeButtonTex = new ActorBeta();
-        resumeButtonTex.loadTexture("PlayButton.png");
-        float resumeBtnAR = resumeButtonTex.getWidth() / resumeButtonTex.getHeight();
-        resumeButtonTex.setSize(HEIGHT / 10 * resumeBtnAR, HEIGHT /10);
-        resumeButtonTex.setColor(1,1,1,0.5f);
-        resumeButton= new Button(arcade);
-        resumeButton.setSize(resumeButtonTex.getWidth() * 0.9f, resumeButtonTex.getHeight() * 0.9f);
-        resumeButton.add(resumeButtonTex);
-        resumeButton.setPosition(20, HEIGHT - resumeButton.getHeight() * 1.2f);
-        resumeButton.setColor(1,1,1,0);
-        mainStage.addActor(resumeButton);
-        resumeButton.setVisible(false);
     }
 
     @Override
     public void update(float dt) {
-        if(fireTrigger)
+
+        startLvlTimer -= dt;
+        if(fireTrigger && !delayToDisplay)
         {
             ControlCannonBall(dt);
+
+            if(cannonBall.overlaps(boatSmall01) && firstWave)
+            {
+                winMsg.removeAction(winMsgSequenceAction);
+                tapToPlay.removeAction(tapToPlaySequenceAction);
+                tapText.removeAction(tapTextSequenceAction);
+
+                winMsg.setText("The cannon ball keeps moving until it explodes");
+                winMsg.setAlignment(Align.center);
+                winMsg.setFontScale(1 * refResolutionFactor);
+                winMsg.setSize(WIDTH, HEIGHT/4);
+                winMsg.setPosition(WIDTH / 2 - winMsg.getWidth()/2, HEIGHT / 2 - winMsg.getHeight()/2);
+                winMsg.setColor(1,1,1,1);
+                winMsg.setWrap(true);
+                delayToDisplay = true;
+                firstWave = false;
+
+                tapToPlay.setColor(1,1,1,0);
+                tapText.setColor(1,1,1,0);
+
+
+            }
+
+
         }
         //CheckPauseResumeButton();
         //CheckGameState();
-        livesCount.setText("x " + cannon.lives);
+
+        if(delayToDisplay) {
+            disTextTimer -= dt;
+            if (disTextTimer <= 0) {
+                delayToDisplay = false;
+            }
+        }
+
 
         if(cannon.lives == 2)
         {
-            secondWave = true;
+            tapToPlay.setColor(1,1,1,1);
+            tapText.setColor(1,1,1,1);
+            instructionGroup.setPosition(livesCount.getX() + livesCount.getWidth()/2, livesCount.getY()-livesCount.getWidth());
+            tapText.setText("The player loses one life if they are hit by the ball");
+            winMsg.setText(" ");
+            secondWaveTransTimer01 -= dt;
+            if(secondWaveTransTimer01 <= 0)
+            {
+                fader.addAction(faderSequenceAction);
+                tapToPlay.setColor(1,1,1,0);
+                tapText.setColor(1,1,1,0);
+                winMsg.setText("Try tap and hold longer. Watch the size of the ball carefully!");
+                secondWaveTransTimer02 -= dt;
+                if(secondWaveTransTimer02 <= 0)
+                {
+                    secondWaveTransition = true;
+                }
+
+            }
         }
 
+        // trasition to second wave
+        if(secondWaveTransition)
+        {
+            fader.removeAction(faderSequenceAction);
+            fader.setColor(1,1,1,0);
+            winMsg.setText(" ");
+            cannon.lives = 1;
+            secondWaveTimer -= dt;
+            if(secondWaveTimer <= 0)
+            {
+                boatSmall01 = new BoatSmall(WIDTH / 2, HEIGHT / 2, mainStage);
+                boatSmall01.setSpeed(0);
+                secondWaveTransition = false;
+                secondWave = true;
+            }
+        }
+        if(secondWave && cannon.lives == 0)
+        {
+            cannon.lives = 1;
+            boatSmall01 = new BoatSmall(WIDTH / 2, HEIGHT / 2, mainStage);
+            boatSmall01.setSpeed(0);
+        }
+
+        livesCount.setText("x " + cannon.lives);
     }
 
     @Override
@@ -175,7 +270,7 @@ public class Level01 extends ScreenBeta {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
-        if(!secondWave && !fireTrigger) // first way fire mechanic
+        if(firstWave && !fireTrigger && startLvlTimer <= 0) // first way fire mechanic
         {
             Vector2 cannonOriPos = new Vector2(cannon.getX() + cannon.getWidth() / 2,cannon.getY()+ cannon.getHeight() / 2);
             Vector2 touchPos = new Vector2(screenX, (screenY - HEIGHT)*(-1));
@@ -183,6 +278,7 @@ public class Level01 extends ScreenBeta {
 
             if(cannon.fireDir.len() > cannon.getWidth() &&
                     -screenY+HEIGHT >= boatSmall01.getY()&& -screenY+HEIGHT <= boatSmall01.getY() + boatSmall01.getHeight())
+            {
                 fireTrigger = true;
                 cannon.setRotation(cannon.fireDir.angle());
                 cannon.setOrigin(cannon.getWidth()/2, cannon.getHeight()/2);
@@ -191,7 +287,30 @@ public class Level01 extends ScreenBeta {
                         cannon.getY() + cannon.getHeight()/2 - HEIGHT / 50 + (float)(Math.sin(cannon.fireDir.angleRad()))*cannon.getWidth(), mainStage);
                 cannonBall.SetVelocity(screenX, (screenY - HEIGHT)*(-1) - cannonBall.getHeight()/2);
                 cannonBall.setVisible(false);
+                //ball = new Ball(cannon.getX()+ cannon.getWidth()/2 - HEIGHT/25 +(float)(Math.cos(cannon.fireDir.angleRad()))*cannon.getWidth()/3,
+                //cannon.getY() + cannon.getHeight()/2 - HEIGHT/50 + (float)(Math.sin(cannon.fireDir.angleRad()))*cannon.getWidth()/3, mainStage);
+            }
+        }
 
+        if(secondWave  && !fireTrigger )
+        {
+            Vector2 cannonOriPos = new Vector2(cannon.getX() + cannon.getWidth() / 2,cannon.getY()+ cannon.getHeight() / 2);
+            Vector2 touchPos = new Vector2(screenX, (screenY - HEIGHT)*(-1));
+            cannon.fireDir = touchPos.sub(cannonOriPos);
+
+            if(cannon.fireDir.len() > cannon.getWidth())
+            {
+                fireTrigger = true;
+                cannon.setRotation(cannon.fireDir.angle());
+                cannon.setOrigin(cannon.getWidth()/2, cannon.getHeight()/2);
+
+                cannonBall = new CannonBall(cannon.getX()+ cannon.getWidth()/2 +(float)(Math.cos(cannon.fireDir.angleRad()))*cannon.getWidth(),
+                        cannon.getY() + cannon.getHeight()/2 - HEIGHT / 50 + (float)(Math.sin(cannon.fireDir.angleRad()))*cannon.getWidth(), mainStage);
+                cannonBall.SetVelocity(screenX, (screenY - HEIGHT)*(-1) - cannonBall.getHeight()/2);
+                cannonBall.setVisible(false);
+                ball = new Ball(cannon.getX()+ cannon.getWidth()/2 - HEIGHT/25 +(float)(Math.cos(cannon.fireDir.angleRad()))*cannon.getWidth()/3,
+                cannon.getY() + cannon.getHeight()/2 - HEIGHT/50 + (float)(Math.sin(cannon.fireDir.angleRad()))*cannon.getWidth()/3, mainStage);
+            }
         }
         /*
         if(!fireTrigger)
