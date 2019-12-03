@@ -31,17 +31,10 @@ public class TitleScreen extends ScreenBeta {
 
         tapToPlay =  new ActorBeta(); //, mainStage);
         tapToPlay.loadTexture("TapMe.png");
-        //===
         float TapAspectRatio = tapToPlay.getWidth()/tapToPlay.getHeight();
         tapToPlay.setSize(HEIGHT/10 * TapAspectRatio, HEIGHT/10);
 
         tap = new Label("TAP!", arcade);
-        //float TextAspectRatio = tap.getWidth()/tap.getHeight();
-        //tap.setPosition(WIDTH /2 * TextAspectRatio, HEIGHT *7/8);
-        //tap.setScale(1);
-        //========
-        //tap.setFontScale( WIDTH/2000 * TextAspectRatio);
-        //tap.setWrap(true);
 
         table = new Table(arcade);
 
@@ -78,7 +71,7 @@ public class TitleScreen extends ScreenBeta {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         clickSound.play();
 
-        PirateBay.setActiveScreen(new LevelScreen());
+        PirateBay.setActiveScreen(new GameScreen());
 
         return super.touchDown(screenX, screenY, pointer, button);
     }

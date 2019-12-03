@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class CannonBall extends ActorBeta {
 
-    public float fireDurationMax = 5.0f;
+    float fireDurationMax = 5.0f;
     float fireTimer = fireDurationMax;
     boolean isFiring = false;
 
@@ -27,7 +27,7 @@ public class CannonBall extends ActorBeta {
         super.act(dt);
         applyPhysics(dt);
 
-        if(ScreenBeta.isPaused || ScreenBeta.delayToDisplay) // if the game is paused, then stop moving
+        if(ScreenBeta.isPaused || ScreenBeta.delayToDisplay) // if the game is paused, then stop moving; delayToDisplay is meant for Level 1 tutorial
         {
             moveBy(0, 0);
             rotateBy(0);
