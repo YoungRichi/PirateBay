@@ -42,6 +42,9 @@ public class Wave1 extends ScreenBeta {
 
     //================= Enemies =======================//
     Island island;
+    BoatBig bigBoat;
+    BoatMedium mediumBoat;
+    BoatSmall smallBoat;
 
     int boatBigNumMax, boatMediumNumMax, boatSmallNumMax;
     int rockNumMax;
@@ -130,6 +133,21 @@ public class Wave1 extends ScreenBeta {
         boatBigNumMax = 5;
         boatMediumNumMax = 3;
         boatSmallNumMax = 5;
+        for(int i = 0; i < boatSmallNumMax; i++)
+        {
+            new BoatSmall(WIDTH / 2 + WIDTH / 10, 0 + i * HEIGHT / 15, mainStage);
+        }
+
+/*        for(int i = 0; i < boatMediumNumMax; i++)
+        {
+            new BoatMedium(WIDTH / 2 + WIDTH / 10, 0 + i * HEIGHT / 15, mainStage);
+        }
+
+        for(int i = 0; i < boatBigNumMax; i++)
+        {
+            new BoatBig(WIDTH / 2 + WIDTH / 10, 0 + i * HEIGHT / 15, mainStage);
+        }*/
+
 
 
         //============================== Labels =================================================//
