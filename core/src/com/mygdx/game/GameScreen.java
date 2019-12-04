@@ -32,8 +32,7 @@ public class GameScreen extends ScreenBeta {
 
     //================ UI ============================//
     Skin arcade;
-    Button pauseButton, resumeButton;
-    ActorBeta pauseButtonTex, resumeButtonTex, fader, tapToPlay;
+    ActorBeta fader, tapToPlay;
     Label livesCount, winMsg, tapText;
     SequenceAction tapTextSequenceAction, tapToPlaySequenceAction, winMsgSequenceAction;
     SequenceAction faderSequenceAction, faderSequenceActions02;
@@ -50,13 +49,13 @@ public class GameScreen extends ScreenBeta {
     float spawnEnemyTimer;
     float toWaveOneTimer;
     boolean waveOne;
-    //================= Sounds =========================//
+
+    //================= Sounds ========================//
     Sound explosion, hit, gameOver, shoot, parrotSound, lvlCompleted, click;
 
     //================= Enemies =======================//
 
     BoatSmall boatSmall01;
-    int boatBigNumMax, boatMediumNumMax, boatSmallNumMax;
     int rockNumMax;
 
     @Override
@@ -80,11 +79,6 @@ public class GameScreen extends ScreenBeta {
             }
         }
         SecondTutorial(dt);
-
-        
-
-        //CheckPauseResumeButton();
-        //CheckGameState();
         livesCount.setText("x " + cannon.lives);
     }
 
@@ -92,17 +86,14 @@ public class GameScreen extends ScreenBeta {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
 
-        if(secondTutorial && !fireTrigger || tutCompleted && !fireTrigger) // there is a transition from firstTutorial to secondTutorial, during which secondTutorial and tutCompleted are all false
+        if(secondTutorial && !fireTrigger || tutCompleted && !fireTrigger)// || playLevel && !fireTrigger) // there is a transition from firstTutorial to secondTutorial, during which secondTutorial and tutCompleted are all false
         {
             Vector2 cannonOriPos = new Vector2(cannon.getX() + cannon.getWidth() / 2,cannon.getY()+ cannon.getHeight() / 2);
             Vector2 touchPos = new Vector2(screenX, (screenY - HEIGHT)*(-1));
-            Vector2 uIButtonPos = new Vector2(- pauseButtonTex.getX() + pauseButtonTex.getWidth()/2, - pauseButtonTex.getY() + pauseButtonTex.getHeight()/2);
             cannon.fireDir = touchPos.sub(cannonOriPos);
             Vector2 touchPos1 = new Vector2(screenX, screenY);
-            Vector2 buttonZone = touchPos1.sub(uIButtonPos);
 
-            if(cannon.fireDir.len() > cannon.getWidth()&&
-                    buttonZone.len2() > 2f * (pauseButtonTex.getWidth()/2 * pauseButtonTex.getWidth()/2 ) + pauseButtonTex.getHeight()/2 * pauseButtonTex.getHeight()/2) // able to load cannon ball only when the touch down position is outside of the range
+            if(cannon.fireDir.len() > cannon.getWidth()) // able to load cannon ball only when the touch down position is outside of the range
             {
                 fireTrigger = true;
                 cannon.setRotation(cannon.fireDir.angle());
@@ -118,7 +109,6 @@ public class GameScreen extends ScreenBeta {
                         cannon.getY() + cannon.getHeight()/2 - HEIGHT/50 + (float)(Math.sin(cannon.fireDir.angleRad()))*cannon.getWidth()/3, mainStage);
             }
         }
-
 
         if(firstTutorial && !fireTrigger && startLvlTimer + 1 <= 0) // tutorial aim and fire mechanic; 1 is the value of tapToPlay delay duration actions
         {
@@ -160,18 +150,6 @@ public class GameScreen extends ScreenBeta {
         return super.touchUp(screenX, screenY, pointer, button);
     }
 
-    @Override
-    public void pause() {
-        super.pause();
-        isPaused = true;
-    }
-
-    @Override
-    public void resume() {
-        super.resume();
-        isPaused = false;
-    }
-
     void ControlCannonBall(float dt)
     {
 
@@ -182,44 +160,6 @@ public class GameScreen extends ScreenBeta {
         if(cannonBall.fireTimer <=0) // the player is able to fire again only when the cannon ball's fireTimer reached zero
         {
             fireTrigger = false;
-        }
-    }
-
-    void CheckPauseResumeButton()
-    {
-        if(pauseButton.isPressed())
-        {
-            click.play();
-
-            pause();
-            pauseButton.setVisible(false);
-            resumeButton.setVisible(true);
-        }
-
-        if(resumeButton.isPressed())
-        {
-            click.play();
-
-            resume();
-            pauseButton.setVisible(true);
-            resumeButton.setVisible(false);
-        }
-    }
-
-    void CheckGameState()
-    {
-        if(ActorBeta.getListSmallBoat().size() + ActorBeta.getListMediumBoat().size() + ActorBeta.getListBigBoat().size() == 0)
-        {
-            //Win
-            winMsg.setText("Level Completed!");
-            isPaused = true;
-            cannonBall.fireTimer = 0;
-        }
-        if(cannon.lives == 0 || loseGame)
-        {
-            winMsg.setText("You lose!");
-            isPaused = true;
-            //cannonBall.fireTimer = 0;
         }
     }
 
@@ -299,25 +239,29 @@ public class GameScreen extends ScreenBeta {
             boatSmall03.setSpeed(0);
             secondTutorial = false;
             tutCompleted = true;
-
         }
 
         if(cannon.lives <=0)
             cannon.lives = 0;
 
-        if(tutCompleted  && ActorBeta.getListSmallBoat().size() == 0 && !waveOne) //&& cannonBall.fireTimer <= 0
+        if(tutCompleted  && ActorBeta.getListSmallBoat().size() == 0 && !waveOne)
         {
             cannonBall.fireTimer = 0;
-            //fader.setColor(1,1,1,1);
             winMsg.setText("Enemies are coming!");
-
+            tutCompleted = false;
+            waveOne = true;
+            for(Rock rock : ActorBeta.getListRock())
+            {
+                rock.remove();
+            }
+        }
+        if(waveOne)
+        {
             toWaveOneTimer -= deltaTime;
             if(toWaveOneTimer <= 0)
             {
-                //fader.setColor(1,1,1,0);
-                winMsg.setText(" ");
-                waveOne = true;
-                System.out.println(waveOne);
+                playLevel = true;
+                PirateBay.setActiveScreen(new Wave1());
             }
         }
     }
@@ -342,15 +286,14 @@ public class GameScreen extends ScreenBeta {
         secondTutTimer = 1;
         secondTutTransTimer01 = 5;
         secondTutTransTimer02 = 5;
-        toWaveOneTimer = 5;
+        toWaveOneTimer = 3;
         firstTutorial = true;
         secondTutTransition = false;
         secondTutorial = false;
         spawnEnemyTimer = 2; // for tutorial
         tutCompleted = false;
-
         waveOne = false;
-
+        playLevel = false;
         //================================= Player ==============================================//
         cannonBase = new CannonBase();
         cannonBase.setPosition(cannonBase.getWidth()/2, HEIGHT/3);
@@ -369,10 +312,6 @@ public class GameScreen extends ScreenBeta {
             new Rock(WIDTH / 2 + WIDTH / 10, 0 + i * HEIGHT / 15, mainStage);
         }
         //================================== Enemies ============================================//
-
-        boatBigNumMax = 5;
-        boatMediumNumMax = 3;
-        boatSmallNumMax = 5;
 
         boatSmall01 = new BoatSmall(WIDTH / 2, HEIGHT / 2, mainStage);
         boatSmall01.setSpeed(0);
@@ -424,39 +363,11 @@ public class GameScreen extends ScreenBeta {
         winMsg.setFontScale(2 * refResolutionFactor);
         winMsg.setSize(WIDTH, HEIGHT/4);
         winMsg.setPosition(WIDTH / 2 - winMsg.getWidth()/2, HEIGHT / 2 - winMsg.getHeight()/2);
-        winMsg.setText("Level 1");
+        winMsg.setText("Are You Ready!");
         winMsgSequenceAction = Actions.sequence(Actions.delay(0.5f),Actions.fadeOut(disTextTimer - 1.5f));
         winMsg.addAction(winMsgSequenceAction);
         faderSequenceActions02 = Actions.sequence(Actions.fadeIn(0.1f), Actions.fadeOut(6));
         mainStage.addActor(winMsg);
-
-        //============================== Buttons ================================================//
-
-        pauseButtonTex = new ActorBeta();
-        pauseButtonTex.loadTexture("PauseButton.png");
-        float pauseBtnAR = pauseButtonTex.getWidth() / pauseButtonTex.getHeight();
-        pauseButtonTex.setSize(HEIGHT / 10 * pauseBtnAR, HEIGHT /10);
-        pauseButtonTex.setColor(1,1,1, 0.5f);
-        pauseButton= new Button(arcade);
-        pauseButton.setSize(pauseButtonTex.getWidth() * 0.9f, pauseButtonTex.getHeight() * 0.9f);
-        pauseButton.add(pauseButtonTex);
-        pauseButton.setPosition(20, HEIGHT - pauseButton.getHeight() * 1.2f);
-        pauseButton.setColor(1,1,1,0);
-        //mainStage.addActor(pauseButton);
-
-        resumeButtonTex = new ActorBeta();
-        resumeButtonTex.loadTexture("PlayButton.png");
-        float resumeBtnAR = resumeButtonTex.getWidth() / resumeButtonTex.getHeight();
-        resumeButtonTex.setSize(HEIGHT / 10 * resumeBtnAR, HEIGHT /10);
-        resumeButtonTex.setColor(1,1,1,0.5f);
-        resumeButton= new Button(arcade);
-        resumeButton.setSize(resumeButtonTex.getWidth() * 0.9f, resumeButtonTex.getHeight() * 0.9f);
-        resumeButton.add(resumeButtonTex);
-        resumeButton.setPosition(20, HEIGHT - resumeButton.getHeight() * 1.2f);
-        resumeButton.setColor(1,1,1,0);
-        //mainStage.addActor(resumeButton);
-        resumeButton.setVisible(false);
-
 
         //==================================== Sound =============================================//
         explosion = Gdx.audio.newSound(Gdx.files.internal("Sound/explosion.wav"));
