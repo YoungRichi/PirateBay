@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class BoatBig extends ActorBeta {
 
-    String[] boatAnim = {"BigBoat.png"};
+    String[] boatAnim = {"BigBoat.png", "BigBoat1.png", "BigBoat2.png", "BigBoat3.png"};
     Animation idleAnim = loadAnimationFromFiles(boatAnim, 0.2f, true);
     int health = 2;
     float dropOffRate = 2;

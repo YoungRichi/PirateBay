@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class BoatSmall extends ActorBeta {
-    String[] boatSAnim = {"SmallBoat.png"};
+    String[] boatSAnim = {"SmallBoat.png", "SmallBoat1.png", "SmallBoat2.png"};
     Animation idleAnim = loadAnimationFromFiles(boatSAnim, 0.2f, true);
     float dropOffRate = 2;
     float dropOffTimer = dropOffRate;

@@ -41,7 +41,7 @@ public class Wave1 extends ScreenBeta {
     Sound explosion, hit, gameOver, shoot, parrotSound, lvlCompleted, click;
 
     //================= Enemies =======================//
-
+    Island island;
 
     int boatBigNumMax, boatMediumNumMax, boatSmallNumMax;
     int rockNumMax;
@@ -122,6 +122,9 @@ public class Wave1 extends ScreenBeta {
         {
             new Rock(WIDTH / 2 + WIDTH / 10, 0 + i * HEIGHT / 15, mainStage);
         }
+
+        island = new Island(WIDTH / 2, HEIGHT / 15, mainStage);
+
         //================================== Enemies ============================================//
 
         boatBigNumMax = 5;

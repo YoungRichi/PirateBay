@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 public class BoatMedium extends ActorBeta {
 
-    String[] boatMAnim = {"MediumBoat.png"};
+    String[] boatMAnim = {"MediumBoat.png", "MediumBoat1.png", "MediumBoat2.png", "MediumBoat3.png"};
     Animation idleAnim = loadAnimationFromFiles(boatMAnim, 0.2f, true);
 
     float timeBetweenFire = 3;
