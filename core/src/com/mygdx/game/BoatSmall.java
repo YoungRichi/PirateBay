@@ -20,7 +20,7 @@ public class BoatSmall extends ActorBeta {
         setSize(Gdx.graphics.getHeight() / 12 * getWidth() / getHeight(), Gdx.graphics.getHeight() / 12);
         setBoundaryRectangleEdited();
         SetUpGroup();
-        setSpeed(120);
+        setSpeed(0);
         setMotionAngle(180);
 
         pathFinderBelow = new ActorBeta(0,0, s);

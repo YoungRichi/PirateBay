@@ -5,11 +5,13 @@ public class Level01 extends MyScreenBeta {
     public void EnemiesInit() {
         levelNum = 1; // define the current level
         // array of size ScreenBeta.waveNum will be used as default. Only the first waveNum values will be used
-        smallBoatNums = new int[] {2,3,4,5,6};
+        smallBoatNums = new int[] {1,1,2,2,2};
         medBoatNums = new int[]{2,2,3,3,3};
         bigBoatNums = new int[]{0,0,1,1,2};
         //highSpeedBoatNums = new int[]{};
         parrotNums = new int[]{0,0,0,0,1};
+        CreateBoatSmall(8);
+        CreateBoatMedium(13);
     }
 
     @Override

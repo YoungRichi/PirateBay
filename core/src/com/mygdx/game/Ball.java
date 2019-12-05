@@ -29,11 +29,15 @@ public class Ball extends ActorBeta {
         super.act(dt);
         for (CannonBall cannonBall : getListCannonBall())
         {
-            cannonBall.setSize(getWidth(), getHeight());
-            cannonBall.setBoundaryRectangle();
-            cannonBall.setColor(Color.RED);
+
             if(cannonBall.isFiring || cannonBall.fireTimer < 0.1f)
+            {
+                cannonBall.setSize(getWidth(), getHeight());
+                cannonBall.setBoundaryRectangle();
+                cannonBall.setColor(Color.RED);
                 remove();
+            }
+
         }
     }
 }

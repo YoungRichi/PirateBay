@@ -14,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.IntArray;
 
+import java.util.ArrayList;
+
 import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
 
 public abstract class MyScreenBeta extends ScreenBeta {
@@ -57,6 +59,7 @@ public abstract class MyScreenBeta extends ScreenBeta {
 
     int[] smallBoatNums, medBoatNums, bigBoatNums, highSpeedBoatNums, parrotNums;
     int rockNumMax;
+    int sBStartIndex, mBStartIndex, bBStartIndex, pStartIndex;
 
     @Override
     public void initialize() {
@@ -73,14 +76,24 @@ public abstract class MyScreenBeta extends ScreenBeta {
             waves[0] = true;
             lvlStarted = true;
             enemySpawned = true;
-            SpawnEnemies(smallBoatNums[0], medBoatNums[0],bigBoatNums[0], parrotNums[0]);
+            GetListSpawnSmlBoat(sBStartIndex, smallBoatNums[0]);
+            GetListSpawnMedBoat(mBStartIndex, medBoatNums[0]);
+            sBStartIndex += smallBoatNums[0];
+            mBStartIndex += medBoatNums[0];
+
         }
-        if(waveEnd(dt) && !enemySpawned)
+
+        if(waveEnd(dt)&& !enemySpawned)
         {
-            for(int i = 0; i < waveNum; i++)
+            for (int i = 1; i < waveNum; i++)
             {
                 if(waves[i])
-                    SpawnEnemies(smallBoatNums[i], medBoatNums[i],bigBoatNums[i], parrotNums[i]);
+                {
+                    GetListSpawnSmlBoat(sBStartIndex, smallBoatNums[i]);
+                    sBStartIndex += smallBoatNums[i];
+                    GetListSpawnMedBoat(mBStartIndex, medBoatNums[i]);
+                    mBStartIndex += medBoatNums[i];
+                }
             }
         }
 
@@ -169,6 +182,14 @@ public abstract class MyScreenBeta extends ScreenBeta {
         medBoatNums = new int[waveNum];
         bigBoatNums = new int[waveNum];
         parrotNums = new int[waveNum];
+        boatSmalls = new ArrayList<BoatSmall>();
+        boatMediums = new ArrayList<BoatMedium>();
+        boatBigs = new ArrayList<BoatBig>();
+        parrots = new ArrayList<Parrot>();
+        sBStartIndex = 0;
+        mBStartIndex = 0;
+        bBStartIndex = 0;
+        pStartIndex = 0;
 
         EnemiesInit();
 

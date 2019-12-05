@@ -19,7 +19,8 @@ public class CannonBall extends ActorBeta {
     public CannonBall(float x, float y, Stage s) {
         super(x, y, s);
         loadTexture("Cannonball.png");
-        setSize(Gdx.graphics.getHeight() / 25 * getWidth()/getHeight(), Gdx.graphics.getHeight() / 25);
+        //setSize(Gdx.graphics.getHeight() / 25 * getWidth()/getHeight(), Gdx.graphics.getHeight() / 25);
+        setSize(0,0);
         setBoundaryRectangle();
     }
 

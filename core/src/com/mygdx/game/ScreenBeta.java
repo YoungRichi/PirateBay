@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -61,6 +62,10 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
     float bwtWaveTimeMax;
     float bwtWaveTimer;
     float toNextLevelTimer;
+    ArrayList<BoatSmall> boatSmalls;
+    ArrayList<BoatMedium> boatMediums;
+    ArrayList<BoatBig> boatBigs;
+    ArrayList<Parrot> parrots;
 
 
     static int score, highscore;
@@ -85,9 +90,10 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
         {
             waves[i] = false;
         }
-        bwtWaveTimeMax = 5;
+        bwtWaveTimeMax = 2;
         bwtWaveTimer = bwtWaveTimeMax;
         toNextLevelTimer = 2;
+
 
         mainStage = new Stage();
         uiStage = new Stage();
@@ -143,14 +149,12 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
 
         prefs = Gdx.app.getPreferences("PirateBay");
         highscore = prefs.getInteger("highscore", 0);
-        /*
+
         if(score > highscore)
         {
             prefs.putInteger("highscore", score);
             prefs.flush();
         }
-
-         */
     }
 
     boolean waveEnd(float deltaTime)
@@ -214,6 +218,48 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
 
         enemySpawned = true;
     }
+
+    public void CreateBoatSmall(int num)
+    {
+        if(num > 0)
+        {
+            for (int i = 0; i < num; i++)
+            {
+
+                boatSmalls.add(new BoatSmall(WIDTH, HEIGHT / num * i , mainStage )); //- HEIGHT / 12
+            }
+        }
+    }
+
+    public void GetListSpawnSmlBoat (int startIndex, int num)
+    {
+        for (int i = startIndex; i < startIndex + num; i++)
+        {
+            boatSmalls.get(i).setSpeed(70);
+        }
+        enemySpawned = true;
+    }
+
+    public void CreateBoatMedium(int num)
+    {
+        if(num > 0)
+        {
+            for (int i = 0; i < num; i++)
+            {
+
+                boatMediums.add(new BoatMedium(WIDTH, HEIGHT / num * i , mainStage )); //- HEIGHT / 12
+            }
+        }
+    }
+
+    public void GetListSpawnMedBoat (int startIndex, int num)
+    {
+        for (int i = startIndex; i < startIndex + num; i++)
+        {
+            boatMediums.get(i).setSpeed(50);
+        }
+        enemySpawned = true;
+    }
     public abstract void initialize();
 
     /**
@@ -267,18 +313,18 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
     public void render(float delta) {
 
         //score++;
-        if(score > highscore)
-        {
-            highscore = score;
-            prefs.putInteger("highscore", score);
-            prefs.flush();
-        }
+        //if(score > highscore)
+        //{
+            //highscore = score;
+            //prefs.putInteger("highscore", score);
+            //prefs.flush();
+        //}
 
         //PAUSE LOGIC
         if(isPaused)
             delta = 0;
         else {
-            delta = Math.min(delta, 1/60.0f);
+            delta = Math.min(delta, 1/25.0f);
         }
 
         mainStage.act(delta);
