@@ -7,11 +7,11 @@ public class ScoreBoard extends ActorBeta {
 
     public ScoreBoard(float x, float y, Stage s) {
         super(x, y, s);
-        loadTexture("Level_Background.png");
+        loadTexture("Scroll.png");
         setSize(Gdx.graphics.getHeight() /2 * getWidth()/getHeight(), Gdx.graphics.getHeight() /2);
     }
 
     public ScoreBoard() {
-        loadTexture("Level_Background.png");
+        loadTexture("Scroll.png");
     }
 }
