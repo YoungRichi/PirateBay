@@ -12,11 +12,14 @@ public class Barricade extends ActorBeta {
     String[] threeQuadStr = {"Barricade_3QuadDam.png"};
     String[] halfStr = {"Barricade_HalfDam.png"};
     String[] oneQuadStr = {"Barricade_OneQuadDam.png"};
+    String[] zeroStr = {"Barricade0_1.png", "Barricade0_2.png", "Barricade0_3.png", "Barricade0_4.png",
+            "Barricade0_5.png", "Barricade0_6.png", "Barricade0_7.png"};
 
     Animation idleAnim = loadAnimationFromFiles(str, 0.1f, true);
     Animation threeQuadDamAnim = loadAnimationFromFiles(threeQuadStr, 0.1f, true);
     Animation halfDamAnim = loadAnimationFromFiles(halfStr, 0.1f, true);
     Animation oneQuadDamAnim = loadAnimationFromFiles(oneQuadStr, 0.1f, true);
+    Animation zeroAnim = loadAnimationFromFiles(zeroStr, 0.1f, true);
 
     float healthMax = 100;
     float healthCurr;
@@ -40,6 +43,11 @@ public class Barricade extends ActorBeta {
         if(healthCurr <=0)
         {
             remove();
+        }
+        else if(healthCurr <= healthMax * 0.05f)
+        {
+            setAnimation(zeroAnim);
+            setSize(Gdx.graphics.getHeight() * getWidth() / getHeight(), Gdx.graphics.getHeight());
         }
         else if(healthCurr <= healthMax * 0.25f)
         {

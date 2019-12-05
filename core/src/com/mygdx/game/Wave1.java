@@ -42,9 +42,9 @@ public class Wave1 extends ScreenBeta {
 
     //================= Enemies =======================//
     Island island;
-    BoatBig bigBoat;
-    BoatMedium mediumBoat;
-    BoatSmall smallBoat;
+    //BoatBig bigBoat;
+    //BoatMedium mediumBoat;
+    //BoatSmall smallBoat;
 
     int boatBigNumMax, boatMediumNumMax, boatSmallNumMax;
     int rockNumMax;
@@ -59,7 +59,11 @@ public class Wave1 extends ScreenBeta {
 
         startLvlTimer -= dt;
         if(startLvlTimer <= 0)
+        {
             winMsg.setText("");
+            // Spawn enemies
+        }
+
         if(fireTrigger)
         {
             ControlCannonBall(dt);
@@ -68,6 +72,7 @@ public class Wave1 extends ScreenBeta {
         CheckPauseResumeButton();
         //CheckGameState();
         livesCount.setText("x " + cannon.lives);
+        scoreUI.setText("" + score);
     }
 
 
@@ -119,26 +124,31 @@ public class Wave1 extends ScreenBeta {
 
         //================================== Obstacles ===========================================//
 
-        rockNumMax = 15;
+        rockNumMax = 1;
 
         for(int i = 0; i < rockNumMax; i++)
         {
-            new Rock(WIDTH / 2 + WIDTH / 10, 0 + i * HEIGHT / 15, mainStage);
+            Rock rock = new Rock(WIDTH / 2 + WIDTH / 10, 0 + i * HEIGHT / 15, mainStage);
+            rock.rotateBy(45);
+            rock.setOrigin(rock.getWidth()/2, rock.getHeight()/2);
+
         }
 
         island = new Island(WIDTH / 2, HEIGHT / 15, mainStage);
+        island.rotateBy(45);
+        island.setOrigin(island.getWidth()/2, island.getHeight()/2);
 
         //================================== Enemies ============================================//
 
-        boatBigNumMax = 5;
-        boatMediumNumMax = 3;
-        boatSmallNumMax = 5;
+        boatBigNumMax = 1;
+        boatMediumNumMax = 1;
+        boatSmallNumMax = 1;
         for(int i = 0; i < boatSmallNumMax; i++)
         {
             new BoatSmall(WIDTH / 2 + WIDTH / 10, 0 + i * HEIGHT / 15, mainStage);
         }
 
-/*        for(int i = 0; i < boatMediumNumMax; i++)
+       for(int i = 0; i < boatMediumNumMax; i++)
         {
             new BoatMedium(WIDTH / 2 + WIDTH / 10, 0 + i * HEIGHT / 15, mainStage);
         }
@@ -146,7 +156,7 @@ public class Wave1 extends ScreenBeta {
         for(int i = 0; i < boatBigNumMax; i++)
         {
             new BoatBig(WIDTH / 2 + WIDTH / 10, 0 + i * HEIGHT / 15, mainStage);
-        }*/
+        }
 
 
 
@@ -166,6 +176,14 @@ public class Wave1 extends ScreenBeta {
         winMsg.setPosition(WIDTH / 2 - winMsg.getWidth()/2, HEIGHT / 2 - winMsg.getHeight()/2);
         winMsg.setText("Wave 1!");
         mainStage.addActor(winMsg);
+
+        //score = 0; // set in GameScreen later (playLevel is set in GameScreen as well)
+        scoreUI =  new Label("" + score, arcade);
+        scoreUI.setAlignment(Align.center);
+        scoreUI.setFontScale(1 * refResolutionFactor);
+        scoreUI.setSize(WIDTH/2, HEIGHT/12);
+        scoreUI.setPosition(WIDTH / 2 - scoreUI.getWidth()/2, HEIGHT - scoreUI.getHeight());
+        mainStage.addActor(scoreUI);
 
         //============================== Buttons ================================================//
 

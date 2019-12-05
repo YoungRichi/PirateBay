@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 public class Soldier extends ActorBeta {
 
 
-    String[] str = {"SoldierBoy.png"};
+    String[] str = {"Soldier_Walk1.png", "Soldier_Walk2.png", "Soldier_Walk3.png", "Soldier_Walk4.png", "Soldier_Walk5.png"};
     Animation moveAnim = loadAnimationFromFiles(str, 0.2f, true);
 
 
@@ -36,6 +36,7 @@ public class Soldier extends ActorBeta {
         {
             remove();
             //ScreenBeta.loseGame = true;
+
         }
     }
 }

@@ -46,11 +46,11 @@ public class BoatSmall extends ActorBeta {
         pathFinderBelow.setPosition( getX() + 15, getY() - 8 );
         pathFinderAbove.setPosition( getX() + 15, getY()+ getHeight()/3);
 
-        if(pathFinderBelow.CheckCollisionRock())
+        if(pathFinderBelow.CheckCollisionObstacle())
             upGroup = true;
-        if(pathFinderAbove.CheckCollisionRock())
+        if(pathFinderAbove.CheckCollisionObstacle())
             upGroup = false;
-        if(!CheckCollisionRock())
+        if(!CheckCollisionObstacle())
             setMotionAngle(180);
 
         if(getY() < 0)

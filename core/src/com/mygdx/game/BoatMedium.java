@@ -23,7 +23,7 @@ public class BoatMedium extends ActorBeta {
         setSize(Gdx.graphics.getHeight() / 8 * getWidth()/getHeight(), Gdx.graphics.getHeight() / 8);
         setBoundaryRectangleEdited();
         SetUpGroup();
-        setSpeed(120);
+        setSpeed(70);
         setMotionAngle(180);
 
         pathFinderBelow = new ActorBeta(0,0, s);
@@ -44,11 +44,11 @@ public class BoatMedium extends ActorBeta {
         super.act(dt);
         applyPhysics(dt);
 
-        if(pathFinderBelow.CheckCollisionRock())
+        if(pathFinderBelow.CheckCollisionObstacle())
             upGroup = true;
-        if(pathFinderAbove.CheckCollisionRock())
+        if(pathFinderAbove.CheckCollisionObstacle())
             upGroup = false;
-        if(!CheckCollisionRock()) // the boat will move in its current direction + 90 degree if it collides with rocks
+        if(!CheckCollisionObstacle()) // the boat will move in its current direction + 90 degree if it collides with rocks
             setMotionAngle(180);
         if(getY() < 0)
         {

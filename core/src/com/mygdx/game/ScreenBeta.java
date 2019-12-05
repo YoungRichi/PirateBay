@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -26,7 +27,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.BooleanArray;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+
+import java.util.ArrayList;
 //import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 //import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 
@@ -45,10 +50,21 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
     //BOOLEANS
     static boolean isPaused;
     static boolean loseGame;
+    static boolean playLevel; // set to true after tutorial completed
     static boolean delayToDisplay;
-    static boolean playLevel;
+    final int waveNum = 5; // number of waves in a level
 
-    //int score;
+    //
+    boolean enemySpawned;
+    boolean lvlStarted, lvlEnd;
+    boolean[] waves;
+    float bwtWaveTimeMax;
+    float bwtWaveTimer;
+    float toNextLevelTimer;
+
+
+    static int score, highscore;
+    Preferences prefs;
 
     static float WIDTH = Gdx.graphics.getWidth();
     static float HEIGHT = Gdx.graphics.getHeight();
@@ -61,6 +77,17 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
 
         isPaused = false;
         loseGame = false;
+
+        lvlStarted = false;
+        enemySpawned = false;
+        waves = new boolean[waveNum];
+        for(int i = 0; i < waves.length; i++)
+        {
+            waves[i] = false;
+        }
+        bwtWaveTimeMax = 5;
+        bwtWaveTimer = bwtWaveTimeMax;
+        toNextLevelTimer = 2;
 
         mainStage = new Stage();
         uiStage = new Stage();
@@ -114,9 +141,79 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
 
         initialize();
 
+        prefs = Gdx.app.getPreferences("PirateBay");
+        highscore = prefs.getInteger("highscore", 0);
+        /*
+        if(score > highscore)
+        {
+            prefs.putInteger("highscore", score);
+            prefs.flush();
+        }
 
+         */
     }
 
+    boolean waveEnd(float deltaTime)
+    {
+
+        for (int i = 0; i < waves.length; i ++)
+        {
+            if( i < waves.length -1 && waves[i] && enemySpawned)
+            {
+                bwtWaveTimer -= deltaTime;
+                if(bwtWaveTimer <= 0)
+                {
+                    waves[i] = false;
+                    enemySpawned = false;
+                    waves[i+1] = true;
+                    bwtWaveTimer = bwtWaveTimeMax;
+                    return true;
+                }
+            }
+            if (i == waves.length - 1 && waves[i] && ActorBeta.getListSmallBoat().size() + ActorBeta.getListMediumBoat().size() +
+                    ActorBeta.getListBigBoat().size() + ActorBeta.getListSoldier().size() + ActorBeta.getListParrot().size() == 0) // add high speed boat later
+            {
+                lvlEnd = true;
+            }
+        }
+        return false;
+    }
+    void SpawnEnemies (int boatSmallNum, int boatMedNum, int boatBigNum, int parrotNum)
+    {
+        if(boatSmallNum > 0)
+        {
+            for (int i = 1; i < boatSmallNum + 1; i++)
+            {
+                new BoatSmall(WIDTH, HEIGHT / boatSmallNum * i - HEIGHT / 12, mainStage );
+            }
+        }
+
+        if(boatMedNum > 0)
+        {
+            for (int i = 1; i < boatMedNum + 1; i++)
+            {
+                new BoatMedium(WIDTH, HEIGHT / boatMedNum * i - HEIGHT / 8, mainStage );
+            }
+        }
+
+        if(boatBigNum > 0)
+        {
+            for (int i = 1; i < boatBigNum + 1; i++)
+            {
+                new BoatBig(WIDTH, HEIGHT / boatBigNum * i - HEIGHT / 6, mainStage );
+            }
+        }
+
+        if(parrotNum > 0)
+        {
+            for (int i = 1; i < parrotNum + 1; i++)
+            {
+                new Parrot(WIDTH, HEIGHT / parrotNum * i - HEIGHT / 4, mainStage );
+            }
+        }
+
+        enemySpawned = true;
+    }
     public abstract void initialize();
 
     /**
@@ -170,6 +267,12 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
     public void render(float delta) {
 
         //score++;
+        if(score > highscore)
+        {
+            highscore = score;
+            prefs.putInteger("highscore", score);
+            prefs.flush();
+        }
 
         //PAUSE LOGIC
         if(isPaused)

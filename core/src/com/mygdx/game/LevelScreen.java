@@ -376,7 +376,7 @@ public class LevelScreen extends ScreenBeta {
         if(Level1Button.isPressed())
         {
             clickSound.play();
-            PirateBay.setActiveScreen(new GameScreen());
+            PirateBay.setActiveScreen(new TutorialScreen());
         }
     }
 }

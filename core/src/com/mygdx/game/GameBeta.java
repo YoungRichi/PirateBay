@@ -3,6 +3,9 @@ package com.mygdx.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+
+import java.util.ArrayList;
 
 public abstract class GameBeta extends Game {
 
@@ -24,4 +27,6 @@ public abstract class GameBeta extends Game {
     {
         game.setScreen(s);
     }
+
+
 }

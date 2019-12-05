@@ -18,7 +18,7 @@ import com.badlogic.gdx.utils.Align;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class GameScreen extends ScreenBeta {
+public class TutorialScreen extends ScreenBeta {
 
     //=============== Player ========================//
     CannonBase cannonBase;
@@ -39,6 +39,7 @@ public class GameScreen extends ScreenBeta {
     float refResolutionFactor;
     Group instructionGroup;
 
+
     //================ Level =========================//
 
     float startLvlTimer;
@@ -47,7 +48,7 @@ public class GameScreen extends ScreenBeta {
     float disTextTimer, secondTutTransTimer01, secondTutTransTimer02;
     float secondTutTimer;
     float spawnEnemyTimer;
-    float toWaveOneTimer;
+    //float toWaveOneTimer;
     boolean waveOne;
 
     //================= Sounds ========================//
@@ -257,8 +258,10 @@ public class GameScreen extends ScreenBeta {
         }
         if(waveOne)
         {
-            toWaveOneTimer -= deltaTime;
-            if(toWaveOneTimer <= 0)
+            //toWaveOneTimer -= deltaTime;
+            //if(toWaveOneTimer <= 0)
+            toNextLevelTimer -= deltaTime;
+            if(toNextLevelTimer <= 0)
             {
                 playLevel = true;
                 PirateBay.setActiveScreen(new Wave1());
@@ -286,7 +289,7 @@ public class GameScreen extends ScreenBeta {
         secondTutTimer = 1;
         secondTutTransTimer01 = 5;
         secondTutTransTimer02 = 5;
-        toWaveOneTimer = 3;
+        //toWaveOneTimer = 3;
         firstTutorial = true;
         secondTutTransition = false;
         secondTutorial = false;

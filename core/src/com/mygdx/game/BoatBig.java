@@ -22,7 +22,7 @@ public class BoatBig extends ActorBeta {
         setSize(Gdx.graphics.getHeight() / 6 * getWidth() / getHeight(), Gdx.graphics.getHeight() / 6);
         SetUpGroup();
         setBoundaryRectangleEdited();
-        setSpeed(120);
+        setSpeed(30);
         setMotionAngle(180); // moves left
 
         pathFinderBelow = new ActorBeta(0,0, s);
@@ -46,12 +46,12 @@ public class BoatBig extends ActorBeta {
         pathFinderAbove.setPosition( getX() + 15, getY()+ getHeight()/3);
 
         applyPhysics(dt);
-        if(pathFinderBelow.CheckCollisionRock())
+        if(pathFinderBelow.CheckCollisionObstacle())
             upGroup = true;
-        if(pathFinderAbove.CheckCollisionRock())
+        if(pathFinderAbove.CheckCollisionObstacle())
             upGroup = false;
 
-        if(!CheckCollisionRock())
+        if(!CheckCollisionObstacle())
             setMotionAngle(180);
 
         // check collision with the edges of the screen

@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
 import java.lang.Class;
+import java.util.Random;
 
 /**
  *  Extend the Actor class to include graphics and collision detection.
@@ -547,6 +548,7 @@ public class ActorBeta extends Actor {
             setY(worldBounds.height - getHeight());
     }
 
+
     public static ArrayList<Rock> getListRock()
     {
         ArrayList<Rock> list = new ArrayList<Rock>();
@@ -556,6 +558,19 @@ public class ActorBeta extends Actor {
         {
             if ( a instanceof Rock )
                 list.add( (Rock) a );
+        }
+        return list;
+    }
+
+    public static ArrayList<Island> getListIsland()
+    {
+        ArrayList<Island> list = new ArrayList<Island>();
+
+
+        for (Actor a : ScreenBeta.mainStage.getActors())
+        {
+            if ( a instanceof Island )
+                list.add( (Island) a );
         }
         return list;
     }
@@ -632,6 +647,18 @@ public class ActorBeta extends Actor {
         return list;
     }
 
+    public static ArrayList<Parrot> getListParrot()
+    {
+        ArrayList<Parrot> list = new ArrayList<Parrot>();
+
+        for (Actor a : ScreenBeta.mainStage.getActors())
+        {
+            if ( a instanceof Parrot)
+                list.add( (Parrot) a );
+        }
+        return list;
+    }
+
     public static ArrayList<NoTapZone> getListNoTapZone()
     {
         ArrayList<NoTapZone> list = new ArrayList<NoTapZone>();
@@ -658,9 +685,9 @@ public class ActorBeta extends Actor {
 
     boolean upGroup;
     // obstacle avoidance mechanic
-    public boolean CheckCollisionRock ()
+    public boolean CheckCollisionObstacle ()
     {
-        for (Rock rock : ActorBeta.getListRock())
+        for (Rock rock : getListRock())
         {
             if(overlaps(rock))
             {
@@ -673,6 +700,29 @@ public class ActorBeta extends Actor {
                         else
                             setMotionAngle(- 90);
                     }
+                }
+                return true;
+            }
+        }
+        for (Island island : getListIsland())
+        {
+            if(overlaps(island))
+            {
+                Vector2 offset = preventOverlap(island);
+                if (offset != null) {
+                    if (Math.abs(offset.x) > Math.abs(offset.y))
+                    {
+                        if(upGroup)
+                            setMotionAngle(90);
+                        else
+                            setMotionAngle(- 90);
+                    }
+                }
+                if(!island.setToHide)
+                {
+                    Random rand = new Random();
+                    island.setToHide = rand.nextBoolean();
+                    System.out.println(island.setToHide);
                 }
                 return true;
             }
