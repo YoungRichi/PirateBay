@@ -278,7 +278,7 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
         if(isPaused)
             delta = 0;
         else {
-            delta = Math.min(delta, 1/30.0f);
+            delta = Math.min(delta, 1/60.0f);
         }
 
         mainStage.act(delta);
