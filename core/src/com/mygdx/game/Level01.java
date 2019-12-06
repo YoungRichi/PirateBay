@@ -23,6 +23,6 @@ public class Level01 extends MyScreenBeta {
 
     @Override
     public ScreenBeta GetScreen() {
-        return new Wave1(); // return next level if current level is cleared.
+        return new Level02(); // return next level if current level is cleared.
     }
 }

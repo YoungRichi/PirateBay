@@ -177,7 +177,7 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
             }
             if (i == waves.length - 1 && waves[i] && ActorBeta.getListSmallBoat().size() + ActorBeta.getListMediumBoat().size() +
                     ActorBeta.getListBigBoat().size() + ActorBeta.getListFastBoat().size()+
-                    ActorBeta.getListSoldier().size() + ActorBeta.getListParrot().size() == 0) // add high speed boat later
+                    ActorBeta.getListSoldier().size() + ActorBeta.getListParrot().size() == 0)
             {
                 lvlEnd = true;
             }
