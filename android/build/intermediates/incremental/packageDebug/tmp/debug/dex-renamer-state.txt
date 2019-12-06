@@ -1,4 +1,4 @@
-#Thu Dec 05 19:09:48 EST 2019
-base.0=/Users/ethanpham/Desktop/G2014/PirateBayGit/PirateBay/android/build/intermediates/dex/debug/mergeDexDebug/out
+#Fri Dec 06 00:13:54 EST 2019
+base.0=C\:\\Users\\Rich\\Desktop\\PB\\PirateBay\\android\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out
 path.0=classes.dex
 renamed.0=classes.dex

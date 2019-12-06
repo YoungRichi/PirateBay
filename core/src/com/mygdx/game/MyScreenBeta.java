@@ -51,6 +51,7 @@ public abstract class MyScreenBeta extends ScreenBeta {
 
     //================= Obstacles =====================//
     Island island;
+    Rock rock;
 
     //================= Sounds ========================//
     Sound explosion, hit, gameOver, shoot, parrotSound, lvlCompleted, click;
@@ -180,7 +181,7 @@ public abstract class MyScreenBeta extends ScreenBeta {
         cannonBase.setPosition(cannonBase.getWidth()/2, HEIGHT/3);
         mainStage.addActor(cannonBase);
         cannon = new Cannon(cannonBase.getX() , cannonBase.getY() + cannonBase.getHeight()*3/4 , mainStage);
-        new Barricade(WIDTH * 5 / 16, 0, mainStage);
+        new Barricade(WIDTH * 3 / 16, 0, mainStage);
         new NoTapZone(cannon.getX()+ cannon.getWidth()/2 - cannon.getWidth(), cannon.getY() + cannon.getHeight()/2 - cannon.getWidth() , mainStage);
         liveIcon = new Lives(cannon.getX(), cannon.getY() + cannon.getHeight(), mainStage);
 
@@ -193,7 +194,51 @@ public abstract class MyScreenBeta extends ScreenBeta {
             //Rock rock = new Rock(WIDTH / 2 + WIDTH / 10, 0 + i * HEIGHT / 15, mainStage);
         //}
 
-        island = new Island(WIDTH / 2, HEIGHT / 2, mainStage);
+        //top rocks
+        island = new Island(WIDTH *5/16, HEIGHT / 2 + HEIGHT/15, mainStage);
+       // rock = new Rock (WIDTH * 5/16, HEIGHT * 5/8 , mainStage);
+        rock = new Rock (WIDTH * 5/16, HEIGHT * 5/8 + HEIGHT/15 , mainStage);
+        rock = new Rock (WIDTH * 5/16, HEIGHT * 5/8 + 2* HEIGHT/15 , mainStage);
+        rock = new Rock (WIDTH * 5/16, HEIGHT * 5/8 + 3* HEIGHT/15 , mainStage);
+        rock = new Rock (WIDTH * 5/16, HEIGHT * 5/8 + 4* HEIGHT/15 , mainStage);
+        rock = new Rock (WIDTH * 5/16, HEIGHT * 5/8 + 5* HEIGHT/15 , mainStage);
+
+
+        //rock = new Rock (WIDTH * 5/16, HEIGHT / 2 + HEIGHT / 15, mainStage);
+
+        //lower half rocks
+        rock = new Rock (WIDTH * 5/16, HEIGHT * 1/8 - 2 * HEIGHT/15  , mainStage);
+        rock = new Rock (WIDTH * 5/16, HEIGHT * 1/8 - HEIGHT/15  , mainStage);
+        rock = new Rock (WIDTH * 5/16, HEIGHT * 1/8  , mainStage);
+        rock = new Rock (WIDTH * 5/16, HEIGHT * 1/8 + HEIGHT / 15  , mainStage);
+        rock = new Rock (WIDTH * 5/16, HEIGHT * 1/8 + 2 * HEIGHT / 15  , mainStage);
+
+
+
+        //Middle Islands
+        rock = new Rock(WIDTH *6/8, HEIGHT * 18/32, mainStage); // east
+        island = new Island(WIDTH *5/8, HEIGHT / 2, mainStage); // west
+        island = new Island(WIDTH *5/8+ WIDTH/15, HEIGHT *3/4, mainStage); //north
+        island = new Island(WIDTH *5/8+ WIDTH/15, HEIGHT *1/4, mainStage); //south
+
+        //Lower screen rock (3 rocks)
+        rock = new Rock (WIDTH * 7/16 , HEIGHT * 3/16   , mainStage);
+        rock = new Rock (WIDTH * 9/16 , HEIGHT * 3/16   , mainStage);
+        island = new Island (WIDTH * 8/16 , HEIGHT * 5/16   , mainStage);
+        rock = new Rock (WIDTH * 14/16 , HEIGHT * 1/16   , mainStage);
+        rock = new Rock (WIDTH * 14/16 , HEIGHT * 0   , mainStage);
+
+        // Upper Screen rock
+        rock = new Rock (WIDTH * 7/16 , HEIGHT * 13/16   , mainStage); // left
+        rock = new Rock (WIDTH * 9/16 , HEIGHT * 11/16   , mainStage); // middle
+        rock = new Rock (WIDTH * 9/16 , HEIGHT * 13/16 - HEIGHT/15   , mainStage); // middle
+       // rock = new Rock (WIDTH * 9/16 , HEIGHT * 12/16 - (2 * HEIGHT/15)   , mainStage); // middle
+
+        rock = new Rock ( WIDTH * 14/16, HEIGHT * 13/16, mainStage); //far east
+
+
+
+        //island = new Island(WIDTH / 4, HEIGHT / 2, mainStage);
 
         //================================== Enemies ============================================//
 
