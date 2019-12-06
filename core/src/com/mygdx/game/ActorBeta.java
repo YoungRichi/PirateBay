@@ -611,6 +611,18 @@ public class ActorBeta extends Actor {
         return list;
     }
 
+    public static ArrayList<BoatFast> getListFastBoat()
+    {
+        ArrayList<BoatFast> list = new ArrayList<BoatFast>();
+
+        for (Actor a : ScreenBeta.mainStage.getActors())
+        {
+            if ( a instanceof BoatFast)
+                list.add( (BoatFast) a );
+        }
+        return list;
+    }
+
     public static ArrayList<Cannon> getListCannon()
     {
         ArrayList<Cannon> list = new ArrayList<Cannon>();
@@ -684,6 +696,7 @@ public class ActorBeta extends Actor {
     }
 
     boolean upGroup;
+    boolean ableToSetIsland;
     // obstacle avoidance mechanic
     public boolean CheckCollisionObstacle ()
     {
@@ -718,11 +731,12 @@ public class ActorBeta extends Actor {
                             setMotionAngle(- 90);
                     }
                 }
-                if(!island.setToHide)
+                if(!island.setToHide && ableToSetIsland)
                 {
-                    Random rand = new Random();
-                    island.setToHide = rand.nextBoolean();
-                    System.out.println(island.setToHide);
+                    //Random rand = new Random();
+                    //island.setToHide = rand.nextBoolean();
+                    //System.out.println(island.setToHide);
+                    island.setToHide = true;
                 }
                 return true;
             }

@@ -37,28 +37,31 @@ public class BoatMedium extends ActorBeta {
         pathFinderAbove.setSize( getWidth() - 30, 8 );
         pathFinderAbove.setBoundaryRectangle();
         pathFinderAbove.setVisible(false);
+
+        ableToSetIsland = false;
     }
 
     @Override
     public void act(float dt) {
         super.act(dt);
-        applyPhysics(dt);
 
-        if(pathFinderBelow.CheckCollisionObstacle())
-            upGroup = true;
-        if(pathFinderAbove.CheckCollisionObstacle())
-            upGroup = false;
-        if(!CheckCollisionObstacle()) // the boat will move in its current direction + 90 degree if it collides with rocks
-            setMotionAngle(180);
-        if(getY() < 0)
-        {
-            setY(0);
-            setMotionAngle(90);
-        }
-        if(getX() < Gdx.graphics.getWidth() * 3 / 4)
-        {
-            setSpeed(0);
-            Fire(dt);
+
+        if (!ScreenBeta.loseGame) {
+            applyPhysics(dt);
+            if (pathFinderBelow.CheckCollisionObstacle())
+                upGroup = true;
+            if (pathFinderAbove.CheckCollisionObstacle())
+                upGroup = false;
+            if (!CheckCollisionObstacle()) // the boat will move in its current direction + 90 degree if it collides with rocks
+                setMotionAngle(180);
+            if (getY() < 0) {
+                setY(0);
+                setMotionAngle(90);
+            }
+            if (getX() < Gdx.graphics.getWidth() * 3 / 4) {
+                setSpeed(0);
+                Fire(dt);
+            }
         }
     }
 

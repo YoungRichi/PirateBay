@@ -4,14 +4,20 @@ public class Level01 extends MyScreenBeta {
     @Override
     public void EnemiesInit() {
         levelNum = 1; // define the current level
-        // array of size ScreenBeta.waveNum will be used as default. Only the first waveNum values will be used
-        smallBoatNums = new int[] {1,1,2,2,2};
+
+        smallBoatNums = new int[] {1,1,2,2,2}; // value of each element is the number of the object each wave
         medBoatNums = new int[]{2,2,3,3,3};
         bigBoatNums = new int[]{0,0,1,1,2};
-        //highSpeedBoatNums = new int[]{};
+        fastBoatNums = new int[]{0,0,0,1,1};
         parrotNums = new int[]{0,0,0,0,1};
-        CreateBoatSmall(8);
-        CreateBoatMedium(13);
+
+        // the parameter should be less than 14 due to the size of the object and the height of the screen
+        CreateBoatSmall(8); // sum of all elements in the smallBoatNums array
+        CreateBoatMedium(13); // sum of all elements in the medBoatNums array
+        CreateBoatBig(4); // sum of all elements in the bigBoatNums array
+        CreateBoatFast(2); // sum of all elements in the fastBoatNums array
+        CreateParrot(1); // sum of all elements in the parrotNums array
+
     }
 
     @Override

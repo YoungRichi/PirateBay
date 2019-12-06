@@ -65,6 +65,7 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
     ArrayList<BoatSmall> boatSmalls;
     ArrayList<BoatMedium> boatMediums;
     ArrayList<BoatBig> boatBigs;
+    ArrayList<BoatFast> boatFasts;
     ArrayList<Parrot> parrots;
 
 
@@ -175,48 +176,13 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
                 }
             }
             if (i == waves.length - 1 && waves[i] && ActorBeta.getListSmallBoat().size() + ActorBeta.getListMediumBoat().size() +
-                    ActorBeta.getListBigBoat().size() + ActorBeta.getListSoldier().size() + ActorBeta.getListParrot().size() == 0) // add high speed boat later
+                    ActorBeta.getListBigBoat().size() + ActorBeta.getListFastBoat().size()+
+                    ActorBeta.getListSoldier().size() + ActorBeta.getListParrot().size() == 0) // add high speed boat later
             {
                 lvlEnd = true;
             }
         }
         return false;
-    }
-    void SpawnEnemies (int boatSmallNum, int boatMedNum, int boatBigNum, int parrotNum)
-    {
-        if(boatSmallNum > 0)
-        {
-            for (int i = 1; i < boatSmallNum + 1; i++)
-            {
-                new BoatSmall(WIDTH, HEIGHT / boatSmallNum * i - HEIGHT / 12, mainStage );
-            }
-        }
-
-        if(boatMedNum > 0)
-        {
-            for (int i = 1; i < boatMedNum + 1; i++)
-            {
-                new BoatMedium(WIDTH, HEIGHT / boatMedNum * i - HEIGHT / 8, mainStage );
-            }
-        }
-
-        if(boatBigNum > 0)
-        {
-            for (int i = 1; i < boatBigNum + 1; i++)
-            {
-                new BoatBig(WIDTH, HEIGHT / boatBigNum * i - HEIGHT / 6, mainStage );
-            }
-        }
-
-        if(parrotNum > 0)
-        {
-            for (int i = 1; i < parrotNum + 1; i++)
-            {
-                new Parrot(WIDTH, HEIGHT / parrotNum * i - HEIGHT / 4, mainStage );
-            }
-        }
-
-        enemySpawned = true;
     }
 
     public void CreateBoatSmall(int num)
@@ -226,7 +192,7 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
             for (int i = 0; i < num; i++)
             {
 
-                boatSmalls.add(new BoatSmall(WIDTH, HEIGHT / num * i , mainStage )); //- HEIGHT / 12
+                boatSmalls.add(new BoatSmall(WIDTH, HEIGHT / num * i, mainStage )); //- HEIGHT / 12
             }
         }
     }
@@ -247,7 +213,7 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
             for (int i = 0; i < num; i++)
             {
 
-                boatMediums.add(new BoatMedium(WIDTH, HEIGHT / num * i , mainStage )); //- HEIGHT / 12
+                boatMediums.add(new BoatMedium(WIDTH, HEIGHT / num * i, mainStage )); //- HEIGHT / 12
             }
         }
     }
@@ -260,6 +226,72 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
         }
         enemySpawned = true;
     }
+
+    public void CreateBoatBig(int num)
+    {
+        if(num > 0)
+        {
+            for (int i = 0; i < num; i++)
+            {
+
+                boatBigs.add(new BoatBig(WIDTH, HEIGHT / num * i, mainStage )); //- HEIGHT / 12
+            }
+        }
+    }
+
+    public void GetListSpawnBigBoat (int startIndex, int num)
+    {
+        for (int i = startIndex; i < startIndex + num; i++)
+        {
+            boatBigs.get(i).setSpeed(50);
+        }
+        enemySpawned = true;
+    }
+
+    public void CreateBoatFast(int num)
+    {
+        if(num > 0)
+        {
+            for (int i = 0; i < num; i++)
+            {
+
+                boatFasts.add(new BoatFast(WIDTH, HEIGHT / num * i, mainStage )); //- HEIGHT / 12
+            }
+        }
+    }
+
+    public void GetListSpawnFastBoat (int startIndex, int num)
+    {
+        for (int i = startIndex; i < startIndex + num; i++)
+        {
+            boatFasts.get(i).setSpeed(120);
+        }
+        enemySpawned = true;
+    }
+
+    public void CreateParrot(int num)
+    {
+        if(num > 0)
+        {
+            for (int i = 0; i < num; i++)
+            {
+
+                parrots.add(new Parrot(WIDTH, HEIGHT / num * i, mainStage )); //
+            }
+        }
+    }
+
+    public void GetListSpawnParrot (int startIndex, int num)
+    {
+        for (int i = startIndex; i < startIndex + num; i++)
+        {
+            parrots.get(i).setSpeed(50);
+            parrots.get(i).setMotionAngle(180);
+
+        }
+        enemySpawned = true;
+    }
+
     public abstract void initialize();
 
     /**

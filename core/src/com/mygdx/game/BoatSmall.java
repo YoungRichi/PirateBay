@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
+import java.util.ArrayList;
+
 public class BoatSmall extends ActorBeta {
     String[] boatSAnim = {"SmallBoat.png", "SmallBoat1.png", "SmallBoat2.png"};
     Animation idleAnim = loadAnimationFromFiles(boatSAnim, 0.2f, true);
@@ -12,6 +14,10 @@ public class BoatSmall extends ActorBeta {
     float dropOffTimer = dropOffRate;
     ActorBeta pathFinderBelow;
     ActorBeta pathFinderAbove;
+    ArrayList<Soldier> soldiers;
+    int soldierNum = 5;
+    int soldierIndex = 0;
+    boolean dropOffCompleted = false;
 
     public BoatSmall(float x, float y, Stage s) {
         super(x, y, s);
@@ -34,6 +40,12 @@ public class BoatSmall extends ActorBeta {
         pathFinderAbove.setSize( getWidth() - 30, 8 );
         pathFinderAbove.setBoundaryRectangle();
         pathFinderAbove.setVisible(false);
+
+        ableToSetIsland = false;
+
+        soldiers = new ArrayList<Soldier>();
+        for (int i = 0; i < soldierNum; i++)
+            soldiers.add(new Soldier());
     }
 
 
@@ -41,42 +53,41 @@ public class BoatSmall extends ActorBeta {
     public void act(float dt)
     {
         super.act(dt);
-        applyPhysics(dt);
+
 
         pathFinderBelow.setPosition( getX() + 15, getY() - 8 );
         pathFinderAbove.setPosition( getX() + 15, getY()+ getHeight()/3);
 
-        if(pathFinderBelow.CheckCollisionObstacle())
-            upGroup = true;
-        if(pathFinderAbove.CheckCollisionObstacle())
-            upGroup = false;
-        if(!CheckCollisionObstacle())
-            setMotionAngle(180);
+        if (!ScreenBeta.loseGame) {
+            applyPhysics(dt);
+            if (pathFinderBelow.CheckCollisionObstacle())
+                upGroup = true;
+            if (pathFinderAbove.CheckCollisionObstacle())
+                upGroup = false;
+            if (!CheckCollisionObstacle())
+                setMotionAngle(180);
 
-        if(getY() < 0)
-        {
-            setY(0);
-            setMotionAngle(90);
-        }
-        if(getY() > Gdx.graphics.getHeight() - getHeight())
-        {
-            setY(Gdx.graphics.getHeight() - getHeight());
-            setMotionAngle(-90);
-        }
-
-        for (Barricade barricade : ActorBeta.getListBarricade())
-        {
-            if(overlaps(barricade))
-            {
-                preventOverlap(barricade);
-                barricade.healthCurr -= barricade.smallDamRate;
+            if (getY() < 0) {
+                setY(0);
+                setMotionAngle(90);
             }
-        }
+            if (getY() > Gdx.graphics.getHeight() - getHeight()) {
+                setY(Gdx.graphics.getHeight() - getHeight());
+                setMotionAngle(-90);
+            }
 
-        if(ActorBeta.getListBarricade().size() == 0 && getX() <= Gdx.graphics.getWidth() * 5 /16)
-        {
-            setSpeed(0);
-            DropOffSoldier(dt);
+            for (Barricade barricade : ActorBeta.getListBarricade()) {
+                if (overlaps(barricade)) {
+                    preventOverlap(barricade);
+                    barricade.healthCurr -= barricade.smallDamRate;
+                }
+            }
+
+            if (ActorBeta.getListBarricade().size() == 0 && getX() <= Gdx.graphics.getWidth() * 5 / 16) {
+                setSpeed(0);
+                if(!dropOffCompleted)
+                    DropOffSoldier(dt);
+            }
         }
 
     }
@@ -86,7 +97,14 @@ public class BoatSmall extends ActorBeta {
         dropOffTimer -= deltaTime;
         if(dropOffTimer <=0)
         {
-            new Soldier(getX(), getY(), ScreenBeta.mainStage);
+            soldiers.get(soldierIndex).setSpeed(12);
+            soldiers.get(soldierIndex).setPosition(getX(), getY());
+            ScreenBeta.mainStage.addActor(soldiers.get(soldierIndex));
+            if(soldierIndex < soldierNum - 1)
+                soldierIndex++;
+            else
+                dropOffCompleted = true;
+
             dropOffTimer = dropOffRate;
         }
     }

@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
+import java.util.ArrayList;
+
 public class BoatBig extends ActorBeta {
 
     String[] boatAnim = {"BigBoat.png", "BigBoat1.png", "BigBoat2.png", "BigBoat3.png"};
@@ -14,6 +16,10 @@ public class BoatBig extends ActorBeta {
     float dropOffTimer = dropOffRate;
     ActorBeta pathFinderBelow;
     ActorBeta pathFinderAbove;
+    ArrayList<Soldier> soldiers;
+    int soldierNum = 10;
+    int soldierIndex = 0;
+    boolean dropOffCompleted = false;
 
     public BoatBig(float x, float y, Stage s) {
         super(x, y, s);
@@ -22,7 +28,7 @@ public class BoatBig extends ActorBeta {
         setSize(Gdx.graphics.getHeight() / 6 * getWidth() / getHeight(), Gdx.graphics.getHeight() / 6);
         SetUpGroup();
         setBoundaryRectangleEdited();
-        setSpeed(30);
+        setSpeed(0);
         setMotionAngle(180); // moves left
 
         pathFinderBelow = new ActorBeta(0,0, s);
@@ -36,6 +42,12 @@ public class BoatBig extends ActorBeta {
         pathFinderAbove.setSize( getWidth() - 30, 8 );
         pathFinderAbove.setBoundaryRectangle();
         pathFinderAbove.setVisible(false);
+
+        ableToSetIsland = false;
+
+        soldiers = new ArrayList<Soldier>();
+        for (int i = 0; i < soldierNum; i++)
+            soldiers.add(new Soldier());
     }
 
     @Override
@@ -45,40 +57,38 @@ public class BoatBig extends ActorBeta {
         pathFinderBelow.setPosition( getX() + 15, getY() - 8 );
         pathFinderAbove.setPosition( getX() + 15, getY()+ getHeight()/3);
 
-        applyPhysics(dt);
-        if(pathFinderBelow.CheckCollisionObstacle())
-            upGroup = true;
-        if(pathFinderAbove.CheckCollisionObstacle())
-            upGroup = false;
+        if(!ScreenBeta.loseGame) {
+            applyPhysics(dt);
+            if (pathFinderBelow.CheckCollisionObstacle())
+                upGroup = true;
+            if (pathFinderAbove.CheckCollisionObstacle())
+                upGroup = false;
 
-        if(!CheckCollisionObstacle())
-            setMotionAngle(180);
+            if (!CheckCollisionObstacle())
+                setMotionAngle(180);
 
-        // check collision with the edges of the screen
-        if(getY() < 0)
-        {
-            setY(0);
-            setMotionAngle(90);
-        }
-        if(getY() > Gdx.graphics.getHeight() - getHeight())
-        {
-            setY(Gdx.graphics.getHeight() - getHeight());
-            setMotionAngle(-90);
-        }
-
-        for (Barricade barricade : ActorBeta.getListBarricade())
-        {
-            if(overlaps(barricade))
-            {
-                preventOverlap(barricade);
-                barricade.healthCurr -= barricade.hugeDamRate;
+            // check collision with the edges of the screen
+            if (getY() < 0) {
+                setY(0);
+                setMotionAngle(90);
             }
-        }
+            if (getY() > Gdx.graphics.getHeight() - getHeight()) {
+                setY(Gdx.graphics.getHeight() - getHeight());
+                setMotionAngle(-90);
+            }
 
-        if(ActorBeta.getListBarricade().size() == 0 && getX() <= Gdx.graphics.getWidth() * 5 /16)
-        {
-            setSpeed(0);
-            DropOffSoldier(dt);
+            for (Barricade barricade : ActorBeta.getListBarricade()) {
+                if (overlaps(barricade)) {
+                    preventOverlap(barricade);
+                    barricade.healthCurr -= barricade.hugeDamRate;
+                }
+            }
+
+            if (ActorBeta.getListBarricade().size() == 0 && getX() <= Gdx.graphics.getWidth() * 5 / 16) {
+                setSpeed(0);
+                if(!dropOffCompleted)
+                    DropOffSoldier(dt);
+            }
         }
     }
 
@@ -87,7 +97,14 @@ public class BoatBig extends ActorBeta {
         dropOffTimer -= deltaTime;
         if(dropOffTimer <=0)
         {
-            new Soldier(getX(), getY(), ScreenBeta.mainStage);
+            soldiers.get(soldierIndex).setSpeed(12);
+            soldiers.get(soldierIndex).setPosition(getX(), getY());
+            ScreenBeta.mainStage.addActor(soldiers.get(soldierIndex));
+            if(soldierIndex < soldierNum - 1)
+                soldierIndex++;
+            else
+                dropOffCompleted = true;
+
             dropOffTimer = dropOffRate;
         }
     }

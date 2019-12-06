@@ -12,9 +12,10 @@ import java.util.Random;
 
 public class CannonBall extends ActorBeta {
 
-    float fireDurationMax = 5.0f;
+    float fireDurationMax = 2.0f;
     float fireTimer = fireDurationMax;
     boolean isFiring = false;
+    float speed = 2;
 
     public CannonBall(float x, float y, Stage s) {
         super(x, y, s);
@@ -27,17 +28,17 @@ public class CannonBall extends ActorBeta {
     @Override
     public void act(float dt) {
         super.act(dt);
-        applyPhysics(dt);
+
         if (!ScreenBeta.loseGame) {
 
-
+            applyPhysics(dt);
             if (ScreenBeta.isPaused || ScreenBeta.delayToDisplay) // if the game is paused, then stop moving; delayToDisplay is meant for Level 1 tutorial
             {
                 moveBy(0, 0);
                 rotateBy(0);
                 setOrigin(getWidth() / 2, getHeight() / 2);
             } else if (fireTimer > 0 && isFiring) {
-                moveBy(GetVelocity().x, GetVelocity().y);
+                moveBy(GetVelocity().x * speed, GetVelocity().y * speed);
                 rotateBy(10);
                 setOrigin(getWidth() / 2, getHeight() / 2);
             }
@@ -105,6 +106,14 @@ public class CannonBall extends ActorBeta {
                 if (overlaps(boatMedium)) {
                     boatMedium.remove();
                     ExplosionEffect explosionEffect = new ExplosionEffect(boatMedium.getX(), boatMedium.getY(), ScreenBeta.mainStage);
+                    ScreenBeta.score += 2;
+                }
+            }
+
+            for (BoatFast boatFast : ActorBeta.getListFastBoat()) {
+                if (overlaps(boatFast)) {
+                    boatFast.remove();
+                    ExplosionEffect explosionEffect = new ExplosionEffect(boatFast.getX(), boatFast.getY(), ScreenBeta.mainStage);
                     ScreenBeta.score += 2;
                 }
             }

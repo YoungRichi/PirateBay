@@ -57,9 +57,9 @@ public abstract class MyScreenBeta extends ScreenBeta {
 
     //================= Enemies =======================//
 
-    int[] smallBoatNums, medBoatNums, bigBoatNums, highSpeedBoatNums, parrotNums;
+    int[] smallBoatNums, medBoatNums, bigBoatNums, fastBoatNums, parrotNums;
     int rockNumMax;
-    int sBStartIndex, mBStartIndex, bBStartIndex, pStartIndex;
+    int smlBoatStartIndex, medBoatStartIndex, bigBoatStartIndex, fastBoatStartIndex, parrotStartIndex;
 
     @Override
     public void initialize() {
@@ -76,10 +76,16 @@ public abstract class MyScreenBeta extends ScreenBeta {
             waves[0] = true;
             lvlStarted = true;
             enemySpawned = true;
-            GetListSpawnSmlBoat(sBStartIndex, smallBoatNums[0]);
-            GetListSpawnMedBoat(mBStartIndex, medBoatNums[0]);
-            sBStartIndex += smallBoatNums[0];
-            mBStartIndex += medBoatNums[0];
+            GetListSpawnSmlBoat(smlBoatStartIndex, smallBoatNums[0]);
+            GetListSpawnMedBoat(medBoatStartIndex, medBoatNums[0]);
+            GetListSpawnBigBoat(bigBoatStartIndex, bigBoatNums[0]);
+            GetListSpawnFastBoat(fastBoatStartIndex, fastBoatNums[0]);
+            GetListSpawnParrot(parrotStartIndex, parrotNums[0]);
+            smlBoatStartIndex += smallBoatNums[0];
+            medBoatStartIndex += medBoatNums[0];
+            bigBoatStartIndex += bigBoatNums[0];
+            fastBoatStartIndex += fastBoatNums[0];
+            parrotStartIndex += parrotNums[0];
 
         }
 
@@ -89,10 +95,16 @@ public abstract class MyScreenBeta extends ScreenBeta {
             {
                 if(waves[i])
                 {
-                    GetListSpawnSmlBoat(sBStartIndex, smallBoatNums[i]);
-                    sBStartIndex += smallBoatNums[i];
-                    GetListSpawnMedBoat(mBStartIndex, medBoatNums[i]);
-                    mBStartIndex += medBoatNums[i];
+                    GetListSpawnSmlBoat(smlBoatStartIndex, smallBoatNums[i]);
+                    GetListSpawnMedBoat(medBoatStartIndex, medBoatNums[i]);
+                    GetListSpawnBigBoat(bigBoatStartIndex, bigBoatNums[i]);
+                    GetListSpawnFastBoat(fastBoatStartIndex, fastBoatNums[i]);
+                    GetListSpawnParrot(parrotStartIndex, parrotNums[i]);
+                    smlBoatStartIndex += smallBoatNums[i];
+                    medBoatStartIndex += medBoatNums[i];
+                    bigBoatStartIndex += bigBoatNums[i];
+                    fastBoatStartIndex += fastBoatNums[i];
+                    parrotStartIndex += parrotNums[i];
                 }
             }
         }
@@ -118,11 +130,19 @@ public abstract class MyScreenBeta extends ScreenBeta {
         if(loseGame)
         {
             winMsg.setText("You lose!");
+
+            mainStage.addActor(scoreBoard);
+            mainStage.addActor(highscoreUI);
+            mainStage.addActor(currentScoreUI);
             scoreBoard.addAction(Actions.sequence(Actions.delay(2), Actions.fadeIn(1)));
             highscoreUI.setText("High Score \n" + ScreenBeta.highscore);
             highscoreUI.addAction(Actions.sequence(Actions.delay(2), Actions.fadeIn(1)));
             currentScoreUI.setText("Current Score \n" + ScreenBeta.score);
             currentScoreUI.addAction(Actions.sequence(Actions.delay(2), Actions.fadeIn(1)));
+            mainStage.addActor(replayButton);
+            replayButtonTex.addAction(Actions.sequence(Actions.delay(2), Actions.fadeIn(1)));
+            if(replayButton.isPressed())
+                PirateBay.setActiveScreen(new Level01());
         }
 
         if(lvlEnd)
@@ -166,30 +186,28 @@ public abstract class MyScreenBeta extends ScreenBeta {
 
         //================================== Obstacles ===========================================//
 
-        rockNumMax = 1;
+        //rockNumMax = 0;
 
-        for(int i = 0; i < rockNumMax; i++)
-        {
-            Rock rock = new Rock(WIDTH / 2 + WIDTH / 10, 0 + i * HEIGHT / 15, mainStage);
-        }
+        //for(int i = 0; i < rockNumMax; i++)
+        //{
+            //Rock rock = new Rock(WIDTH / 2 + WIDTH / 10, 0 + i * HEIGHT / 15, mainStage);
+        //}
 
         island = new Island(WIDTH / 2, HEIGHT / 2, mainStage);
 
         //================================== Enemies ============================================//
 
-        // used as default if in the child class they are not initialized otherwise
-        smallBoatNums = new int[waveNum];
-        medBoatNums = new int[waveNum];
-        bigBoatNums = new int[waveNum];
-        parrotNums = new int[waveNum];
         boatSmalls = new ArrayList<BoatSmall>();
         boatMediums = new ArrayList<BoatMedium>();
         boatBigs = new ArrayList<BoatBig>();
+        boatFasts = new ArrayList<BoatFast>();
         parrots = new ArrayList<Parrot>();
-        sBStartIndex = 0;
-        mBStartIndex = 0;
-        bBStartIndex = 0;
-        pStartIndex = 0;
+
+        smlBoatStartIndex = 0;
+        medBoatStartIndex = 0;
+        bigBoatStartIndex = 0;
+        fastBoatStartIndex = 0;
+        parrotStartIndex = 0;
 
         EnemiesInit();
 
@@ -222,7 +240,9 @@ public abstract class MyScreenBeta extends ScreenBeta {
         scoreBoard.setSize(HEIGHT/2 * scoreBoard.getWidth()/scoreBoard.getHeight(), HEIGHT/2);
         scoreBoard.setPosition(WIDTH / 2 - scoreBoard.getWidth()/2, HEIGHT/2 - scoreBoard.getHeight()/2);
         scoreBoard.setColor(1,1,1,0);
-        mainStage.addActor(scoreBoard);
+        //mainStage.addActor(scoreBoard);
+        //mainStage.addActor(highscoreUI);
+        //mainStage.addActor(currentScoreUI);
 
         highscoreUI = new Label("High Score \n" + ScreenBeta.highscore, arcade);
         highscoreUI.setAlignment(Align.center);
@@ -230,7 +250,7 @@ public abstract class MyScreenBeta extends ScreenBeta {
         highscoreUI.setSize(scoreBoard.getWidth(), scoreBoard.getHeight()/3);
         highscoreUI.setPosition(scoreBoard.getX() + scoreBoard.getWidth() / 2 - highscoreUI.getWidth()/2, scoreBoard.getY() + scoreBoard.getHeight() - highscoreUI.getHeight());
         highscoreUI.setColor(1,1,1,0);
-        mainStage.addActor(highscoreUI);
+        //mainStage.addActor(highscoreUI);
 
         currentScoreUI = new Label("Current Score \n" + ScreenBeta.score, arcade);
         currentScoreUI.setAlignment(Align.center);
@@ -238,7 +258,19 @@ public abstract class MyScreenBeta extends ScreenBeta {
         currentScoreUI.setSize(scoreBoard.getWidth(), scoreBoard.getHeight()/3);
         currentScoreUI.setPosition(scoreBoard.getX() + scoreBoard.getWidth() / 2 - currentScoreUI.getWidth()/2, scoreBoard.getY() + scoreBoard.getHeight()/2 - currentScoreUI.getHeight()/2);
         currentScoreUI.setColor(1,1,1,0);
-        mainStage.addActor(currentScoreUI);
+        //mainStage.addActor(currentScoreUI);
+
+        replayButtonTex = new ActorBeta();
+        replayButtonTex.loadTexture("replayButton.png");
+        float replayBtnAR = replayButtonTex.getWidth() / replayButtonTex.getHeight();
+        replayButtonTex.setSize(HEIGHT / 10 * replayBtnAR, HEIGHT /10);
+        replayButtonTex.setColor(1,1,1, 0);
+        replayButton= new Button(arcade);
+        replayButton.setSize(replayButtonTex.getWidth() * 0.9f, replayButtonTex.getHeight() * 0.9f);
+        replayButton.add(replayButtonTex);
+        replayButton.setPosition(scoreBoard.getX() + scoreBoard.getWidth() / 2 - replayButtonTex.getWidth()/2, scoreBoard.getY() + scoreBoard.getHeight()/2 - replayButtonTex.getHeight() * 2);
+        replayButton.setColor(1,1,1,0);
+        //mainStage.addActor(replayButton);
 
         //============================== Buttons ================================================//
 
@@ -295,7 +327,7 @@ public abstract class MyScreenBeta extends ScreenBeta {
             Vector2 touchPos1 = new Vector2(screenX, screenY);
             Vector2 buttonZone = touchPos1.sub(uIButtonPos);
 
-            if(cannon.fireDir.len() > cannon.getWidth()&&
+            if(cannon.fireDir.len() > cannon.getWidth() &&
                     buttonZone.len2() > 2f * (pauseButtonTex.getWidth()/2 * pauseButtonTex.getWidth()/2 ) + pauseButtonTex.getHeight()/2 * pauseButtonTex.getHeight()/2) // able to load cannon ball only when the touch down position is outside of the range
             {
                 fireTrigger = true;
@@ -305,12 +337,13 @@ public abstract class MyScreenBeta extends ScreenBeta {
                 cannonBall = new CannonBall(cannon.getX()+ cannon.getWidth()/2 +(float)(Math.cos(cannon.fireDir.angleRad()))*cannon.getWidth(),
                         cannon.getY() + cannon.getHeight()/2 - HEIGHT / 50 + (float)(Math.sin(cannon.fireDir.angleRad()))*cannon.getWidth(), mainStage);
 
-                cannonBall.SetVelocity(screenX, (screenY - HEIGHT)*(-1) - cannonBall.getHeight()/2);
+                cannonBall.SetVelocity(screenX, ((screenY - HEIGHT)*(-1) - cannonBall.getHeight()/2));
                 cannonBall.setVisible(false);
                 // HEIGHT / 50 is half of the cannon ball height
 
                 ball = new Ball(cannon.getX()+ cannon.getWidth()/2 - HEIGHT/25 +(float)(Math.cos(cannon.fireDir.angleRad()))*cannon.getWidth()/3,
                         cannon.getY() + cannon.getHeight()/2 - HEIGHT/50 + (float)(Math.sin(cannon.fireDir.angleRad()))*cannon.getWidth()/3, mainStage);
+
             }
         }
 

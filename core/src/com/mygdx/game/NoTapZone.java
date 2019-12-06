@@ -15,8 +15,8 @@ public class NoTapZone extends ActorBeta {
 
         setAnimation(idleAnim);
         cannonAspectRatio = 525 / 275;
-        setSize(Gdx.graphics.getHeight() / 5 * 525/275, Gdx.graphics.getHeight() / 5 * 525/275); // double the cannon width
-        setBoundaryPolygon(8);
+        setSize(Gdx.graphics.getHeight() / 5 * 525/275, Gdx.graphics.getHeight() / 5f * 525/275); // double the cannon width
+        setBoundaryPolygon(6);
     }
 
     @Override
