@@ -59,23 +59,12 @@ public class BoatBig extends ActorBeta {
 
         if(!ScreenBeta.loseGame) {
             applyPhysics(dt);
-            if (pathFinderBelow.CheckCollisionObstacle())
+            if (pathFinderBelow.CheckCollisionObstacle()|| pathFinderBelow.getY() <= 0)
                 upGroup = true;
-            if (pathFinderAbove.CheckCollisionObstacle())
+            if (pathFinderAbove.CheckCollisionObstacle()|| pathFinderAbove.getY() >= Gdx.graphics.getHeight())
                 upGroup = false;
-
             if (!CheckCollisionObstacle())
                 setMotionAngle(180);
-
-            // check collision with the edges of the screen
-            if (getY() < 0) {
-                setY(0);
-                setMotionAngle(90);
-            }
-            if (getY() > Gdx.graphics.getHeight() - getHeight()) {
-                setY(Gdx.graphics.getHeight() - getHeight());
-                setMotionAngle(-90);
-            }
 
             for (Barricade barricade : ActorBeta.getListBarricade()) {
                 if (overlaps(barricade)) {

@@ -50,8 +50,8 @@ public abstract class MyScreenBeta extends ScreenBeta {
 
 
     //================= Obstacles =====================//
-    Island island;
-    Rock rock;
+    //Island island;
+    //Rock rock;
 
     //================= Sounds ========================//
     Sound explosion, hit, gameOver, shoot, parrotSound, lvlCompleted, click;
@@ -131,19 +131,22 @@ public abstract class MyScreenBeta extends ScreenBeta {
         if(loseGame)
         {
             winMsg.setText("You lose!");
-
-            mainStage.addActor(scoreBoard);
-            mainStage.addActor(highscoreUI);
-            mainStage.addActor(currentScoreUI);
             scoreBoard.addAction(Actions.sequence(Actions.delay(2), Actions.fadeIn(1)));
+            uiStage.addActor(scoreBoard);
             highscoreUI.setText("High Score \n" + ScreenBeta.highscore);
             highscoreUI.addAction(Actions.sequence(Actions.delay(2), Actions.fadeIn(1)));
+            uiStage.addActor(highscoreUI);
             currentScoreUI.setText("Current Score \n" + ScreenBeta.score);
             currentScoreUI.addAction(Actions.sequence(Actions.delay(2), Actions.fadeIn(1)));
-            mainStage.addActor(replayButton);
+            uiStage.addActor(currentScoreUI);
             replayButtonTex.addAction(Actions.sequence(Actions.delay(2), Actions.fadeIn(1)));
+            uiStage.addActor(replayButton);
             if(replayButton.isPressed())
+            {
+                ScreenBeta.score = 0;
                 PirateBay.setActiveScreen(new Level01());
+            }
+
         }
 
         if(lvlEnd)
@@ -195,48 +198,46 @@ public abstract class MyScreenBeta extends ScreenBeta {
         //}
 
         //top rocks
-        island = new Island(WIDTH *5/16, HEIGHT / 2 + HEIGHT/15, mainStage);
+        new Island(WIDTH *5/16, HEIGHT / 2 + HEIGHT/15, mainStage);
        // rock = new Rock (WIDTH * 5/16, HEIGHT * 5/8 , mainStage);
-        rock = new Rock (WIDTH * 5/16, HEIGHT * 5/8 + HEIGHT/15 , mainStage);
-        rock = new Rock (WIDTH * 5/16, HEIGHT * 5/8 + 2* HEIGHT/15 , mainStage);
-        rock = new Rock (WIDTH * 5/16, HEIGHT * 5/8 + 3* HEIGHT/15 , mainStage);
-        rock = new Rock (WIDTH * 5/16, HEIGHT * 5/8 + 4* HEIGHT/15 , mainStage);
-        rock = new Rock (WIDTH * 5/16, HEIGHT * 5/8 + 5* HEIGHT/15 , mainStage);
+        new Rock (WIDTH * 5/16, HEIGHT * 5/8 + HEIGHT/15 , mainStage);
+        new Rock (WIDTH * 5/16, HEIGHT * 5/8 + 2* HEIGHT/15 , mainStage);
+        new Rock (WIDTH * 5/16, HEIGHT * 5/8 + 3* HEIGHT/15 , mainStage);
+        new Rock (WIDTH * 5/16, HEIGHT * 5/8 + 4* HEIGHT/15 , mainStage);
+        new Rock (WIDTH * 5/16, HEIGHT * 5/8 + 5* HEIGHT/15 , mainStage);
 
 
         //rock = new Rock (WIDTH * 5/16, HEIGHT / 2 + HEIGHT / 15, mainStage);
 
         //lower half rocks
-        rock = new Rock (WIDTH * 5/16, HEIGHT * 1/8 - 2 * HEIGHT/15  , mainStage);
-        rock = new Rock (WIDTH * 5/16, HEIGHT * 1/8 - HEIGHT/15  , mainStage);
-        rock = new Rock (WIDTH * 5/16, HEIGHT * 1/8  , mainStage);
-        rock = new Rock (WIDTH * 5/16, HEIGHT * 1/8 + HEIGHT / 15  , mainStage);
-        rock = new Rock (WIDTH * 5/16, HEIGHT * 1/8 + 2 * HEIGHT / 15  , mainStage);
+        new Rock (WIDTH * 5/16, HEIGHT * 1/8 - 2 * HEIGHT/15  , mainStage);
+        new Rock (WIDTH * 5/16, HEIGHT * 1/8 - HEIGHT/15  , mainStage);
+        new Rock (WIDTH * 5/16, HEIGHT * 1/8  , mainStage);
+        new Rock (WIDTH * 5/16, HEIGHT * 1/8 + HEIGHT / 15  , mainStage);
+        new Rock (WIDTH * 5/16, HEIGHT * 1/8 + 2 * HEIGHT / 15  , mainStage);
 
 
 
         //Middle Islands
-        rock = new Rock(WIDTH *6/8, HEIGHT * 18/32, mainStage); // east
-        island = new Island(WIDTH *5/8, HEIGHT / 2, mainStage); // west
-        island = new Island(WIDTH *5/8+ WIDTH/15, HEIGHT *3/4, mainStage); //north
-        island = new Island(WIDTH *5/8+ WIDTH/15, HEIGHT *1/4, mainStage); //south
+        new Rock(WIDTH *6/8, HEIGHT * 18/32, mainStage); // east
+        new Island(WIDTH *5/8, HEIGHT / 2, mainStage); // west
+        new Island(WIDTH *5/8+ WIDTH/15, HEIGHT *3/4, mainStage); //north
+        new Island(WIDTH *5/8+ WIDTH/15, HEIGHT *1/4, mainStage); //south
 
         //Lower screen rock (3 rocks)
-        rock = new Rock (WIDTH * 7/16 , HEIGHT * 3/16   , mainStage);
-        rock = new Rock (WIDTH * 9/16 , HEIGHT * 3/16   , mainStage);
-        island = new Island (WIDTH * 8/16 , HEIGHT * 5/16   , mainStage);
-        rock = new Rock (WIDTH * 14/16 , HEIGHT * 1/16   , mainStage);
-        rock = new Rock (WIDTH * 14/16 , HEIGHT * 0   , mainStage);
+        new Rock (WIDTH * 7/16 , HEIGHT * 3/16   , mainStage);
+        new Rock (WIDTH * 9/16 , HEIGHT * 3/16   , mainStage);
+        new Island (WIDTH * 8/16 , HEIGHT * 5/16   , mainStage);
+        new Rock (WIDTH * 14/16 , HEIGHT * 1/16   , mainStage);
+        new Rock (WIDTH * 14/16 , HEIGHT * 0   , mainStage);
 
         // Upper Screen rock
-        rock = new Rock (WIDTH * 7/16 , HEIGHT * 13/16   , mainStage); // left
-        rock = new Rock (WIDTH * 9/16 , HEIGHT * 11/16   , mainStage); // middle
-        rock = new Rock (WIDTH * 9/16 , HEIGHT * 13/16 - HEIGHT/15   , mainStage); // middle
+        new Rock (WIDTH * 7/16 , HEIGHT * 13/16   , mainStage); // left
+        new Rock (WIDTH * 9/16 , HEIGHT * 11/16   , mainStage); // middle
+        new Rock (WIDTH * 9/16 , HEIGHT * 13/16 - HEIGHT/15   , mainStage); // middle
        // rock = new Rock (WIDTH * 9/16 , HEIGHT * 12/16 - (2 * HEIGHT/15)   , mainStage); // middle
 
-        rock = new Rock ( WIDTH * 14/16, HEIGHT * 13/16, mainStage); //far east
-
-
+        new Rock ( WIDTH * 14/16, HEIGHT * 13/16, mainStage); //far east
 
         //island = new Island(WIDTH / 4, HEIGHT / 2, mainStage);
 
@@ -285,9 +286,6 @@ public abstract class MyScreenBeta extends ScreenBeta {
         scoreBoard.setSize(HEIGHT/2 * scoreBoard.getWidth()/scoreBoard.getHeight(), HEIGHT/2);
         scoreBoard.setPosition(WIDTH / 2 - scoreBoard.getWidth()/2, HEIGHT/2 - scoreBoard.getHeight()/2);
         scoreBoard.setColor(1,1,1,0);
-        //mainStage.addActor(scoreBoard);
-        //mainStage.addActor(highscoreUI);
-        //mainStage.addActor(currentScoreUI);
 
         highscoreUI = new Label("High Score \n" + ScreenBeta.highscore, arcade);
         highscoreUI.setAlignment(Align.center);
@@ -295,7 +293,6 @@ public abstract class MyScreenBeta extends ScreenBeta {
         highscoreUI.setSize(scoreBoard.getWidth(), scoreBoard.getHeight()/3);
         highscoreUI.setPosition(scoreBoard.getX() + scoreBoard.getWidth() / 2 - highscoreUI.getWidth()/2, scoreBoard.getY() + scoreBoard.getHeight() - highscoreUI.getHeight());
         highscoreUI.setColor(1,1,1,0);
-        //mainStage.addActor(highscoreUI);
 
         currentScoreUI = new Label("Current Score \n" + ScreenBeta.score, arcade);
         currentScoreUI.setAlignment(Align.center);
@@ -303,7 +300,6 @@ public abstract class MyScreenBeta extends ScreenBeta {
         currentScoreUI.setSize(scoreBoard.getWidth(), scoreBoard.getHeight()/3);
         currentScoreUI.setPosition(scoreBoard.getX() + scoreBoard.getWidth() / 2 - currentScoreUI.getWidth()/2, scoreBoard.getY() + scoreBoard.getHeight()/2 - currentScoreUI.getHeight()/2);
         currentScoreUI.setColor(1,1,1,0);
-        //mainStage.addActor(currentScoreUI);
 
         replayButtonTex = new ActorBeta();
         replayButtonTex.loadTexture("replayButton.png");
@@ -315,7 +311,6 @@ public abstract class MyScreenBeta extends ScreenBeta {
         replayButton.add(replayButtonTex);
         replayButton.setPosition(scoreBoard.getX() + scoreBoard.getWidth() / 2 - replayButtonTex.getWidth()/2, scoreBoard.getY() + scoreBoard.getHeight()/2 - replayButtonTex.getHeight() * 2);
         replayButton.setColor(1,1,1,0);
-        //mainStage.addActor(replayButton);
 
         //============================== Buttons ================================================//
 
@@ -324,26 +319,27 @@ public abstract class MyScreenBeta extends ScreenBeta {
         float pauseBtnAR = pauseButtonTex.getWidth() / pauseButtonTex.getHeight();
         pauseButtonTex.setSize(HEIGHT / 10 * pauseBtnAR, HEIGHT /10);
         pauseButtonTex.setColor(1,1,1, 0.5f);
+
         pauseButton= new Button(arcade);
         pauseButton.setSize(pauseButtonTex.getWidth() * 0.9f, pauseButtonTex.getHeight() * 0.9f);
         pauseButton.add(pauseButtonTex);
         pauseButton.setPosition(20, HEIGHT - pauseButton.getHeight() * 1.2f);
         pauseButton.setColor(1,1,1,0);
-        mainStage.addActor(pauseButton);
+        uiStage.addActor(pauseButton);
 
         resumeButtonTex = new ActorBeta();
         resumeButtonTex.loadTexture("PlayButton.png");
         float resumeBtnAR = resumeButtonTex.getWidth() / resumeButtonTex.getHeight();
         resumeButtonTex.setSize(HEIGHT / 10 * resumeBtnAR, HEIGHT /10);
         resumeButtonTex.setColor(1,1,1,0.5f);
+
         resumeButton= new Button(arcade);
         resumeButton.setSize(resumeButtonTex.getWidth() * 0.9f, resumeButtonTex.getHeight() * 0.9f);
         resumeButton.add(resumeButtonTex);
         resumeButton.setPosition(20, HEIGHT - resumeButton.getHeight() * 1.2f);
         resumeButton.setColor(1,1,1,0);
-        mainStage.addActor(resumeButton);
+        uiStage.addActor(resumeButton);
         resumeButton.setVisible(false);
-
 
         //==================================== Sound =============================================//
         explosion = Gdx.audio.newSound(Gdx.files.internal("Sound/explosion.wav"));
@@ -361,7 +357,6 @@ public abstract class MyScreenBeta extends ScreenBeta {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-
 
         if(playLevel && !fireTrigger && startLvlTimer <= 0 && !loseGame) // there is a transition from firstTutorial to secondTutorial, during which secondTutorial and tutCompleted are all false
         {
@@ -390,8 +385,8 @@ public abstract class MyScreenBeta extends ScreenBeta {
                         cannon.getY() + cannon.getHeight()/2 - HEIGHT/50 + (float)(Math.sin(cannon.fireDir.angleRad()))*cannon.getWidth()/3, mainStage);
 
             }
-        }
 
+        }
         return super.touchDown(screenX, screenY, pointer, button);
     }
 
@@ -457,4 +452,6 @@ public abstract class MyScreenBeta extends ScreenBeta {
             resumeButton.setVisible(false);
         }
     }
+
+
 }

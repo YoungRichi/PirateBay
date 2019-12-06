@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+
 public class Level01 extends MyScreenBeta {
     @Override
     public void EnemiesInit() {
@@ -17,7 +19,6 @@ public class Level01 extends MyScreenBeta {
         CreateBoatBig(4); // sum of all elements in the bigBoatNums array
         CreateBoatFast(2); // sum of all elements in the fastBoatNums array
         CreateParrot(1); // sum of all elements in the parrotNums array
-
     }
 
     @Override

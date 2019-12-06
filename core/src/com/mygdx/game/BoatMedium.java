@@ -48,16 +48,12 @@ public class BoatMedium extends ActorBeta {
 
         if (!ScreenBeta.loseGame) {
             applyPhysics(dt);
-            if (pathFinderBelow.CheckCollisionObstacle())
+            if (pathFinderBelow.CheckCollisionObstacle() || pathFinderBelow.getY() <= 0)
                 upGroup = true;
-            if (pathFinderAbove.CheckCollisionObstacle())
+            if (pathFinderAbove.CheckCollisionObstacle()|| pathFinderAbove.getY() >= Gdx.graphics.getHeight())
                 upGroup = false;
             if (!CheckCollisionObstacle()) // the boat will move in its current direction + 90 degree if it collides with rocks
                 setMotionAngle(180);
-            if (getY() < 0) {
-                setY(0);
-                setMotionAngle(90);
-            }
             if (getX() < Gdx.graphics.getWidth() * 3 / 4) {
                 setSpeed(0);
                 Fire(dt);
