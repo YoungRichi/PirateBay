@@ -169,7 +169,7 @@ public abstract class MyScreenBeta extends ScreenBeta {
         refResolutionFactor = HEIGHT/480;
 
         ActorBeta background = new ActorBeta(0, 0, mainStage);
-        background.loadTexture( "Battlefield.png" );
+        background.loadTexture( "Battlefield2.png" );
         background.setSize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 
         ActorBeta.setWorldBounds(WIDTH, HEIGHT);
@@ -198,29 +198,29 @@ public abstract class MyScreenBeta extends ScreenBeta {
         //}
 
         //top rocks
-        new Island(WIDTH *5/16, HEIGHT / 2 + HEIGHT/15, mainStage);
+        new Island(WIDTH * 15/64, HEIGHT / 2 + HEIGHT/15, mainStage);
        // rock = new Rock (WIDTH * 5/16, HEIGHT * 5/8 , mainStage);
-        new Rock (WIDTH * 5/16, HEIGHT * 5/8 + HEIGHT/15 , mainStage);
-        new Rock (WIDTH * 5/16, HEIGHT * 5/8 + 2* HEIGHT/15 , mainStage);
-        new Rock (WIDTH * 5/16, HEIGHT * 5/8 + 3* HEIGHT/15 , mainStage);
-        new Rock (WIDTH * 5/16, HEIGHT * 5/8 + 4* HEIGHT/15 , mainStage);
-        new Rock (WIDTH * 5/16, HEIGHT * 5/8 + 5* HEIGHT/15 , mainStage);
+        new Rock (WIDTH * 9/32, HEIGHT * 5/8 + HEIGHT/15 , mainStage);
+        new Rock (WIDTH * 9/32, HEIGHT * 5/8 + 2* HEIGHT/15 , mainStage);
+        new Rock (WIDTH * 9/32, HEIGHT * 5/8 + 3* HEIGHT/15 , mainStage);
+        new Rock (WIDTH * 9/32, HEIGHT * 5/8 + 4* HEIGHT/15 , mainStage);
+        new Rock (WIDTH * 9/32, HEIGHT * 5/8 + 5* HEIGHT/15 , mainStage);
 
 
         //rock = new Rock (WIDTH * 5/16, HEIGHT / 2 + HEIGHT / 15, mainStage);
 
         //lower half rocks
-        new Rock (WIDTH * 5/16, HEIGHT * 1/8 - 2 * HEIGHT/15  , mainStage);
-        new Rock (WIDTH * 5/16, HEIGHT * 1/8 - HEIGHT/15  , mainStage);
-        new Rock (WIDTH * 5/16, HEIGHT * 1/8  , mainStage);
-        new Rock (WIDTH * 5/16, HEIGHT * 1/8 + HEIGHT / 15  , mainStage);
-        new Rock (WIDTH * 5/16, HEIGHT * 1/8 + 2 * HEIGHT / 15  , mainStage);
+        new Rock (WIDTH * 9/32, HEIGHT * 1/8 - 2 * HEIGHT/15  , mainStage);
+        new Rock (WIDTH * 9/32, HEIGHT * 1/8 - HEIGHT/15  , mainStage);
+        new Rock (WIDTH * 9/32, HEIGHT * 1/8  , mainStage);
+        new Rock (WIDTH * 9/32, HEIGHT * 1/8 + HEIGHT / 15  , mainStage);
+        new Rock (WIDTH * 9/32, HEIGHT * 1/8 + 2 * HEIGHT / 15  , mainStage);
 
 
 
         //Middle Islands
         new Rock(WIDTH *6/8, HEIGHT * 18/32, mainStage); // east
-        new Island(WIDTH *5/8, HEIGHT / 2, mainStage); // west
+        new Island(WIDTH *5/8, HEIGHT * 14/32, mainStage); // west
         new Island(WIDTH *5/8+ WIDTH/15, HEIGHT *3/4, mainStage); //north
         new Island(WIDTH *5/8+ WIDTH/15, HEIGHT *1/4, mainStage); //south
 
