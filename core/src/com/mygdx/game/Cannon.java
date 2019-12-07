@@ -21,7 +21,8 @@ public class Cannon extends ActorBeta {
     Animation chargeDangerAnim = loadAnimationFromFiles(chargeDangerStr, 0.1f, true);
     Animation shootAnim = loadAnimationFromFiles(shootStr, 0.3f, true);
 
-    int lives = 3;
+    int livesMax = 3;
+    int lives = livesMax;
     CannonState cannonState;
     float toIdleTimer = 1.0f;
     Vector2 fireDir = Vector2.Zero;

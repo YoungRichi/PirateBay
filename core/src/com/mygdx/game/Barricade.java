@@ -67,6 +67,12 @@ public class Barricade extends ActorBeta {
             setSize(Gdx.graphics.getHeight() * getWidth() / getHeight(), Gdx.graphics.getHeight());
             setBoundaryRectangle();
         }
+        else if(healthCurr <= healthMax)
+        {
+            setAnimation(idleAnim);
+            setSize(Gdx.graphics.getHeight() * getWidth() / getHeight(), Gdx.graphics.getHeight());
+            setBoundaryRectangle();
+        }
 
 
         //boundToWorld();

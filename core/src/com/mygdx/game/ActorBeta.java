@@ -695,6 +695,31 @@ public class ActorBeta extends Actor {
         return list;
     }
 
+    public static ArrayList<LifePickup> getListLifePickup()
+    {
+        ArrayList<LifePickup> list = new ArrayList<LifePickup>();
+
+        for (Actor a : ScreenBeta.mainStage.getActors())
+        {
+            if ( a instanceof LifePickup)
+                list.add( (LifePickup) a );
+        }
+        return list;
+    }
+
+    public static ArrayList<BarricadeHealthPickup> getListBHPickup()
+    {
+        ArrayList<BarricadeHealthPickup> list = new ArrayList<BarricadeHealthPickup>();
+
+        for (Actor a : ScreenBeta.mainStage.getActors())
+        {
+            if ( a instanceof BarricadeHealthPickup)
+                list.add( (BarricadeHealthPickup) a );
+        }
+        return list;
+    }
+
+
     boolean upGroup;
     boolean ableToSetIsland;
     // obstacle avoidance mechanic

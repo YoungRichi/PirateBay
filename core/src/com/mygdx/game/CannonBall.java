@@ -86,6 +86,30 @@ public class CannonBall extends ActorBeta {
                 }
             }
 
+            for (LifePickup lifePickup : ActorBeta.getListLifePickup()) {
+                if (overlaps(lifePickup)) {
+                    lifePickup.remove();
+                    for (Cannon cannon : ActorBeta.getListCannon())
+                    {
+                        cannon.lives = cannon.livesMax;
+                        // play sound here
+                    }
+
+                }
+            }
+
+            for (BarricadeHealthPickup barricadeHealthPickup : ActorBeta.getListBHPickup()) {
+                if (overlaps(barricadeHealthPickup)) {
+                    barricadeHealthPickup.remove();
+                    for (Barricade barricade : ActorBeta.getListBarricade())
+                    {
+                        barricade.healthCurr = barricade.healthMax;
+                        // play sound here
+                    }
+
+                }
+            }
+
             for (Soldier soldier : ActorBeta.getListSoldier()) {
                 if (overlaps(soldier)) {
                     soldier.remove();

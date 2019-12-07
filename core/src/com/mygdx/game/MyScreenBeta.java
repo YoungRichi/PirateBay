@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.IntArray;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
 
@@ -49,9 +50,11 @@ public abstract class MyScreenBeta extends ScreenBeta {
     float toNextLvlTimer;
 
 
-    //================= Obstacles =====================//
-    //Island island;
-    //Rock rock;
+    //================= Pickups =====================//
+    LifePickup lifePickup;
+    BarricadeHealthPickup barricadeHealthPickup;
+    float lifePickupSpawnTimer, healthPickupSpawnTimer;
+    boolean hasLifePickup, hasHealthPickup;
 
     //================= Sounds ========================//
     Sound explosion, hit, gameOver, shoot, parrotSound, lvlCompleted, click;
@@ -114,6 +117,25 @@ public abstract class MyScreenBeta extends ScreenBeta {
         {
             ControlCannonBall(dt);
         }
+
+        if(hasLifePickup)
+            lifePickupSpawnTimer -= dt;
+        if(lifePickupSpawnTimer <= 0)
+        {
+            lifePickup.setSpeed(12);
+            lifePickup.setMotionAngle(270);
+            hasLifePickup = false;
+        }
+
+        if(hasHealthPickup)
+            healthPickupSpawnTimer -= dt;
+        if(healthPickupSpawnTimer <= 0)
+        {
+            barricadeHealthPickup.setSpeed(12);
+            barricadeHealthPickup.setMotionAngle(270);
+            hasHealthPickup = false;
+        }
+
 
         CheckPauseResumeButton();
         CheckGameState(dt);
@@ -242,6 +264,15 @@ public abstract class MyScreenBeta extends ScreenBeta {
 
         //island = new Island(WIDTH / 4, HEIGHT / 2, mainStage);
 
+        //============================== Pickups ===============================================//
+
+        lifePickup = new LifePickup();
+        mainStage.addActor(lifePickup);
+        barricadeHealthPickup = new BarricadeHealthPickup();
+        mainStage.addActor(barricadeHealthPickup);
+        hasLifePickup = false;
+        hasHealthPickup = false;
+
         //================================== Enemies ============================================//
 
         boatSmalls = new ArrayList<BoatSmall>();
@@ -258,9 +289,7 @@ public abstract class MyScreenBeta extends ScreenBeta {
 
         EnemiesInit();
 
-
         //============================== Labels =================================================//
-
         livesCount = new Label("x 3", arcade);
         livesCount.setAlignment(Align.center);
         livesCount.setFontScale(1 * refResolutionFactor);
@@ -350,6 +379,8 @@ public abstract class MyScreenBeta extends ScreenBeta {
         parrotSound = Gdx.audio.newSound(Gdx.files.internal("Sound/parrot.wav"));
         shoot = Gdx.audio.newSound(Gdx.files.internal("Sound/shoot.wav"));
         click = Gdx.audio.newSound(Gdx.files.internal("Sound/click.wav"));
+
+
     }
 
     public abstract void EnemiesInit();
