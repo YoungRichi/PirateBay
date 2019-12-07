@@ -28,6 +28,6 @@ public class Level02 extends MyScreenBeta {
 
     @Override
     public ScreenBeta GetScreen() {
-        return new EndScreen();
+        return new Level03();
     }
 }

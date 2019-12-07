@@ -26,7 +26,7 @@ public class Level01 extends MyScreenBeta {
         CreateBoatFast(2); // sum of all elements in the fastBoatNums array
         CreateParrot(1); // sum of all elements in the parrotNums array
 
-        lifePickup.setPosition(WIDTH * 3 / 4, HEIGHT); // y coordinate should always be HEIGHT
+	lifePickup.setPosition(WIDTH * 3 / 4, HEIGHT); // y coordinate should always be HEIGHT
         barricadeHealthPickup.setPosition(WIDTH/2, HEIGHT); // y coordinate should always be HEIGHT
         hasLifePickup = true; // when this is set to true, its timer must be set
         hasHealthPickup = true;
