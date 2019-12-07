@@ -58,6 +58,7 @@ public abstract class MyScreenBeta extends ScreenBeta {
 
     //================= Sounds ========================//
     Sound explosion, hit, gameOver, shoot, parrotSound, lvlCompleted, click;
+    boolean lvlCompletedSoundPlayed;
 
     //================= Enemies =======================//
 
@@ -118,22 +119,22 @@ public abstract class MyScreenBeta extends ScreenBeta {
             ControlCannonBall(dt);
         }
 
-        if(hasLifePickup)
+        if(hasLifePickup) {
             lifePickupSpawnTimer -= dt;
-        if(lifePickupSpawnTimer <= 0)
-        {
-            lifePickup.setSpeed(12);
-            lifePickup.setMotionAngle(270);
-            hasLifePickup = false;
+            if (lifePickupSpawnTimer <= 0) {
+                lifePickup.setSpeed(12);
+                lifePickup.setMotionAngle(270);
+                hasLifePickup = false;
+            }
         }
 
-        if(hasHealthPickup)
+        if(hasHealthPickup) {
             healthPickupSpawnTimer -= dt;
-        if(healthPickupSpawnTimer <= 0)
-        {
-            barricadeHealthPickup.setSpeed(12);
-            barricadeHealthPickup.setMotionAngle(270);
-            hasHealthPickup = false;
+            if (healthPickupSpawnTimer <= 0) {
+                barricadeHealthPickup.setSpeed(12);
+                barricadeHealthPickup.setMotionAngle(270);
+                hasHealthPickup = false;
+            }
         }
 
 
@@ -175,9 +176,14 @@ public abstract class MyScreenBeta extends ScreenBeta {
         if(lvlEnd)
         {
             winMsg.setText("Wave " + levelNum + " Cleared!");
+            if(!lvlCompletedSoundPlayed) {
+                ScreenBeta.getSound("levelCompleted").play(1);
+                lvlCompletedSoundPlayed = true;
+            }
             toNextLvlTimer -= deltaTime;
             if(toNextLvlTimer <= 0)
             {
+
                 PirateBay.setActiveScreen(GetScreen());
             }
         }
@@ -212,13 +218,6 @@ public abstract class MyScreenBeta extends ScreenBeta {
         liveIcon = new Lives(cannon.getX(), cannon.getY() + cannon.getHeight(), mainStage);
 
         //================================== Obstacles ===========================================//
-
-        //rockNumMax = 0;
-
-        //for(int i = 0; i < rockNumMax; i++)
-        //{
-            //Rock rock = new Rock(WIDTH / 2 + WIDTH / 10, 0 + i * HEIGHT / 15, mainStage);
-        //}
 
         //top rocks
         new Island(WIDTH * 15/64, HEIGHT / 2 + HEIGHT/15, mainStage);
@@ -266,10 +265,8 @@ public abstract class MyScreenBeta extends ScreenBeta {
 
         //============================== Pickups ===============================================//
 
-        lifePickup = new LifePickup();
-        mainStage.addActor(lifePickup);
-        barricadeHealthPickup = new BarricadeHealthPickup();
-        mainStage.addActor(barricadeHealthPickup);
+        lifePickup = new LifePickup(0, HEIGHT, mainStage);
+        barricadeHealthPickup = new BarricadeHealthPickup(0, HEIGHT, mainStage);
         hasLifePickup = false;
         hasHealthPickup = false;
 
@@ -380,7 +377,9 @@ public abstract class MyScreenBeta extends ScreenBeta {
         shoot = Gdx.audio.newSound(Gdx.files.internal("Sound/shoot.wav"));
         click = Gdx.audio.newSound(Gdx.files.internal("Sound/click.wav"));
 
-
+        ScreenBeta.loadSound("Sound/shoot.wav", "shoot");
+        ScreenBeta.loadSound("Sound/levelCompleted.wav", "levelCompleted");
+        lvlCompletedSoundPlayed = false;
     }
 
     public abstract void EnemiesInit();
@@ -434,6 +433,7 @@ public abstract class MyScreenBeta extends ScreenBeta {
                 if(cannon.cannonState != CannonState.Idle) // Not allow to change to shoot anim if the cannon is in idle state
                     cannon.cannonState = CannonState.Shoot;
                 cannonBall.setVisible(true);
+                ScreenBeta.getSound("shoot").play();
             }
         }
         return super.touchUp(screenX, screenY, pointer, button);

@@ -7,13 +7,12 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 public class BarricadeHealthPickup extends ActorBeta {
 
-    public BarricadeHealthPickup() {
+    public BarricadeHealthPickup(float x, float y, Stage s) {
+        super(x, y, s);
         loadTexture("BarricadeHealth.png");
         setSize(Gdx.graphics.getHeight() / 12 * getWidth() / getHeight(), Gdx.graphics.getHeight() / 12);
         setBoundaryRectangle();
         addAction(Actions.forever(Actions.sequence(Actions.fadeOut(0.5f), Actions.fadeIn(0.2f))));
-        //setSpeed(0);
-        //setMotionAngle(270);
     }
 
     @Override

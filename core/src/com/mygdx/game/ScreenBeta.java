@@ -33,6 +33,7 @@ import com.badlogic.gdx.utils.BooleanArray;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 //import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 //import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 
@@ -74,6 +75,9 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
     static float WIDTH = Gdx.graphics.getWidth();
     static float HEIGHT = Gdx.graphics.getHeight();
 
+    static public HashMap<String, Music> music;
+    static public HashMap<String, Sound> sounds;
+
 
     SpriteBatch batch;
     //CONSTRUCTOR
@@ -90,6 +94,9 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
 
         mainStage = new Stage();
         uiStage = new Stage();
+
+        music = new HashMap<String, Music>();
+        sounds = new HashMap<String, Sound>();
 
         /***
          * TODO: USE THE TABLE BELOW TO SET THE BUTTONS ON BOTH START SCREEN AND GAME SCREEN
@@ -149,6 +156,27 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
             prefs.flush();
         }
     }
+
+    static public void loadMusic(String path, String key) {
+        Music musicfile = Gdx.audio.newMusic(Gdx.files.internal(path));
+        music.put(key, musicfile);
+    }
+
+    static public void loadSound(String path, String key) {
+        Sound soundfile = Gdx.audio.newSound(Gdx.files.internal(path));
+        sounds.put(key, soundfile);
+        System.out.println("Sound loaded");
+    }
+
+    static public Music getMusic(String key) {
+        return music.get(key);
+    }
+
+    static public Sound getSound(String key) {
+        return sounds.get(key);
+    }
+
+
 
     boolean waveEnd(float deltaTime)
     {
@@ -337,12 +365,12 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
     public void render(float delta) {
 
         //score++;
-        //if(score > highscore)
-        //{
-            //highscore = score;
-            //prefs.putInteger("highscore", score);
-            //prefs.flush();
-        //}
+        if(score > highscore)
+        {
+            highscore = score;
+            prefs.putInteger("highscore", score);
+            prefs.flush();
+        }
 
         //PAUSE LOGIC
         if(isPaused)

@@ -23,6 +23,8 @@ public class CannonBall extends ActorBeta {
         setSize(Gdx.graphics.getHeight() / 25 * getWidth()/getHeight(), Gdx.graphics.getHeight() / 25);
         //setSize(0,0);
         setBoundaryRectangle();
+        ScreenBeta.loadSound("Sound/explosion.wav", "explosion");
+        ScreenBeta.loadSound("Sound/hitsound.wav", "hit");
     }
 
     @Override
@@ -48,6 +50,7 @@ public class CannonBall extends ActorBeta {
                 fireTimer = fireDurationMax;
                 remove();
                 ExplosionEffect explosionEffect = new ExplosionEffect(getX(), getY(), ScreenBeta.mainStage);
+                ScreenBeta.getSound("explosion").play(1);
             }
 
             // Check collisions
@@ -59,6 +62,7 @@ public class CannonBall extends ActorBeta {
                             SetVelocityXY(GetVelocity().x * (-1), GetVelocity().y);
                         else
                             SetVelocityXY(GetVelocity().x, GetVelocity().y * (-1));
+                        ScreenBeta.getSound("hit").play(1);
                     }
                 }
             }
@@ -83,6 +87,7 @@ public class CannonBall extends ActorBeta {
 
                  */
                     island.setToHide = true;
+                    ScreenBeta.getSound("hit").play(1);
                 }
             }
 
@@ -115,6 +120,7 @@ public class CannonBall extends ActorBeta {
                     soldier.remove();
                     //ExplosionEffect explosionEffect = new ExplosionEffect(soldier.getX(), soldier.getY(), ScreenBeta.mainStage);
                     ScreenBeta.score++;
+                    ScreenBeta.getSound("explosion").play(1);
                 }
             }
 
@@ -123,6 +129,7 @@ public class CannonBall extends ActorBeta {
                     boatSmall.remove();
                     ExplosionEffect explosionEffect = new ExplosionEffect(boatSmall.getX(), boatSmall.getY(), ScreenBeta.mainStage);
                     ScreenBeta.score++;
+                    ScreenBeta.getSound("explosion").play(1);
                 }
             }
 
@@ -131,6 +138,7 @@ public class CannonBall extends ActorBeta {
                     boatMedium.remove();
                     ExplosionEffect explosionEffect = new ExplosionEffect(boatMedium.getX(), boatMedium.getY(), ScreenBeta.mainStage);
                     ScreenBeta.score += 2;
+                    ScreenBeta.getSound("explosion").play(1);
                 }
             }
 
@@ -139,6 +147,7 @@ public class CannonBall extends ActorBeta {
                     boatFast.remove();
                     ExplosionEffect explosionEffect = new ExplosionEffect(boatFast.getX(), boatFast.getY(), ScreenBeta.mainStage);
                     ScreenBeta.score += 2;
+                    ScreenBeta.getSound("explosion").play(1);
                 }
             }
 
@@ -150,6 +159,7 @@ public class CannonBall extends ActorBeta {
                             SetVelocityXY(GetVelocity().x * (-1), GetVelocity().y);
                         else
                             SetVelocityXY(GetVelocity().x, GetVelocity().y * (-1));
+
                     }
 
                     setMotionAngle(getMotionAngle() + 180);
@@ -164,6 +174,7 @@ public class CannonBall extends ActorBeta {
                         ScreenBeta.score += 5;
                     }
                     ExplosionEffect explosionEffect = new ExplosionEffect(boatBig.getX(), boatBig.getY(), ScreenBeta.mainStage);
+                    ScreenBeta.getSound("explosion").play(1);
                 }
             }
 
@@ -180,6 +191,7 @@ public class CannonBall extends ActorBeta {
                     cannon.lives--;
                     fireTimer = 0; // the player is able to fire again only when the cannon ball's fireTimer reached zero
                     ExplosionEffect explosionEffect = new ExplosionEffect(getX(), getY(), ScreenBeta.mainStage);
+                    ScreenBeta.getSound("explosion").play(1);
                     cannon.addAction(Actions.repeat(10, Actions.sequence(Actions.fadeOut(0.05f), Actions.fadeIn(0.05f))));
                 } else if (!isFiring) {
                     if (0 < fireTimer && fireTimer < fireDurationMax / 5)
@@ -197,18 +209,22 @@ public class CannonBall extends ActorBeta {
             if (getY() > Gdx.graphics.getHeight() - getHeight()) {
                 setY(Gdx.graphics.getHeight() - getHeight());
                 SetVelocityXY(GetVelocity().x, GetVelocity().y * (-1));
+                ScreenBeta.getSound("hit").play(1);
             }
             if (getY() < 0) {
                 setY(0);
                 SetVelocityXY(GetVelocity().x, GetVelocity().y * (-1));
+                ScreenBeta.getSound("hit").play(1);
             }
             if (getX() < 0) {
                 setX(0);
                 SetVelocityXY(GetVelocity().x * (-1), GetVelocity().y);
+                ScreenBeta.getSound("hit").play(1);
             }
             if (getX() > Gdx.graphics.getWidth() - getWidth()) {
                 setX(Gdx.graphics.getWidth() - getWidth());
                 SetVelocityXY(GetVelocity().x * (-1), GetVelocity().y);
+                ScreenBeta.getSound("hit").play(1);
             }
             //boundToWorld();
         }

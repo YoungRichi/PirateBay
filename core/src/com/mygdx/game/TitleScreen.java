@@ -57,7 +57,7 @@ public class TitleScreen extends ScreenBeta {
         }
 
         titleMusic.setLooping(true);
-        titleMusic.setVolume(0.5f);
+        titleMusic.setVolume(1.0f);
 
         clickSound = Gdx.audio.newSound(Gdx.files.internal("Sound/click.wav"));
     }
