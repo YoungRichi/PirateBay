@@ -89,7 +89,7 @@ public class BoatSmall extends ActorBeta {
         if(dropOffTimer <=0)
         {
             soldiers.get(soldierIndex).setSpeed(12);
-            soldiers.get(soldierIndex).setPosition(getX(), getY());
+            soldiers.get(soldierIndex).setPosition(getX(), getY()+ getHeight()/2);
             ScreenBeta.mainStage.addActor(soldiers.get(soldierIndex));
             if(soldierIndex < soldierNum - 1)
                 soldierIndex++;

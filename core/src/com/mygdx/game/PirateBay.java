@@ -17,12 +17,12 @@ public class PirateBay extends GameBeta {
     public void create() {
         super.create();
 
-        level01 = new Level01();
-        setActiveScreen(level01);
+        //level01 = new Level01();
+        //setActiveScreen(level01);
 
 
-        //splashScreen = new SplashScreen();
-        //setActiveScreen(splashScreen);
+        splashScreen = new SplashScreen();
+        setActiveScreen(splashScreen);
 
 
         //titleScreen = new TitleScreen();

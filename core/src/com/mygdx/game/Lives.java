@@ -12,8 +12,8 @@ public class Lives extends ActorBeta {
 
     public Lives(float x, float y, Stage s) {
         super(x, y, s);
-
         setSize(Gdx.graphics.getHeight() / 12 * getWidth() / getHeight(), Gdx.graphics.getHeight() / 12);
+        setBoundaryRectangle();
     }
 
     @Override

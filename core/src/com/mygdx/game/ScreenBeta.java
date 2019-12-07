@@ -53,8 +53,7 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
     static boolean loseGame;
     static boolean playLevel; // set to true after tutorial completed
     static boolean delayToDisplay;
-    final int waveNum = 5; // number of waves in a level
-
+    int waveNum; // number of waves in a level
     //
     boolean enemySpawned;
     boolean lvlStarted, lvlEnd;
@@ -86,15 +85,8 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
 
         lvlStarted = false;
         enemySpawned = false;
-        waves = new boolean[waveNum];
-        for(int i = 0; i < waves.length; i++)
-        {
-            waves[i] = false;
-        }
         bwtWaveTimeMax = 2;
         bwtWaveTimer = bwtWaveTimeMax;
-        toNextLevelTimer = 2;
-
 
         mainStage = new Stage();
         uiStage = new Stage();

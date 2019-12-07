@@ -264,7 +264,7 @@ public class TutorialScreen extends ScreenBeta {
             if(toNextLevelTimer <= 0)
             {
                 playLevel = true;
-                PirateBay.setActiveScreen(new Wave1());
+                PirateBay.setActiveScreen(new Level01());
             }
         }
     }
@@ -297,6 +297,7 @@ public class TutorialScreen extends ScreenBeta {
         tutCompleted = false;
         waveOne = false;
         playLevel = false;
+        toNextLevelTimer = 5;
         //================================= Player ==============================================//
         cannonBase = new CannonBase();
         cannonBase.setPosition(cannonBase.getWidth()/2, HEIGHT/3);

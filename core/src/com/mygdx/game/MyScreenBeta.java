@@ -145,6 +145,7 @@ public abstract class MyScreenBeta extends ScreenBeta {
             {
                 ScreenBeta.score = 0;
                 PirateBay.setActiveScreen(new Level01());
+                loseGame = false;
             }
 
         }

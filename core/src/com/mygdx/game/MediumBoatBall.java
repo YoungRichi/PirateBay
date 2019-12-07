@@ -31,7 +31,7 @@ public class MediumBoatBall extends ActorBeta {
                     Vector2 barricadePos = new Vector2(barricade.getX(), barricade.getY());
                     Vector2 mediumBoatBallPos = new Vector2(getX(), getY());
                     Vector2 hitVector = barricadePos.sub(mediumBoatBallPos);
-                    float offset = 0.1f;
+                    float offset = 0.02f;
                     barricade.addAction(Actions.sequence(Actions.moveBy(hitVector.x * offset, hitVector.y * offset),
                             Actions.delay(0.1f), Actions.moveBy(hitVector.x * -1 * offset, hitVector.y * -1 * offset)));
                     remove();
