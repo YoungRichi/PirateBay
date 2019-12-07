@@ -97,7 +97,8 @@ public class CannonBall extends ActorBeta {
                     for (Cannon cannon : ActorBeta.getListCannon())
                     {
                         cannon.lives = cannon.livesMax;
-                        // play sound here
+                        ScreenBeta.getMusic("pickup").stop();
+                        ScreenBeta.getMusic("pickup").dispose();
                     }
 
                 }
@@ -109,7 +110,8 @@ public class CannonBall extends ActorBeta {
                     for (Barricade barricade : ActorBeta.getListBarricade())
                     {
                         barricade.healthCurr = barricade.healthMax;
-                        // play sound here
+                        ScreenBeta.getMusic("pickup").stop();
+                        ScreenBeta.getMusic("pickup").dispose();
                     }
 
                 }

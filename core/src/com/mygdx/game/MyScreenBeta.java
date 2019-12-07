@@ -45,8 +45,7 @@ public abstract class MyScreenBeta extends ScreenBeta {
     //================ Level =========================//
 
     float startLvlTimer;
-    int levelNum; // the
-    int levelTotalNum;
+    int levelNum;
     float toNextLvlTimer;
 
 
@@ -57,13 +56,11 @@ public abstract class MyScreenBeta extends ScreenBeta {
     boolean hasLifePickup, hasHealthPickup;
 
     //================= Sounds ========================//
-    Sound explosion, hit, gameOver, shoot, parrotSound, lvlCompleted, click;
     boolean lvlCompletedSoundPlayed;
 
     //================= Enemies =======================//
 
     int[] smallBoatNums, medBoatNums, bigBoatNums, fastBoatNums, parrotNums;
-    int rockNumMax;
     int smlBoatStartIndex, medBoatStartIndex, bigBoatStartIndex, fastBoatStartIndex, parrotStartIndex;
 
     @Override
@@ -137,7 +134,6 @@ public abstract class MyScreenBeta extends ScreenBeta {
             }
         }
 
-
         CheckPauseResumeButton();
         CheckGameState(dt);
         livesCount.setText("x " + cannon.lives);
@@ -153,6 +149,11 @@ public abstract class MyScreenBeta extends ScreenBeta {
 
         if(loseGame)
         {
+            if(!lvlCompletedSoundPlayed) {
+                ScreenBeta.getSound("gameOver").play(1);
+                lvlCompletedSoundPlayed = true;
+            }
+
             winMsg.setText("You lose!");
             scoreBoard.addAction(Actions.sequence(Actions.delay(2), Actions.fadeIn(1)));
             uiStage.addActor(scoreBoard);
@@ -164,13 +165,14 @@ public abstract class MyScreenBeta extends ScreenBeta {
             uiStage.addActor(currentScoreUI);
             replayButtonTex.addAction(Actions.sequence(Actions.delay(2), Actions.fadeIn(1)));
             uiStage.addActor(replayButton);
+
             if(replayButton.isPressed())
             {
+                ScreenBeta.getSound("click").play(1);
                 ScreenBeta.score = 0;
                 PirateBay.setActiveScreen(new Level01());
                 loseGame = false;
             }
-
         }
 
         if(lvlEnd)
@@ -180,6 +182,7 @@ public abstract class MyScreenBeta extends ScreenBeta {
                 ScreenBeta.getSound("levelCompleted").play(1);
                 lvlCompletedSoundPlayed = true;
             }
+
             toNextLvlTimer -= deltaTime;
             if(toNextLvlTimer <= 0)
             {
@@ -228,17 +231,12 @@ public abstract class MyScreenBeta extends ScreenBeta {
         new Rock (WIDTH * 9/32, HEIGHT * 5/8 + 4* HEIGHT/15 , mainStage);
         new Rock (WIDTH * 9/32, HEIGHT * 5/8 + 5* HEIGHT/15 , mainStage);
 
-
-        //rock = new Rock (WIDTH * 5/16, HEIGHT / 2 + HEIGHT / 15, mainStage);
-
         //lower half rocks
         new Rock (WIDTH * 9/32, HEIGHT * 1/8 - 2 * HEIGHT/15  , mainStage);
         new Rock (WIDTH * 9/32, HEIGHT * 1/8 - HEIGHT/15  , mainStage);
         new Rock (WIDTH * 9/32, HEIGHT * 1/8  , mainStage);
         new Rock (WIDTH * 9/32, HEIGHT * 1/8 + HEIGHT / 15  , mainStage);
         new Rock (WIDTH * 9/32, HEIGHT * 1/8 + 2 * HEIGHT / 15  , mainStage);
-
-
 
         //Middle Islands
         new Rock(WIDTH *6/8, HEIGHT * 18/32, mainStage); // east
@@ -260,8 +258,6 @@ public abstract class MyScreenBeta extends ScreenBeta {
        // rock = new Rock (WIDTH * 9/16 , HEIGHT * 12/16 - (2 * HEIGHT/15)   , mainStage); // middle
 
         new Rock ( WIDTH * 14/16, HEIGHT * 13/16, mainStage); //far east
-
-        //island = new Island(WIDTH / 4, HEIGHT / 2, mainStage);
 
         //============================== Pickups ===============================================//
 
@@ -369,16 +365,13 @@ public abstract class MyScreenBeta extends ScreenBeta {
         resumeButton.setVisible(false);
 
         //==================================== Sound =============================================//
-        explosion = Gdx.audio.newSound(Gdx.files.internal("Sound/explosion.wav"));
-        gameOver = Gdx.audio.newSound(Gdx.files.internal("Sound/gameOver.wav"));
-        hit = Gdx.audio.newSound(Gdx.files.internal("Sound/hitsound.wav"));
-        lvlCompleted = Gdx.audio.newSound(Gdx.files.internal("Sound/levelCompleted.wav"));
-        parrotSound = Gdx.audio.newSound(Gdx.files.internal("Sound/parrot.wav"));
-        shoot = Gdx.audio.newSound(Gdx.files.internal("Sound/shoot.wav"));
-        click = Gdx.audio.newSound(Gdx.files.internal("Sound/click.wav"));
 
         ScreenBeta.loadSound("Sound/shoot.wav", "shoot");
         ScreenBeta.loadSound("Sound/levelCompleted.wav", "levelCompleted");
+        ScreenBeta.loadSound("Sound/click.wav", "click");
+        ScreenBeta.loadMusic("Sound/DingDing.wav", "levelStart");
+        ScreenBeta.getMusic("levelStart").play();
+        ScreenBeta.loadSound("Sound/gameOver.wav", "gameOver");
         lvlCompletedSoundPlayed = false;
     }
 
@@ -468,8 +461,7 @@ public abstract class MyScreenBeta extends ScreenBeta {
     {
         if(pauseButton.isPressed())
         {
-            click.play();
-
+            ScreenBeta.getSound("click").play(1);
             pause();
             pauseButton.setVisible(false);
             resumeButton.setVisible(true);
@@ -477,8 +469,7 @@ public abstract class MyScreenBeta extends ScreenBeta {
 
         if(resumeButton.isPressed())
         {
-            click.play();
-
+            ScreenBeta.getSound("click").play(1);
             resume();
             pauseButton.setVisible(true);
             resumeButton.setVisible(false);

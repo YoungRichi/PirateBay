@@ -13,7 +13,9 @@ public class LifePickup extends ActorBeta {
         loadTexture("LivesIcon.png");
         setSize(Gdx.graphics.getHeight() / 12 * getWidth() / getHeight(), Gdx.graphics.getHeight() / 12);
         setBoundaryRectangle();
+        setSpeed(0);
         addAction(Actions.forever(Actions.sequence(Actions.fadeOut(0.5f), Actions.fadeIn(0.1f))));
+        ScreenBeta.loadMusic("Sound/FallingSound.ogg", "pickup");
     }
 
     @Override
@@ -21,9 +23,29 @@ public class LifePickup extends ActorBeta {
         super.act(dt);
         if(!ScreenBeta.loseGame) {
             applyPhysics(dt);
+
+            if(getSpeed() != 0)
+            {
+                if(!ScreenBeta.getMusic("pickup").isPlaying())
+                {
+                    ScreenBeta.getMusic("pickup").play();
+                    ScreenBeta.getMusic("pickup").setLooping(true);
+                }
+            }
+
             if (getY() + getHeight() <= 0)
+            {
                 remove();
-            //boundToWorld();
+                ScreenBeta.getMusic("pickup").stop();
+                ScreenBeta.getMusic("pickup").dispose();
+            }
+
         }
+        else if(ScreenBeta.getMusic("pickup").isPlaying())
+        {
+            ScreenBeta.getMusic("pickup").stop();
+            ScreenBeta.getMusic("pickup").dispose();
+        }
+            //boundToWorld();
     }
 }

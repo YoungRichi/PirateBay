@@ -12,7 +12,6 @@ import javax.xml.soap.Text;
 public class TitleScreen extends ScreenBeta {
 
     ActorBeta background;
-    ActorBeta tapToPlay;
     Skin arcade;
     Label tap;
     Table table;
@@ -29,19 +28,12 @@ public class TitleScreen extends ScreenBeta {
         background.loadTexture("TitleScreen.png");
         background.setSize(WIDTH,HEIGHT);
 
-        tapToPlay =  new ActorBeta(); //, mainStage);
-        tapToPlay.loadTexture("TapMe.png");
-        float TapAspectRatio = tapToPlay.getWidth()/tapToPlay.getHeight();
-        tapToPlay.setSize(HEIGHT/10 * TapAspectRatio, HEIGHT/10);
-
         tap = new Label("TAP!", arcade);
 
         table = new Table(arcade);
-
-        //table.setPosition(WIDTH  - tap.getWidth() * screenRatio, HEIGHT / 8);
         table.setPosition(WIDTH  * 7/8, HEIGHT / 8);
         table.add(tap).padRight(10);
-        table.add(tapToPlay);
+        table.add(new Finger());
 
         mainStage.addActor(table);
 

@@ -34,11 +34,10 @@ public class TutorialScreen extends ScreenBeta {
     Skin arcade;
     ActorBeta fader, tapToPlay;
     Label livesCount, winMsg, tapText;
-    SequenceAction tapTextSequenceAction, tapToPlaySequenceAction, winMsgSequenceAction;
+    SequenceAction winMsgSequenceAction;
     SequenceAction faderSequenceAction, faderSequenceActions02;
     float refResolutionFactor;
     Group instructionGroup;
-
 
     //================ Level =========================//
 
@@ -48,17 +47,20 @@ public class TutorialScreen extends ScreenBeta {
     float disTextTimer, secondTutTransTimer01, secondTutTransTimer02;
     float secondTutTimer;
     float spawnEnemyTimer;
-    //float toWaveOneTimer;
     boolean waveOne;
 
+    boolean first;
+
     //================= Sounds ========================//
-    Sound explosion, hit, gameOver, shoot, parrotSound, lvlCompleted, click;
+    Sound click;
+    boolean lvlStartSoundPlayed, lvlCompletedSoundPlayed;
 
     //================= Enemies =======================//
 
     BoatSmall boatSmall01;
     int rockNumMax;
 
+    //=================================================//
     @Override
     public void initialize() {
         CreateLevel();
@@ -68,11 +70,18 @@ public class TutorialScreen extends ScreenBeta {
     public void update(float dt) {
 
         startLvlTimer -= dt;
+        if(startLvlTimer <= 0 && !first)
+        {
+            instructionGroup.setVisible(true);
+            first = true;
+        }
+
         if(fireTrigger && !delayToDisplay)
         {
             ControlCannonBall(dt);
             FirstTutorial();
         }
+        //time to display the first message
         if(delayToDisplay) {
             disTextTimer -= dt;
             if (disTextTimer <= 0) {
@@ -81,6 +90,7 @@ public class TutorialScreen extends ScreenBeta {
         }
         SecondTutorial(dt);
         livesCount.setText("x " + cannon.lives);
+
     }
 
     @Override
@@ -92,7 +102,7 @@ public class TutorialScreen extends ScreenBeta {
             Vector2 cannonOriPos = new Vector2(cannon.getX() + cannon.getWidth() / 2,cannon.getY()+ cannon.getHeight() / 2);
             Vector2 touchPos = new Vector2(screenX, (screenY - HEIGHT)*(-1));
             cannon.fireDir = touchPos.sub(cannonOriPos);
-            Vector2 touchPos1 = new Vector2(screenX, screenY);
+            //Vector2 touchPos1 = new Vector2(screenX, screenY);
 
             if(cannon.fireDir.len() > cannon.getWidth()) // able to load cannon ball only when the touch down position is outside of the range
             {
@@ -108,10 +118,12 @@ public class TutorialScreen extends ScreenBeta {
 
                 ball = new Ball(cannon.getX()+ cannon.getWidth()/2 - HEIGHT/25 +(float)(Math.cos(cannon.fireDir.angleRad()))*cannon.getWidth()/3,
                         cannon.getY() + cannon.getHeight()/2 - HEIGHT/50 + (float)(Math.sin(cannon.fireDir.angleRad()))*cannon.getWidth()/3, mainStage);
+
+                ScreenBeta.getSound("shoot").play(1);
             }
         }
 
-        if(firstTutorial && !fireTrigger && startLvlTimer + 1 <= 0) // tutorial aim and fire mechanic; 1 is the value of tapToPlay delay duration actions
+        if(firstTutorial && !fireTrigger && startLvlTimer <= 0) // tutorial aim and fire mechanic; 1 is the value of tapToPlay delay duration actions
         {
             Vector2 cannonOriPos = new Vector2(cannon.getX() + cannon.getWidth() / 2,cannon.getY()+ cannon.getHeight() / 2);
             Vector2 touchPos = new Vector2(screenX, (screenY - HEIGHT)*(-1));
@@ -128,6 +140,7 @@ public class TutorialScreen extends ScreenBeta {
                         cannon.getY() + cannon.getHeight()/2 - HEIGHT / 50 + (float)(Math.sin(cannon.fireDir.angleRad()))*cannon.getWidth(), mainStage);
                 cannonBall.SetVelocity(screenX, (screenY - HEIGHT)*(-1) - cannonBall.getHeight()/2);
                 cannonBall.setVisible(false);
+                ScreenBeta.getSound("shoot").play(1);
             }
         }
 
@@ -168,10 +181,7 @@ public class TutorialScreen extends ScreenBeta {
     {
         if(cannonBall.overlaps(boatSmall01) && firstTutorial)
         {
-            winMsg.removeAction(winMsgSequenceAction);
-            tapToPlay.removeAction(tapToPlaySequenceAction);
-            tapText.removeAction(tapTextSequenceAction);
-
+            instructionGroup.setVisible(false);
             winMsg.setText("The cannon ball keeps moving until it explodes");
             winMsg.setAlignment(Align.center);
             winMsg.setFontScale(1 * refResolutionFactor);
@@ -179,65 +189,43 @@ public class TutorialScreen extends ScreenBeta {
             winMsg.setPosition(WIDTH / 2 - winMsg.getWidth()/2, HEIGHT / 2 - winMsg.getHeight()/2);
             winMsg.setColor(1,1,1,1);
             winMsg.setWrap(true);
-
             delayToDisplay = true;
             firstTutorial = false;
-            tapToPlay.setColor(1,1,1,0);
-            tapText.setColor(1,1,1,0);
         }
     }
 
     // set tutComplete and waveOne to true
     void SecondTutorial(float deltaTime)
     {
-        if(cannon.lives == 2 && !secondTutorial && !tutCompleted)
+        if(cannon.lives == 2 && !secondTutorial && !tutCompleted && !waveOne)
         {
-            tapToPlay.setColor(1,1,1,1);
-            tapText.setColor(1,1,1,1);
+            instructionGroup.setVisible(true);
             instructionGroup.setPosition(livesCount.getX() + livesCount.getWidth()/2, livesCount.getY()-livesCount.getWidth());
             tapText.setText("The player loses one life if they are hit by the ball");
             winMsg.setText(" ");
             secondTutTransTimer01 -= deltaTime;
             if(secondTutTransTimer01 <= 0)
             {
-                fader.addAction(faderSequenceAction);
-                tapToPlay.setColor(1,1,1,0);
-                tapText.setColor(1,1,1,0);
+                fader.setColor(1,1,1,1);
+                instructionGroup.setVisible(false);
                 winMsg.setText("Try to tap and hold longer. Watch the size of the ball carefully!");
                 secondTutTransTimer02 -= deltaTime;
                 if(secondTutTransTimer02 <= 0)
                 {
-                    secondTutTransition = true;
+                    fader.setColor(1,1,1,0);
+                    winMsg.setText(" ");
+                    cannon.lives = 3;
+                    secondTutorial = true;
                 }
             }
         }
-        // trasition to second tutorial
-        if(secondTutTransition)
-        {
-            fader.removeAction(faderSequenceAction);
-            fader.setColor(1,1,1,0);
-            winMsg.setText(" ");
-            cannon.lives = 3;
-            secondTutTimer -= deltaTime;
-            if(secondTutTimer <= 0)
-            {
-                boatSmall01 = new BoatSmall(WIDTH / 2, HEIGHT / 2, mainStage);
-                boatSmall01.setSpeed(0);
-                secondTutTransition = false;
-                secondTutorial = true;
-            }
-        }
+
         // practice shooting logic
-        if(secondTutorial && cannonBall.fireTimer <= 0 && ActorBeta.getListSmallBoat().size() == 0 && !tutCompleted)
+        if(secondTutorial && !tutCompleted && !waveOne)
         {
-            boatSmall01 = new BoatSmall(WIDTH / 2, HEIGHT / 2, mainStage);
-            boatSmall01.setSpeed(0);
-
-            BoatSmall boatSmall02 = new BoatSmall(WIDTH / 2, HEIGHT * 3/ 4, mainStage);
-            boatSmall02.setSpeed(0);
-
-            BoatSmall boatSmall03 = new BoatSmall(WIDTH / 2, HEIGHT / 4, mainStage);
-            boatSmall03.setSpeed(0);
+            new BoatSmall(WIDTH / 2, HEIGHT / 2, mainStage);
+            new BoatSmall(WIDTH / 2, HEIGHT * 3/ 4, mainStage);
+            new BoatSmall(WIDTH / 2, HEIGHT / 4, mainStage);
             secondTutorial = false;
             tutCompleted = true;
         }
@@ -245,12 +233,16 @@ public class TutorialScreen extends ScreenBeta {
         if(cannon.lives <=0)
             cannon.lives = 0;
 
-        if(tutCompleted  && ActorBeta.getListSmallBoat().size() == 0 && !waveOne)
+        if(tutCompleted && ActorBeta.getListSmallBoat().size() == 0 && !waveOne)
         {
             cannonBall.fireTimer = 0;
             winMsg.setText("Enemies are coming!");
             tutCompleted = false;
             waveOne = true;
+            if(!lvlCompletedSoundPlayed) {
+                ScreenBeta.getSound("levelCompleted").play(1);
+                lvlCompletedSoundPlayed = true;
+            }
             for(Rock rock : ActorBeta.getListRock())
             {
                 rock.remove();
@@ -258,8 +250,6 @@ public class TutorialScreen extends ScreenBeta {
         }
         if(waveOne)
         {
-            //toWaveOneTimer -= deltaTime;
-            //if(toWaveOneTimer <= 0)
             toNextLevelTimer -= deltaTime;
             if(toNextLevelTimer <= 0)
             {
@@ -284,12 +274,11 @@ public class TutorialScreen extends ScreenBeta {
         ActorBeta.setWorldBounds(WIDTH, HEIGHT);
 
         fireTrigger = false; // if the player touches the screen, then the value is true
-        startLvlTimer = 3;
-        disTextTimer = 5;
+        startLvlTimer = 3.5f;
+        disTextTimer = 3.5f;
         secondTutTimer = 1;
-        secondTutTransTimer01 = 5;
-        secondTutTransTimer02 = 5;
-        //toWaveOneTimer = 3;
+        secondTutTransTimer01 = 3.5f;
+        secondTutTransTimer02 = 3.5f;
         firstTutorial = true;
         secondTutTransition = false;
         secondTutorial = false;
@@ -297,7 +286,9 @@ public class TutorialScreen extends ScreenBeta {
         tutCompleted = false;
         waveOne = false;
         playLevel = false;
-        toNextLevelTimer = 5;
+        toNextLevelTimer = 3f;
+
+        first = false;
         //================================= Player ==============================================//
         cannonBase = new CannonBase();
         cannonBase.setPosition(cannonBase.getWidth()/2, HEIGHT/3);
@@ -318,7 +309,6 @@ public class TutorialScreen extends ScreenBeta {
         //================================== Enemies ============================================//
 
         boatSmall01 = new BoatSmall(WIDTH / 2, HEIGHT / 2, mainStage);
-        boatSmall01.setSpeed(0);
 
         //============================== Labels =================================================//
 
@@ -329,31 +319,19 @@ public class TutorialScreen extends ScreenBeta {
         livesCount.setPosition(liveIcon.getX() + liveIcon.getWidth() + 10, liveIcon.getY());
         mainStage.addActor(livesCount);
 
-        tapToPlay = new ActorBeta();
-        tapToPlay.loadTexture("TapMe.png");
-        float TapAspectRatio = tapToPlay.getWidth()/tapToPlay.getHeight();
-        tapToPlay.setSize(HEIGHT/10 * TapAspectRatio, HEIGHT/10);
-        tapToPlay.setPosition(0,0);
-        tapToPlay.setColor(1,1,1,0);
-        tapToPlaySequenceAction = Actions.sequence(Actions.delay(startLvlTimer + 1), Actions.repeat(10,
-                Actions.sequence(Actions.fadeIn(1f), Actions.fadeOut(0.5f))));
-        tapToPlay.addAction(tapToPlaySequenceAction);
-
+        tapToPlay = new Finger();
         tapText = new Label("TAP HERE TO FIRE!", arcade);
         tapText.setFontScale(1 * refResolutionFactor);
         tapText.setSize(WIDTH * 1.5f / 2, HEIGHT/6);
         tapText.setWrap(true);
         tapText.setPosition(tapToPlay.getX(), tapToPlay.getY() - tapToPlay.getHeight()* 2);
-        tapText.setColor(1,1,1,0);
-        tapTextSequenceAction = Actions.sequence(Actions.delay(startLvlTimer + 1), Actions.repeat(10,
-                Actions.sequence(Actions.fadeIn(1f), Actions.fadeOut(0.5f))));
-        tapText.addAction(tapTextSequenceAction);
 
         instructionGroup = new Group();
         instructionGroup.setPosition(WIDTH/2 - boatSmall01.getWidth(), HEIGHT/2 - boatSmall01.getHeight()/1.5f);
         mainStage.addActor(instructionGroup);
         instructionGroup.addActor(tapToPlay);
         instructionGroup.addActor(tapText);
+        instructionGroup.setVisible(false);
 
         fader = new ActorBeta(0,0, mainStage);
         fader.loadTexture("cannonTesting.png");
@@ -374,13 +352,14 @@ public class TutorialScreen extends ScreenBeta {
         mainStage.addActor(winMsg);
 
         //==================================== Sound =============================================//
-        explosion = Gdx.audio.newSound(Gdx.files.internal("Sound/explosion.wav"));
-        gameOver = Gdx.audio.newSound(Gdx.files.internal("Sound/gameOver.wav"));
-        hit = Gdx.audio.newSound(Gdx.files.internal("Sound/hitsound.wav"));
-        lvlCompleted = Gdx.audio.newSound(Gdx.files.internal("Sound/levelCompleted.wav"));
-        parrotSound = Gdx.audio.newSound(Gdx.files.internal("Sound/parrot.wav"));
-        shoot = Gdx.audio.newSound(Gdx.files.internal("Sound/shoot.wav"));
+
         click = Gdx.audio.newSound(Gdx.files.internal("Sound/click.wav"));
+        ScreenBeta.loadSound("Sound/shoot.wav", "shoot");
+        ScreenBeta.loadSound("Sound/levelCompleted.wav", "levelCompleted");
+        ScreenBeta.loadSound("Sound/click.wav", "click");
+        ScreenBeta.loadMusic("Sound/DingDing.wav", "levelStart");
+        ScreenBeta.getMusic("levelStart").play();
+        lvlCompletedSoundPlayed = false;
     }
 
 }
