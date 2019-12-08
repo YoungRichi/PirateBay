@@ -306,20 +306,20 @@ public abstract class MyScreenBeta extends ScreenBeta {
         mainStage.addActor(scoreUI);
 
         scoreBoard = new ScoreBoard();
-        scoreBoard.setSize(HEIGHT/2 * scoreBoard.getWidth()/scoreBoard.getHeight(), HEIGHT/2);
+        scoreBoard.setSize(HEIGHT * 2/3 * scoreBoard.getWidth()/scoreBoard.getHeight(), HEIGHT * 2/3);
         scoreBoard.setPosition(WIDTH / 2 - scoreBoard.getWidth()/2, HEIGHT/2 - scoreBoard.getHeight()/2);
         scoreBoard.setColor(1,1,1,0);
 
         highscoreUI = new Label("High Score \n" + ScreenBeta.highscore, arcade);
         highscoreUI.setAlignment(Align.center);
-        highscoreUI.setFontScale(1.2f * refResolutionFactor);
+        highscoreUI.setFontScale(1.4f * refResolutionFactor);
         highscoreUI.setSize(scoreBoard.getWidth(), scoreBoard.getHeight()/3);
-        highscoreUI.setPosition(scoreBoard.getX() + scoreBoard.getWidth() / 2 - highscoreUI.getWidth()/2, scoreBoard.getY() + scoreBoard.getHeight() - highscoreUI.getHeight());
-        highscoreUI.setColor(1,1,1,0);
+        highscoreUI.setPosition(scoreBoard.getX() + scoreBoard.getWidth() / 2 - highscoreUI.getWidth()/2, scoreBoard.getY() + scoreBoard.getHeight() - highscoreUI.getHeight() * 1.2f);
+        highscoreUI.setColor(1,0,0,0);
 
         currentScoreUI = new Label("Current Score \n" + ScreenBeta.score, arcade);
         currentScoreUI.setAlignment(Align.center);
-        currentScoreUI.setFontScale(1 * refResolutionFactor);
+        currentScoreUI.setFontScale(1f * refResolutionFactor);
         currentScoreUI.setSize(scoreBoard.getWidth(), scoreBoard.getHeight()/3);
         currentScoreUI.setPosition(scoreBoard.getX() + scoreBoard.getWidth() / 2 - currentScoreUI.getWidth()/2, scoreBoard.getY() + scoreBoard.getHeight()/2 - currentScoreUI.getHeight()/2);
         currentScoreUI.setColor(1,1,1,0);

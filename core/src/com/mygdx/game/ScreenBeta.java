@@ -176,8 +176,6 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
         return sounds.get(key);
     }
 
-
-
     boolean waveEnd(float deltaTime)
     {
 
