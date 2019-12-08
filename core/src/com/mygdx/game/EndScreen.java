@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
@@ -17,6 +18,8 @@ public class EndScreen extends ScreenBeta {
     @Override
     public void initialize() {
         comic = new Skin(Gdx.files.internal("comic/skin/comic-ui.json"));
+
+
 
         background = new ActorBeta(0, 0, mainStage);
         background.loadTexture("EndScreen.png");
