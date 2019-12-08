@@ -19,11 +19,11 @@ public class EndScreen extends ScreenBeta {
     public void initialize() {
         comic = new Skin(Gdx.files.internal("comic/skin/comic-ui.json"));
 
+        new Pirate(0,0, mainStage);
 
-
-        background = new ActorBeta(0, 0, mainStage);
-        background.loadTexture("EndScreen.png");
-        background.setSize(WIDTH,HEIGHT);
+        //background = new ActorBeta(0, 0, mainStage);
+        //background.loadTexture("EndScreen.png");
+        //background.setSize(WIDTH,HEIGHT);
 
         new Finger(WIDTH * 2/3, HEIGHT/2, mainStage);
 
