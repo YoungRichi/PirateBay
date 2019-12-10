@@ -90,7 +90,7 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
 
         lvlStarted = false;
         enemySpawned = false;
-        bwtWaveTimeMax = 10;
+        bwtWaveTimeMax = 6;
         bwtWaveTimer = bwtWaveTimeMax;
 
         mainStage = new Stage();
