@@ -34,6 +34,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 //import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 //import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 
@@ -210,7 +211,10 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
             for (int i = 0; i < num; i++)
             {
 
-                boatSmalls.add(new BoatSmall(WIDTH, HEIGHT / num * i, mainStage )); //- HEIGHT / 12
+                //boatSmalls.add(new BoatSmall(WIDTH, HEIGHT / num * i, mainStage )); //- HEIGHT / 12
+                Random rand = new Random();
+                int pos = rand.nextInt(11) + 1;
+                boatSmalls.add(new BoatSmall(WIDTH, HEIGHT / 12 * pos, mainStage));
             }
         }
     }
@@ -231,7 +235,10 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
             for (int i = 0; i < num; i++)
             {
 
-                boatMediums.add(new BoatMedium(WIDTH, HEIGHT / num * i, mainStage )); //- HEIGHT / 12
+                //boatMediums.add(new BoatMedium(WIDTH, HEIGHT / num * i, mainStage )); //- HEIGHT / 12
+                Random rand = new Random();
+                int pos = rand.nextInt(11) + 1;
+                boatMediums.add(new BoatMedium(WIDTH, HEIGHT / 12 * pos, mainStage));
             }
         }
     }
@@ -252,7 +259,10 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
             for (int i = 0; i < num; i++)
             {
 
-                boatBigs.add(new BoatBig(WIDTH, HEIGHT / num * i, mainStage )); //- HEIGHT / 12
+                //boatBigs.add(new BoatBig(WIDTH, HEIGHT / num * i, mainStage )); //- HEIGHT / 12
+                Random rand = new Random();
+                int pos = rand.nextInt(11) + 1;
+                boatBigs.add(new BoatBig(WIDTH, HEIGHT / 12 * pos, mainStage));
             }
         }
     }
@@ -273,7 +283,10 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
             for (int i = 0; i < num; i++)
             {
 
-                boatFasts.add(new BoatFast(WIDTH, HEIGHT / num * i, mainStage )); //- HEIGHT / 12
+                //boatFasts.add(new BoatFast(WIDTH, HEIGHT / num * i, mainStage )); //- HEIGHT / 12
+                Random rand = new Random();
+                int pos = rand.nextInt(11) + 1;
+                boatFasts.add(new BoatFast(WIDTH, HEIGHT / 12 * pos, mainStage));
             }
         }
     }
@@ -294,7 +307,10 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
             for (int i = 0; i < num; i++)
             {
 
-                parrots.add(new Parrot(WIDTH, HEIGHT / num * i, mainStage )); //
+                //parrots.add(new Parrot(WIDTH, HEIGHT / num * i, mainStage ));
+                Random rand = new Random();
+                int pos = rand.nextInt(11) + 1;
+                parrots.add(new Parrot(WIDTH, HEIGHT / 12 * pos, mainStage));
             }
         }
     }
