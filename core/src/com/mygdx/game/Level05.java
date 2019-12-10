@@ -3,7 +3,7 @@ package com.mygdx.game;
 public class Level05 extends MyScreenBeta {
     @Override
     public void EnemiesInit() {
-        levelNum = 6; // define the current level
+        levelNum = 5; // define the current level
         waveNum = 2;
         waves = new boolean[waveNum];
         for(int i = 0; i < waves.length; i++)
