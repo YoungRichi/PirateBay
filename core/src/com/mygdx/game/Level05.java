@@ -23,6 +23,13 @@ public class Level05 extends MyScreenBeta {
         CreateBoatBig(1); // sum of all elements in the bigBoatNums array
         CreateBoatFast(4); // sum of all elements in the fastBoatNums array
         CreateParrot(0); // sum of all elements in the parrotNums array
+
+        lifePickup.setPosition(WIDTH * 3 / 4, HEIGHT); // y coordinate should always be HEIGHT
+        barricadeHealthPickup.setPosition(WIDTH/2, HEIGHT); // y coordinate should always be HEIGHT
+        hasLifePickup = true; // when this is set to true, its timer must be set
+        hasHealthPickup = true;
+        lifePickupSpawnTimer = 10; // in seconds. The pickup will be spawned when the timer reaches zero
+        healthPickupSpawnTimer = 10; // in second. The pickup will be spawned when the timer reaches zero
     }
 
     @Override

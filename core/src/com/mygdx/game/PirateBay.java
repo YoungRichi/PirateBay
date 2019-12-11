@@ -16,8 +16,8 @@ public class PirateBay extends GameBeta {
     @Override
     public void create() {
         super.create();
-        level01 = new Level01();
-        setActiveScreen(level01);
+/*        level01 = new Level01();
+        setActiveScreen(level01);*/
 
 //===================LEVEL TESTING===============================================================
 /*        Level02 level02 = new Level02();
@@ -36,9 +36,9 @@ public class PirateBay extends GameBeta {
 /*        Level08 level08 = new Level08();
         setActiveScreen(level08);*/
 
-/*        Level09 level09 = new Level09();
+        Level09 level09 = new Level09();
         setActiveScreen(level09);
-
+/*
         Level10 level10 = new Level10();
         setActiveScreen(level10);*/
 

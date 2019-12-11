@@ -228,12 +228,13 @@ public abstract class MyScreenBeta extends ScreenBeta {
         new Rock (WIDTH * 8/32, HEIGHT * 5/8 + HEIGHT/15 , mainStage);
         new Rock (WIDTH * 8/32, HEIGHT * 5/8 + 2* HEIGHT/15 , mainStage);
         new Rock (WIDTH * 8/32, HEIGHT * 5/8 + 3* HEIGHT/15 , mainStage);
-        new Rock (WIDTH * 8/32, HEIGHT * 5/8 + 4* HEIGHT/15 , mainStage);
-        new Rock (WIDTH * 8/32, HEIGHT * 5/8 + 5* HEIGHT/15 , mainStage);
+
+        //new Rock (WIDTH * 8/32, HEIGHT * 5/8 + 4* HEIGHT/15 , mainStage);
+        //new Rock (WIDTH * 8/32, HEIGHT * 5/8 + 5* HEIGHT/15 , mainStage);
 
         //lower half rocks
-        new Rock (WIDTH * 8/32, HEIGHT * 1/8 - 2 * HEIGHT/15  , mainStage);
-        new Rock (WIDTH * 8/32, HEIGHT * 1/8 - HEIGHT/15  , mainStage);
+        //new Rock (WIDTH * 8/32, HEIGHT * 1/8 - 2 * HEIGHT/15  , mainStage);
+        //new Rock (WIDTH * 8/32, HEIGHT * 1/8 - HEIGHT/15  , mainStage);
         new Rock (WIDTH * 8/32, HEIGHT * 1/8  , mainStage);
         new Rock (WIDTH * 8/32, HEIGHT * 1/8 + HEIGHT / 15  , mainStage);
         //new Rock (WIDTH * 8/32, HEIGHT * 1/8 + 2 * HEIGHT / 15  , mainStage);
@@ -254,7 +255,7 @@ public abstract class MyScreenBeta extends ScreenBeta {
         // Upper Screen rock
         new Rock (WIDTH * 7/16 , HEIGHT * 13/16   , mainStage); // left
         new Rock (WIDTH * 9/16 , HEIGHT * 11/16   , mainStage); // middle
-        new Rock (WIDTH * 9/16 , HEIGHT * 13/16 - HEIGHT/15   , mainStage); // middle
+        new Rock (WIDTH * 8/16 , HEIGHT * 13/16 - HEIGHT/15   , mainStage); // middle
        // rock = new Rock (WIDTH * 9/16 , HEIGHT * 12/16 - (2 * HEIGHT/15)   , mainStage); // middle
 
         new Rock ( WIDTH * 14/16, HEIGHT * 13/16, mainStage); //far east
