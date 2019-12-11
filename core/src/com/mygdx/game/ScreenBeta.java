@@ -223,7 +223,7 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
     {
         for (int i = startIndex; i < startIndex + num; i++)
         {
-            boatSmalls.get(i).setSpeed(70);
+            boatSmalls.get(i).setSpeed(200);
         }
         enemySpawned = true;
     }
@@ -247,7 +247,7 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
     {
         for (int i = startIndex; i < startIndex + num; i++)
         {
-            boatMediums.get(i).setSpeed(50);
+            boatMediums.get(i).setSpeed(100);
         }
         enemySpawned = true;
     }
@@ -271,7 +271,7 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
     {
         for (int i = startIndex; i < startIndex + num; i++)
         {
-            boatBigs.get(i).setSpeed(50);
+            boatBigs.get(i).setSpeed(100);
         }
         enemySpawned = true;
     }
@@ -295,7 +295,7 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
     {
         for (int i = startIndex; i < startIndex + num; i++)
         {
-            boatFasts.get(i).setSpeed(120);
+            boatFasts.get(i).setSpeed(250);
         }
         enemySpawned = true;
     }

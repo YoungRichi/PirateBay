@@ -223,8 +223,8 @@ public abstract class MyScreenBeta extends ScreenBeta {
         //================================== Obstacles ===========================================//
 
         //top rocks
-        new Island(WIDTH * 15/64, HEIGHT / 2 + HEIGHT/15, mainStage);
-       // rock = new Rock (WIDTH * 5/16, HEIGHT * 5/8 , mainStage);
+        //new Rock(WIDTH * 15/64, HEIGHT / 2 + HEIGHT/15, mainStage);
+        //new Rock (WIDTH * 8/32, HEIGHT * 5/8 , mainStage);
         new Rock (WIDTH * 8/32, HEIGHT * 5/8 + HEIGHT/15 , mainStage);
         new Rock (WIDTH * 8/32, HEIGHT * 5/8 + 2* HEIGHT/15 , mainStage);
         new Rock (WIDTH * 8/32, HEIGHT * 5/8 + 3* HEIGHT/15 , mainStage);
@@ -236,7 +236,7 @@ public abstract class MyScreenBeta extends ScreenBeta {
         new Rock (WIDTH * 8/32, HEIGHT * 1/8 - HEIGHT/15  , mainStage);
         new Rock (WIDTH * 8/32, HEIGHT * 1/8  , mainStage);
         new Rock (WIDTH * 8/32, HEIGHT * 1/8 + HEIGHT / 15  , mainStage);
-        new Rock (WIDTH * 8/32, HEIGHT * 1/8 + 2 * HEIGHT / 15  , mainStage);
+        //new Rock (WIDTH * 8/32, HEIGHT * 1/8 + 2 * HEIGHT / 15  , mainStage);
 
         //Middle Islands
         new Rock(WIDTH *6/8, HEIGHT * 18/32, mainStage); // east
