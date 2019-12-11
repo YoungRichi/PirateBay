@@ -319,7 +319,7 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
     {
         for (int i = startIndex; i < startIndex + num; i++)
         {
-            parrots.get(i).setSpeed(50);
+            parrots.get(i).setSpeed(100);
             parrots.get(i).setMotionAngle(180);
 
         }

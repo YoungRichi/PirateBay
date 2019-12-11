@@ -15,7 +15,7 @@ public class CannonBall extends ActorBeta {
     float fireDurationMax = 2.0f;
     float fireTimer = fireDurationMax;
     boolean isFiring = false;
-    float speed = 6;
+    float speed = 5;  // speed of bullet
 
     public CannonBall(float x, float y, Stage s) {
         super(x, y, s);
