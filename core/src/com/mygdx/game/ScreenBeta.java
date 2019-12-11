@@ -213,7 +213,7 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
 
                 //boatSmalls.add(new BoatSmall(WIDTH, HEIGHT / num * i, mainStage )); //- HEIGHT / 12
                 Random rand = new Random();
-                int pos = rand.nextInt(11) + 1;
+                int pos = rand.nextInt(12);
                 boatSmalls.add(new BoatSmall(WIDTH, HEIGHT / 12 * pos, mainStage));
             }
         }
@@ -237,7 +237,7 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
 
                 //boatMediums.add(new BoatMedium(WIDTH, HEIGHT / num * i, mainStage )); //- HEIGHT / 12
                 Random rand = new Random();
-                int pos = rand.nextInt(11) + 1;
+                int pos = rand.nextInt(12);
                 boatMediums.add(new BoatMedium(WIDTH, HEIGHT / 12 * pos, mainStage));
             }
         }
@@ -261,7 +261,7 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
 
                 //boatBigs.add(new BoatBig(WIDTH, HEIGHT / num * i, mainStage )); //- HEIGHT / 12
                 Random rand = new Random();
-                int pos = rand.nextInt(11) + 1;
+                int pos = rand.nextInt(12);
                 boatBigs.add(new BoatBig(WIDTH, HEIGHT / 12 * pos, mainStage));
             }
         }
@@ -285,7 +285,7 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
 
                 //boatFasts.add(new BoatFast(WIDTH, HEIGHT / num * i, mainStage )); //- HEIGHT / 12
                 Random rand = new Random();
-                int pos = rand.nextInt(11) + 1;
+                int pos = rand.nextInt(12);
                 boatFasts.add(new BoatFast(WIDTH, HEIGHT / 12 * pos, mainStage));
             }
         }
@@ -309,8 +309,8 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
 
                 //parrots.add(new Parrot(WIDTH, HEIGHT / num * i, mainStage ));
                 Random rand = new Random();
-                int pos = rand.nextInt(11) + 1;
-                parrots.add(new Parrot(WIDTH, HEIGHT / 12 * pos, mainStage));
+                int pos = rand.nextInt(4);
+                parrots.add(new Parrot(WIDTH, HEIGHT /4 * pos, mainStage));
             }
         }
     }
