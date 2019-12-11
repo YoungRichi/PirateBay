@@ -36,16 +36,15 @@ public class PirateBay extends GameBeta {
 /*        Level08 level08 = new Level08();
         setActiveScreen(level08);*/
 
-        Level09 level09 = new Level09();
-        setActiveScreen(level09);
-/*
-        Level10 level10 = new Level10();
+/*        Level09 level09 = new Level09();
+        setActiveScreen(level09);*/
+/*        Level10 level10 = new Level10();
         setActiveScreen(level10);*/
 
 //===================LEVEL TESTING===============================================================
 
-        //splashScreen = new SplashScreen();
-        //setActiveScreen(splashScreen);
+        splashScreen = new SplashScreen();
+        setActiveScreen(splashScreen);
 
 
         //titleScreen = new TitleScreen();
