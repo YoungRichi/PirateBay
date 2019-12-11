@@ -38,7 +38,7 @@ public abstract class MyScreenBeta extends ScreenBeta {
     Label livesCount, winMsg, scoreUI;
     float refResolutionFactor;
     ScoreBoard scoreBoard;
-    Label highscoreUI, currentScoreUI;
+    Label highscoreUI, currentScoreUI, loseMsg;
     Button replayButton;
     ActorBeta replayButtonTex;
 
@@ -163,6 +163,10 @@ public abstract class MyScreenBeta extends ScreenBeta {
             currentScoreUI.setText("Current Score \n" + ScreenBeta.score);
             currentScoreUI.addAction(Actions.sequence(Actions.delay(2), Actions.fadeIn(1)));
             uiStage.addActor(currentScoreUI);
+            loseMsg.setText("Hint: Dont Forget to hold your shots");
+            loseMsg.addAction(Actions.sequence(Actions.delay(2), Actions.fadeIn(1)));
+            uiStage.addActor(loseMsg);
+
             replayButtonTex.addAction(Actions.sequence(Actions.delay(2), Actions.fadeIn(1)));
             uiStage.addActor(replayButton);
 
@@ -324,6 +328,14 @@ public abstract class MyScreenBeta extends ScreenBeta {
         currentScoreUI.setSize(scoreBoard.getWidth(), scoreBoard.getHeight()/3);
         currentScoreUI.setPosition(scoreBoard.getX() + scoreBoard.getWidth() / 2 - currentScoreUI.getWidth()/2, scoreBoard.getY() + scoreBoard.getHeight()/2 - currentScoreUI.getHeight()/2);
         currentScoreUI.setColor(1,1,1,0);
+
+        loseMsg = new Label(" " , arcade);
+        loseMsg.setAlignment(Align.center);
+        loseMsg.setFontScale(1.4f * refResolutionFactor);
+        loseMsg.setSize(scoreBoard.getWidth(), scoreBoard.getHeight()/3);
+        loseMsg.setPosition(scoreBoard.getX() + scoreBoard.getWidth() / 2 - highscoreUI.getWidth()/2, HEIGHT * 1/16);
+        loseMsg.setColor(1,0,0,0);
+
 
         replayButtonTex = new ActorBeta();
         replayButtonTex.loadTexture("replayButton.png");

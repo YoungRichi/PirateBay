@@ -63,7 +63,13 @@ public class TitleScreen extends ScreenBeta {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         clickSound.play();
 
-        PirateBay.setActiveScreen(new TutorialScreen());
+        if (highscore > 0)
+        {
+            PirateBay.setActiveScreen(new Level01());
+        }
+        else {
+            PirateBay.setActiveScreen(new TutorialScreen());
+        }
 
         return super.touchDown(screenX, screenY, pointer, button);
     }
