@@ -163,7 +163,7 @@ public abstract class MyScreenBeta extends ScreenBeta {
             currentScoreUI.setText("Current Score \n" + ScreenBeta.score);
             currentScoreUI.addAction(Actions.sequence(Actions.delay(2), Actions.fadeIn(1)));
             uiStage.addActor(currentScoreUI);
-            loseMsg.setText("Hint: Dont Forget to hold your shots");
+            loseMsg.setText("Hint: Remember to charge your shots");
             loseMsg.addAction(Actions.sequence(Actions.delay(2), Actions.fadeIn(1)));
             uiStage.addActor(loseMsg);
 

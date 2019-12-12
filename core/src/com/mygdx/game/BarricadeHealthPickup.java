@@ -27,7 +27,7 @@ public class BarricadeHealthPickup extends ActorBeta {
                 if(!ScreenBeta.getMusic("pickup").isPlaying())
                 {
                     ScreenBeta.getMusic("pickup").play();
-                    ScreenBeta.getMusic("pickup").setLooping(true);
+                    ScreenBeta.getMusic("pickup").setLooping(false);
                 }
             }
 
